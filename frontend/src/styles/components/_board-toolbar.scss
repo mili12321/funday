@@ -1,0 +1,105 @@
+.board-toolbar{
+    min-width: 29px;
+    padding:0 7px ;
+    height: 100vh;
+    background-color: #292f4c;
+    display: flex;
+    flex-direction: column;
+    position: sticky;
+    top: 0;
+    z-index: 3;
+    .icon-wrapper{
+        margin-bottom: 25px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: relative;
+        color: rgb(233, 233, 233);
+    }
+    .workspace-wrapper{
+        margin-bottom: 20px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: relative;
+        color: rgb(233, 233, 233);
+        padding: 4px;
+        &.selected{
+            background-color: #3e4462;
+            border-radius: 5px;
+            &:after{
+                content: '';
+                position: absolute;
+                width: 0;
+                height: 0;
+                border-top: 13px solid transparent;
+                border-bottom: 13px solid transparent;
+                border-right: 10px solid white;
+                left: 31px; 
+            }
+        }
+        .workspace-icon{
+            transition: all 200ms linear;
+            cursor: pointer;
+            &:hover{
+                transform: scale(1.2); 
+            }
+        }
+    }
+
+}
+.workspace-icon{
+    width: 20px;
+    height: 20px;
+    border-radius: 6px;
+    font-size: 14px;
+    color: #fff;
+    display: flex;
+    place-items: center;
+    justify-content: center;
+}
+.board-first-area{
+    .icon-wrapper:first-of-type{
+        padding: 15px 0px 10px;
+        margin-bottom: 15px;
+        border-bottom: 1px solid #373d58;
+    }
+}
+.tollbar-icon{
+    width: 15px;
+    height: 15px;
+    padding: 7px;
+    transition: 0.2s;
+    cursor: pointer;
+    &:hover{
+        background-color: #1b2038;
+        border-radius: 5px;
+    }
+    &.selected{
+        background-color: #3e4462;
+        border-radius: 5px;
+    }
+}
+
+.board-second-area{
+    position: relative;
+    .toolbar-options-modal{
+        white-space: nowrap;
+        top: -83px;
+        left: 40px;
+        .pin-workspaces-btn{
+            display: flex;
+            justify-content: space-between;
+            >div{
+                display: flex;
+                align-items: center;
+            }
+        }
+    }
+}
+.pin-workspace-title{
+    margin-bottom: 10px;
+}
+.checkbox{
+    cursor: pointer;
+}

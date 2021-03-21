@@ -1,0 +1,97 @@
+.upload-img-wrapper{
+    label{
+        cursor: pointer;
+        display: inline-block;
+        position: relative;
+        div{
+            border-radius: 50%;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+            display: block;
+            position: relative;
+        }
+        input{
+            width: 0;
+        }
+        &::before{
+            content: "";
+            display: block;
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            z-index: -1;
+        }
+    }
+
+}
+.logo{
+    margin-top:11px;
+    display: flex;
+    justify-content: center;
+    label{
+        height: 43px;
+        margin-bottom: 12px;
+        div{
+            pointer-events: none;
+            width: 41px;
+            top: -22px;
+            height: 41px;
+        }
+        transition:opacity 0.2s;
+        &:hover{
+            opacity: 0.8;
+        }
+    }
+    
+}
+
+.details-header{
+    label{
+        top: -9px;
+        height: 122px;
+        margin-top: 40px;
+        margin-bottom: -7px;
+        >div{
+            width: 120px;
+            height: 120px;
+            top: -21px;
+            .before{
+                background-color: transparent;
+                border-radius: 50%;
+                display: block;
+                position: absolute;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                transition:opacity 0.2s;
+                display: flex;
+                justify-content: center;
+                place-items: center;
+                flex-direction: column;
+                color: white;
+                transition: 0.2s;
+                >.text{
+                    text-align: center;
+                    font-size: 14px;
+                    display: none;
+                }
+                >.update-img-icon{
+                    display: none;
+                    font-size: 46px;
+                }
+            }
+            &:hover{
+                .before{
+                    background-color: #3131318e;
+                }
+                .text, .update-img-icon{
+                    display: block;
+                }
+            }
+        }
+    }
+}

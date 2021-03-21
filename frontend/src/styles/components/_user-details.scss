@@ -1,0 +1,122 @@
+.user-details{
+    flex: 1;
+    background-color: white;
+    border-radius:15px 0 0 0 ;
+    max-height: 100vh;
+    overflow: hidden;
+}
+.details-header{
+    min-height: 35vh;
+    background-color: #0085ff;    
+    border-radius:15px 0 0 0 ;
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+    box-shadow: 0 2px 3px rgba(182, 182, 182, 0.75);
+}
+.header-navigation{
+    display: flex;
+    margin:0 auto;
+    width: fit-content;
+    white-space: nowrap;
+    >.title{
+        padding: 7px;
+        margin: 0 15px;
+        border-bottom: 3px solid transparent;
+        color: white;
+        &:first-child{
+            border-bottom: 3px solid white;
+        }
+    }
+}
+.updating-user-name-wrapper{
+    text-align: center;
+    font-size: 30px;
+    color: white;
+    display: flex;
+    justify-content: center;
+    .user-name{
+        border: 1px dashed transparent;
+        width: 40%;
+        cursor: pointer;
+        transition: 0.2s;
+        display: flex;
+        place-items: center;
+        justify-content: center;
+        position: relative;
+        &:hover{
+            border: 1px dashed white;
+            .BsPencil{
+                display: block;
+            }
+            .label-text{
+                visibility: visible;
+            }
+        }
+        .BsPencil{
+            position: absolute;
+            right: 5px;
+            font-size: 16px;
+            display: none;
+        }
+    }
+    .update-name{
+        width: 40%;
+        border: 1px dashed white;
+        background-color: transparent;
+        font-size: 25px;
+        color: white;
+        text-align: center;
+        padding: 0;
+    }
+}
+
+.details-main{
+    display: flex;
+    justify-content: center;
+}
+.details-main-content-wrapper{
+    margin-top: 30px;
+    display: flex;
+    flex-direction: column;
+    >.title{
+        font-size: 18px;
+        margin-bottom: 15px;
+    }
+    border-bottom: 1px solid gray;
+    margin-bottom: 20px;
+    width: 45vw;
+}
+.overview-row-container{
+    display: flex;
+    place-items: center;
+    margin-bottom: 10px;
+    &:last-child{
+        margin-bottom: 20px;
+    }
+    .icon-wrapper{
+        width: 35px;
+        height: 35px;
+        border: 1px solid gray;
+        margin-right: 15px;
+        border-radius: 50%;
+        display: flex;
+        justify-content: center;
+        place-items: center;
+        .icon{
+            font-size: 25px;
+        }
+    }
+    .user-info-wrapper{
+        display: flex;
+        place-items: center;
+        div{
+            &:first-child{
+                margin-right: 7px;
+            }
+            &:first-letter{
+                text-transform: capitalize
+            }
+        }
+    }
+}

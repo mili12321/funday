@@ -1,0 +1,40 @@
+.favorite-toolbar-menu{
+    .title-wrapper{
+        display: flex;
+        margin-bottom: 12px;
+        padding: 6px 3px;
+        display: flex;
+        color: #161616;
+        >div{
+            font-weight: bold;
+            margin-left: 7px;
+        }
+        margin-bottom: 26px;
+    }
+    .no-favorite-msg{
+        display: flex;
+        flex-direction: column;
+        >div{
+            margin: auto;
+            &:first-child{
+                margin-bottom: 15px;
+                .star{
+                    font-size: 25px;
+                }
+            }
+            &:nth-child(2){
+                font-weight: bold;
+                margin-bottom: 5px;
+                text-align: center;
+                font-size: 14px;
+            }
+            &:last-child{
+                text-align: center;
+                font-size: 13px;
+            }
+        }
+    }
+}
+.star{
+    color: #ffdf28;
+}

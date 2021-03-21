@@ -1,0 +1,108 @@
+
+.folder-wrapper{
+    padding: 5px;
+}
+.folder-dropdown{
+    >.board-wrapper{
+        margin-left: 16px;
+        width: 152px;
+    }
+}
+
+.folder-wrapper,.board-wrapper{
+    // position: relative;
+    // position: absolute;
+    box-sizing: border-box;
+    width:168px;
+    border-radius: 4px;
+    padding: 5px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 4px 0;
+    font-size: 14px;
+    transition:0.2s;
+    &.updating-style{
+        background-color: #0085ff1c;
+        &:hover{
+            background-color: #0085ff1c;
+        }
+    }
+    &.active{
+        background-color: #0085ff1c;
+        color: #0085ff;
+    }
+    .name-wrapper{
+        display: flex;
+        align-items: center;
+        width: 100%;
+        overflow: hidden;
+        .update-folder-name-input, .update-board-name-input{
+            width: 100%;
+            outline: none;
+            border:1px dashed #0085ff;
+        }
+    }
+    span{
+        padding-left: 5px;
+        width: 100%;
+
+    }
+    .BsThreeDots{
+        min-width: 15px;
+        min-height: 15px;
+        visibility: hidden;
+        &.hide{
+            display: none;
+        }
+    }
+    cursor: pointer;
+    &:hover{
+        background-color: #dddddd;
+        border-radius: 3px;
+        .BsThreeDots{
+            visibility: visible;
+            &.hide{
+                display: none;
+            }
+        }
+    }
+    &.open-modal{
+        background-color: #dddddd;
+        border-radius: 3px;
+        .BsThreeDots{
+            visibility: visible;
+            color: #0085ff;
+        }
+    }
+    &.active{
+        background-color: #0085ff1c;
+        border-radius: 3px;
+        color: #0085ff;
+    }
+}
+
+
+.close-dropdown{
+    display: none;
+}
+
+.ellipsis-board-name, .ellipsis-folder-name{
+    white-space: nowrap; 
+    overflow: hidden;
+    text-overflow: ellipsis; 
+}
+.table-modal-wrapper{
+    left: 152px;
+    top: 26px;
+}
+.folder-modal-wrapper, .board-modal-wrapper{
+    left: 160px;
+    transition:top 0.3s ;
+}
+
+.delete-btn-wrapper{
+    margin-top: 5px;
+    padding-top: 7px;
+    border-top: 1px solid #dddddd;
+}

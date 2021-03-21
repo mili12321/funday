@@ -1,0 +1,64 @@
+.workspace-icon-modal{
+    top: 60px;
+    left: 0px;
+}
+.menu-icon-picker{
+    top: 0px;
+    right: -155px;
+    padding: 10px;
+}
+.workspace-icon-modal, .menu-icon-picker{
+    padding: 10px;
+    .workspace-color-picker{         
+        width: 150px;
+        height: 150px;
+        top: 36px;
+        left: 0;
+        background-color: white;
+        grid-gap: 4px;
+        height: fit-content;
+        width: fit-content;
+        display: grid;
+        grid-template: repeat(3,  1fr) / repeat(7, 1fr);
+        grid-auto-flow: row;
+        margin-bottom: 10px;
+        .workspace-color{
+            width: 16px;
+            height: 15px;
+            border-radius: 50%;
+            justify-self: center;
+            align-self: center;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            place-items: center;
+            color: white;
+        }
+    }
+    .icon-picker{
+        width: 150px;
+        height: 150px;
+        top: 36px;
+        left: 0;
+        background-color: white;
+        grid-gap: 5px;
+        height: fit-content;
+        width: fit-content;
+        display: grid;
+        grid-template: repeat(4,  1fr) / repeat(5, 1fr);
+        grid-auto-flow: row;
+        .icon{
+            width: 23px;
+            height: 23px;
+            border-radius: 5px;
+            justify-self: center;
+            align-self: center;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            place-items: center;
+            color: white;
+            font-size: 14px;
+        }
+    }
+}

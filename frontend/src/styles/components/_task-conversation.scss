@@ -1,0 +1,34 @@
+.task-conversation-wrapper{
+    position: relative;
+    &:hover{
+        .label-text{
+            visibility: visible;
+        }
+        .conversations-count{
+            background-color: #0085ff;
+        }
+        .conversation-bubble{
+            color: #0085ff;
+        }
+    }
+    .conversations-count{
+        background-color: rgb(180, 182, 188);
+        position: absolute;
+        min-width: 10px;
+        height: 10px;
+        padding: 2px;
+        text-align: center;
+        border-radius: 50%;
+        font-size: 10px;
+        color: white;
+        bottom: 3px;
+        right: 0;
+    }
+    .conversation-bubble{
+        width: 30px;
+        height: 30px;
+        color: rgb(180, 182, 188);
+        cursor: pointer;
+        position: relative;
+    }
+}

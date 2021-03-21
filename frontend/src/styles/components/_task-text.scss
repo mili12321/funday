@@ -1,0 +1,87 @@
+.task-text{
+    width: 141px;
+    height: 29px;
+    display: flex;
+    place-items: center;
+    position: relative;
+    .updating-container{
+        position: absolute;
+        z-index: 1;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        >input{
+            height: 93%;
+            width: 77%;
+            padding: 0 3px;
+            border: 1px dashed #0085ff;
+        }
+        >span{
+            flex-grow: 1;
+            border: 1px solid;
+            padding: 3px;
+            display: flex;
+            place-items: center;
+            justify-content: center;
+            border-radius: 0 50% 50% 0;
+            border: 1px dashed #0085ff;
+            border-left: none;
+            color: #0085ff;
+            background-color: #fff;
+            position: relative;
+            &.active{
+                border: 1px solid #0085ff;
+                border-left: none;
+                border-radius: 0 50% 0 0;
+                border-bottom: 1px dashed #ffffff;
+            }
+        }
+    }
+}
+.text-modal{
+    top: 26px;
+    right:-1px;
+    border-radius: 0;
+    z-index: 1;
+    box-shadow: none;
+    border: 1px solid #0085ff;
+    z-index: -1;
+    padding: 10px;
+    display: grid;
+    grid-gap: 8px;
+    grid-template: repeat(5, 1fr)/repeat(3, 1fr);
+    grid-auto-flow: row dense;
+    >span{
+        display: flex;
+        justify-content: center;
+        place-items: center;
+    }
+    .gif-img{
+        cursor: pointer;
+    }
+}
+.dangerouslySetInnerHTML{
+    img{
+        width: 20px;
+        height: auto;
+    }
+}
+.gif-img {
+    max-width: 20px;
+    height: auto;
+}
+.red{
+    color:#eb3b5a;
+}
+.green{
+    color:#10ac84;
+}
+.yellow{
+    color:#fbc531;
+}
+.blue{
+    color:#0fbcf9;
+}
+.gray{
+    color: #353b48;
+}

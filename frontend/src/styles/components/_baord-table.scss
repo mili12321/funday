@@ -1,0 +1,323 @@
+.table{
+    margin-right: 65px;
+    &.shrink{
+        background-color: #e6e9ef9f;
+        transition: 0.2s;
+        &:hover{
+            background-color: #c1c3c79f;
+        }
+    }
+}
+.table-wrapper{
+    min-width: fit-content;
+    height: fit-content;
+    margin-left: 42px;
+    margin-right: 10px;
+    margin-top: 24px;
+    margin-bottom: 44px;
+    &.shrink{
+        max-height: 40px;
+    }
+}
+.table-row{
+    display: flex;
+}
+
+.task-row{
+    margin-bottom: 2px;
+    flex-grow: 1;
+    &:hover{
+        background-color: #c1c3c79f;
+        .task-cell-status{
+            opacity: 0.8 !important; 
+        }
+    }
+}
+.add-row, .task-row{
+    box-shadow: 0 3px 1px -2px #e6e9ef;
+}
+.add-row{
+    margin-top: 1px;
+    box-shadow:  0 3px 1px -2px #e6e9ef, 0 -3px 1px -2px #e6e9ef;
+}
+.table-cell{
+    width: 150px;
+    display:flex;
+    border-left: 2px solid rgb(255, 255, 255);
+    &:first-child{
+        min-width: 300px;
+        flex-grow: 1;
+    }
+    &:last-child{
+        width: 40px;
+    }
+}
+.title-cell{
+    display: flex;
+    place-items: center;
+    padding: 10px 0;
+    position: relative;
+    &:not(:first-child){
+        justify-content: center;
+        color:  #424242  !important;
+    }
+    &:first-child{
+       font-size: 20px;
+       opacity: 0.5;
+    }
+    >span{
+        margin-left: 5px;
+    }
+    &.checkBox-title{
+        width: 50px;
+        justify-content: start;
+        >.content-editable{
+            width: 50px;
+            overflow: hidden;
+            white-space: nowrap;  
+            text-overflow: ellipsis; 
+        }
+    }
+}
+.add-column-btn{
+    width: 18px;
+    height: 18px;
+    cursor: pointer;
+    transition: 0.1s;
+    &:hover{
+        color: #0085ff; 
+    }
+}
+.task-cell, .add-cell{
+    &:not(:first-child){
+        .decoration-line{
+            display: none;
+        }
+        justify-content: center;
+    }
+    &:last-child{
+        justify-content: flex-end;
+        &::after{
+            content: "";
+            width: 10px;
+            background-color: #e3e6ed;
+        }
+    }
+    .cell-content-wrapper{
+        display: flex;
+        place-items: center;
+        &.name-wrapper-cell{
+            &:hover .task-name-span{
+                color: #0085ff;
+            }
+        }
+    }
+}
+.add-cell{
+    .decoration-line{
+       opacity: 0.5;
+    }
+    &:first-child{
+        .cell-content-wrapper{
+            margin-left: 12px;
+        }
+    }
+}
+.task-cell{
+    &:first-child{
+        .cell-content-wrapper{
+            margin-left: 7px;
+            width: 100%;
+            justify-content: space-between;
+        }
+    }
+    &:hover .add-owner{
+        opacity: 1;
+    } 
+    &:hover .add-owner-btn-wrapper{
+        opacity: 1;
+    }
+    &.text-style{
+        transition: 0.1s;
+        &:hover{
+            background-color:#c5e7ff92 ;
+        }
+        &.updating-text{
+            background-color:#c5e7ff92 ;
+        }
+    }
+    &.checkBox-style{
+        width: 50px;
+        padding: 0;
+    }
+}
+.drag-handle-btn{
+    position: absolute;
+    left: -7px;
+    top: 50%;
+    transform: translateY(-50%);
+}
+.task-cell-status{
+    justify-content: center;
+    color: white;
+
+    width: 100%;
+    display: flex;
+    cursor: pointer;
+}
+.cell-content-wrapper, .sum-cell-content-wrapper{
+    padding:10px 6px;
+    max-height: 20px;
+}
+.sum-cell-content-wrapper, .task-cell{
+    background-color: #e6e9ef9f ;
+}
+.sum-cell-content-wrapper{
+    border-radius: 0 0 5px 5px;
+    width: calc(150px - 12px);
+    display: flex;
+    justify-content: center;
+}
+.checkbox-sum-cell{
+    width: 50px;
+}
+.add-status-cell{
+    background-color: #e6e9ef31 ;
+}
+
+.sum-status-wrapper{
+    display: flex;
+    width: 100%;
+    height: 20px;
+    >span{
+        flex-grow: 1;
+        transition: 0.2s;
+        &:hover{
+            .label-text{
+                visibility: visible;
+            }
+        }
+        &:hover{
+           transform: scaleY(1.2);
+        }
+        >span{
+            >span{
+                font-size: 14px;
+                padding:0 4px;
+            }
+        }
+    }
+}
+.decoration-line{
+    width: 10px;
+    transition: 0.1s;
+    &.task-line{
+        display: flex;
+        justify-content: center;
+        place-items: center;
+        &:hover{
+            width: 40px;
+            .task-line-square{
+                display: flex;
+            }
+        }
+        &.open{
+            width: 40px;
+            .task-line-square{
+                display: flex;
+            }
+        }
+    }
+}
+.task-line-square{
+    background-color: rgba(0, 0, 0, 0.163);
+    width: 15px;
+    height: 15px;
+    border: 2px solid rgba(255, 255, 255, 0.408);
+    display: none;
+    justify-content: center;
+    place-items: center;
+    &.checked{
+        background-color: rgb(255, 255, 255);
+        border: 2px solid rgba(41, 41, 41, 0.144);
+    }
+}
+.month{
+    margin-right: 5px;
+}
+.add-new-task-input{
+    outline: none;
+    display: flex;
+    place-items: center;
+    flex-grow: 1;
+    height: 100%;
+    border: 1px solid #e6e9ef;
+    background-color: transparent;
+    padding: 10px 20px;
+    box-sizing: border-box;
+    color: #000000;
+    &::placeholder { 
+        color: #000000;
+    }
+    &:focus{
+        border: 1px solid #0085ff; 
+        outline: none;
+    }
+}
+
+.new-table-input{
+    &::placeholder { 
+        color : rgb(180, 182, 188);
+    }
+}
+.add-new-task-btn{
+    display: flex;
+    place-items: center;
+    justify-content: center;
+    padding: 0 10px;
+    background-color: #0085ff; 
+    color: white;
+    opacity: 0.5;
+    cursor: pointer;
+    &.active{
+        opacity: 1; 
+    }
+}
+
+.FaPencilAlt{
+    width: 14px;
+    height: 14px;
+    color:rgb(180, 182, 188);
+    padding: 5px;
+    cursor: pointer;
+    display: none;
+    transition: 0.1s;
+    &:hover .task-name-span{
+        border: 1px dashed  rgb(180, 182, 188);
+    }
+    //on focus
+    // border: 1px solid  rgb(211, 217, 221);
+    // background-color: rgb(211, 217, 221);
+
+}
+.task-name-wrapper{
+    cursor: pointer;
+    display: flex;
+    > span{
+        border: 1px dashed transparent;
+        padding:2px 6px;
+        transition: 0.1s;
+        display: flex;
+        justify-content: center;
+        place-items: center;
+        &.task-name-span-updating{
+            background-color: white;
+        }
+    }
+    &:hover .FaPencilAlt{
+       display: inline-block;
+    }
+    &:hover .task-name-span{
+        border: 1px dashed  rgb(180, 182, 188);
+    }
+}

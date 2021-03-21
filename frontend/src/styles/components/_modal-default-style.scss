@@ -1,0 +1,59 @@
+.modal-default-style{
+    padding: 15px;
+    height: fit-content;
+    position: absolute;
+    background-color: rgb(255, 255, 255);
+    box-shadow: 0px 3px 10px 1px rgb(180, 182, 188);
+    border-radius: 5px;
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+    color: #424242;
+    &.item-actions-modal{
+        min-width:220px;
+        padding: 7px;
+        z-index: 10;
+    }
+}
+.modal-btn{
+    font-size: 14px;
+    position: relative;
+    display: flex;
+    align-items: center;
+    padding: 8px ;
+    cursor: pointer;
+    transition: 0.2s;
+    span{
+        margin-left: 8px;
+    }
+    // &:hover{
+    //     background-color: #0085ff1c;
+    //     border-radius: 5px;
+        // color: #0085ff;
+    // }
+    &:hover{
+        background-color: #dddddd;
+        border-radius: 3px;
+        color: #424242;
+    }
+    &.item-actions-btn{
+        place-items: center;
+        &:hover{
+            background-color: #dddddd;
+            border-radius: 3px;
+            color: #424242;
+        }
+        &.open-modal{
+            background-color: #dddddd;
+            border-radius: 3px;
+        }
+        &.move-workspace-btn, .pin-workspaces-btn{
+            display: flex;
+            justify-content: space-between;
+            >div{
+                display: flex;
+                align-items: center;
+            }
+        }
+    }
+}

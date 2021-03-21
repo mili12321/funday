@@ -1,0 +1,21 @@
+.content-editable{
+    border: 1px dashed transparent;
+    padding: 2px;
+    display: flex;
+    transition:margin 1s;
+    &.focus{
+        border: 1px dashed  rgb(180, 182, 188);
+        padding-left: 40px;
+    }
+    &:focus {
+        outline: none;
+        border: 1px dashed  rgb(180, 182, 188);
+    } 
+    &:hover{
+        border: 1px dashed  rgb(180, 182, 188);
+    }   
+}
+.content-editable-table-name{
+    margin-left: 40px;
+    
+}

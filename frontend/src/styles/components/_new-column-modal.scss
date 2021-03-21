@@ -1,0 +1,37 @@
+.new-column-modal{
+    top: 40px;
+    right: 0;
+    z-index: 1;
+    min-width: 230px;
+    .title{
+       margin-bottom: 5px;
+       margin-left: 5px;
+    }
+    .column-types-container{
+        font-size: 12px;
+        width: 100%;
+        // background-color: lightcoral;
+        display: flex;
+        flex-wrap: wrap;
+        margin-bottom: 15px;
+        >div{
+            width: 100px;
+            padding: 5px ;
+            margin: 3px 0;
+            margin-right: 5px;
+            display: flex;
+            place-items: center;
+            border-radius: 3px;
+            cursor: pointer;
+            &:hover{
+                background-color: #dddddd;
+                color: #424242;
+            }
+            >.icon{
+                margin-right:7px;
+                color: #626262;
+            }
+        }
+
+    }
+}

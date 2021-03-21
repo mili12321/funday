@@ -1,0 +1,67 @@
+.title-row-wrapper{
+    display: flex;
+    flex-grow: 1;
+    position: relative;
+}
+.title-row{
+    flex-grow: 1;
+}
+.title-options-btn{
+    margin-left: -27px;
+    padding-right: 7px;
+    justify-content: center;
+    place-items: center;
+    display: flex;
+}
+.TiArrowSortedDown-title-wrapper{
+    border-radius: 50%;
+    border: 1px solid transparent;
+    transition: 0.2s;
+    &.active{
+        background-color: #0085ff1c !important;
+        border-color: transparent !important;;
+    }
+}
+.TiArrowSortedDown-title{
+    color: white;
+    transition: 0.2s;
+    &.active{
+        color: #0085ff !important;
+    }
+}
+
+.table-name-wrapper{
+    display: flex;
+    &:hover{
+        .table-actions{
+            display: flex;
+            transition: 0.3s;
+        }
+        .expand-btn, .shrink-btn, .drag-btn{
+            opacity: 1;
+        }
+    }
+}
+
+.table-actions{
+    white-space: nowrap;
+    display: flex;
+    justify-content: center;
+    place-items: center;
+    display: none;
+}
+.expand-btn, .shrink-btn{
+    background-color: rgb(208, 208, 208);
+    color: rgb(45, 45, 45);
+    border-radius: 50%;
+    padding: 2px;
+    width: 14px;
+    height: 14px;
+    cursor: pointer;
+}
+.drag-btn{
+    color: rgb(126, 126, 126);
+    display: flex;
+    justify-content: center;
+    place-items: center;
+}

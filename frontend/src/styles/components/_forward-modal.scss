@@ -1,0 +1,90 @@
+.forward-modal-btn-wrapper{
+    position: relative;
+    .forward-modal{
+        left: 215px;
+        bottom: 0;
+        min-width: 197px;
+        width: fit-content;
+        z-index: 4;
+        color: #424242;
+        max-height: 200px;
+        overflow-y: scroll;
+        overflow-x: auto;
+        display: flex;
+        justify-content: start;
+        &.items-list{
+          min-height: 200px;
+        }
+        // max-height: 200px;
+        // overflow-y: auto
+    }
+}
+/* width */
+::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+  
+  /* Track */
+  ::-webkit-scrollbar-track {
+    // box-shadow: inset 0 0 5px grey; 
+    background: rgb(255, 255, 255); 
+    border-radius: 3px;
+  }
+   
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    background: rgba(96, 96, 96, 0.63);
+    border-radius: 2px;
+  }
+  
+  /* Handle on hover */
+  ::-webkit-scrollbar-thumb:hover {
+    background: rgb(182, 182, 182); 
+  }
+.forward-modal{
+    .forward-modal-btn{
+        display: flex;
+        justify-content: space-between;
+        >div{
+          display: flex;
+        }
+        .workspace-icon{
+          min-width:20px;
+          min-height: 20px;
+        }
+        &.remove-pointer{
+          cursor: default;
+        }
+    }
+    .forward-modal-title{
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 7px;
+        place-items: center;
+        margin-top: -8px;
+    }
+
+}
+.forward-modal-btn{
+  display: flex;
+  justify-content: space-between;
+  >div{
+    display: flex;
+  }
+  .workspace-icon{
+    min-width:20px;
+    min-height: 20px;
+  }
+  &.remove-pointer{
+    cursor: default;
+  }
+}
+.forward-modal-search-input{
+    width: 100%;
+    border-radius: 4px;
+    outline: none;
+    border: 1px solid #0085ff;
+    padding: 5px 10px;
+    margin-bottom: 7px;
+}

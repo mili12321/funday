@@ -1,0 +1,104 @@
+// @mixin flex($content) {
+//    display: flex;
+// //    place-items: center;
+//    justify-content: $content;
+// }
+
+.multiple-actions-modal{
+    box-shadow: 0px 3px 10px 1px #b4b6bc;
+    border-radius: 3px;
+    background-color: white;
+    width: fit-content;
+    min-width: 620px;
+    position: sticky;
+    z-index: 1;
+    bottom: -25px;
+    // transition: all .5s ease-in-out;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    justify-content: space-between;
+    .items-count-wrapper,.middle-section,.close-btn{
+        display: flex;
+        place-items: center;
+        justify-content: center;
+        padding:7px 0;
+    }
+    .items-count-wrapper{
+        color: white;
+        background-color: #0085ff;
+        font-size: 27px;
+        border-radius: 3px 0 0 3px;
+    }
+    .items-count-wrapper,.close-btn{
+        width: 60px;
+    }
+    .close-btn{
+        box-shadow: -4px 0px 10px -3px #aaaaaa;
+        cursor: pointer;
+        transition: 0.2s;
+        &:hover{
+            color:#0085ff;
+        }
+    }
+    .middle-section{
+        display: flex;
+      .selected-items{
+        display: flex;
+        flex-direction: column;
+        min-width: 286px;
+        width:fit-content;
+        padding: 0 15px;
+        .title{
+            margin-bottom: 10px;
+        }
+        .dots-container{
+            display: flex;
+            .dot{
+                width: 7px;
+                height:7px;
+                background-color: rgb(255, 56, 89);
+                border-radius: 50%;
+                margin-right: 3px;
+            }
+        }
+
+      }
+      .options-wrapper{
+        display: flex;
+        .option-btn{
+            display: flex;
+            flex-direction: column;
+            text-align: center;
+            place-items: center;
+            justify-content: center;
+            margin-right: 15px;
+            .icon{
+                font-size: 20px;
+                cursor: pointer;
+                transition: 0.2s;
+                &:hover{
+                    color:#0085ff;
+                }
+            }
+            div{
+                font-size: 13px;
+            }
+        }
+      }
+    }
+}
+
+
+.slide-top {
+	animation: slide-top 0.3s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+}
+@keyframes slide-top {
+    0% {
+      bottom: -25px;
+    }
+    100% {
+        bottom: 25px;
+    }
+}
+  

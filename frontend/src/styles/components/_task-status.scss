@@ -1,0 +1,237 @@
+.status-container{
+    position: relative;
+    height: 100%;
+}
+.status-modal-wrapper{
+    width: 310px;
+    // height: 400px;
+    height: fit-content;
+    position: absolute;
+    top: 42px;
+    left: -226px;
+    background-color: rgb(255, 255, 255);
+    box-shadow: 0px 3px 10px 1px rgb(180, 182, 188);
+    border-radius: 5px;
+    z-index: 1;
+    &::before{
+        content: "";
+        width: 20px;
+        height: 20px;
+        background-color: rgb(255, 255, 255);
+        position: absolute;
+        top: -10px;
+        left: 50%;
+        transform: translateX(-50%) rotate(45deg);
+    }
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+}
+.status-label-list-container{
+    padding: 15px;
+    display: grid;
+    gap: 10px;
+    grid-template: repeat(6,  40px) / repeat(2,133px);
+    // grid-template: repeat(6,  40px) / repeat(2, 1fr);
+    grid-auto-flow: column dense; 
+    &.edit{
+        gap:10px 15px; 
+    }
+    &.updating-the-label{
+        grid-template: repeat(10,  40px) / repeat(2,133px);
+    }
+}
+.stat-label-edit, .stat-label{
+    // height: 20px;
+    cursor: pointer;
+}
+.stat-label{
+    color: white;
+    padding: 10px 4px;
+    text-align: center;
+    &:focus{
+        outline: none;
+        box-shadow:  0 0px 3px 3px #1399ff;
+    }
+    &:hover{
+        box-shadow:  0 0px 3px 3px #1399ff;
+    }
+}
+.stat-label-edit{
+    color: #424242;
+    background-color: #eff0f3;
+    // padding: 10px 0;
+    // width: 100%;
+    display: flex;
+    .edit-label-color{
+        padding:10px 8px;
+        // height: 100%;
+        position: relative;
+        display: flex;
+    }
+    .edit-label-name{
+        padding: 10px 4px;
+        display: flex;
+        width: calc((310px - 15px - 15px - 15px - 27px - 27px)/2);
+        >span{
+            overflow: hidden;
+        }
+    }
+}
+
+.status-label-btn{
+    // border-top: 1px solid rgb(180, 182, 188);
+    box-shadow: 0 -5px 5px -5px  rgb(180, 182, 188);
+    display: flex;
+    place-items: center;
+    justify-content: center;
+    height: 50px;
+    color: #1399ff;
+    cursor: pointer;
+    transition: 0.2s;
+    margin-top: 15px;
+    &:hover{
+        background-color:#1399ff;
+        color: white;
+        .status-FaPencilAlt{
+            color: white;
+        }
+    }
+}
+.edit-status{
+    margin-top: 20px;
+}
+.ellipsis-label-name{
+    white-space: nowrap; 
+    overflow: hidden;
+    text-overflow: ellipsis; 
+    // &.edit{
+    //     width: 132px;
+    // }
+}
+.ellipsis-label-name-edit{
+    white-space: nowrap; 
+    text-overflow: ellipsis;
+}
+.status-FaPencilAlt{
+    color: #1399ff;  
+    margin-right: 7px;
+}
+
+.stat-label-edit-wrapper{
+    display: flex; 
+    position: relative;
+    place-items: center;
+    justify-content: center;
+    &:hover{
+        .status-label-delete-btn, .status-label-dots-btn, .BsDroplet{
+            visibility: visible;
+        }
+    }
+    &.sec-column{
+        grid-column-start:2;
+    }
+}
+.status-label-delete-btn, .status-label-dots-btn{
+    visibility: hidden;
+    cursor: pointer;
+}
+.status-label-delete-btn{
+    transition: 0.2s color;
+    position: relative;
+    &:hover{
+        color:#1399ff ;
+        .label-text-on-top{
+            visibility: visible;
+        }
+    }
+}
+.sec-column{
+    grid-column-start:2;
+}
+.add-new-label{
+    padding: 10px 4px;
+    width: 118px;
+    text-align: center;
+    cursor: pointer;
+    border: 1px dashed transparent;
+    color: rgb(0, 0, 0);
+    &.default{
+        border: 1px dashed rgb(180, 182, 188);
+        color: rgb(180, 182, 188);
+        background-color: transparent !important;
+    }
+}
+.status-color-picker{
+    height: fit-content;
+    width: 100%;
+    background-color: #eff0f3;
+    display: grid;
+    grid-template: repeat(4,  40px) / repeat(9, 1fr);
+    grid-auto-flow: row;
+}
+.color{
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    justify-self: center;
+    align-self: center;
+    border: 2px solid transparent;
+    cursor: pointer;
+    &:hover{
+        border: 2px solid rgb(255, 255, 255);  
+        box-shadow: 0px 3px 10px 1px #828385;
+        transform: scale(1.4);
+    }
+}
+.BsDroplet{
+   position: absolute;
+   left: 50%;
+   top: 50%;
+   transform: translate(-50%,-50%);
+   visibility: hidden;
+   &.light-drop-on-dark-color{
+       color: white;
+   }
+}
+.update-label-name-input{
+    width: 97%;
+    border: none;
+    background-color: #eff0f3;
+    padding: 0;
+    font-size: 16px;
+}
+
+.label-color-edit{
+//    position: relative;
+   z-index: 1;
+   width:calc(310px - 30px);
+   grid-column-start: 1;
+}
+
+.label-text-on-top{
+    visibility: hidden;
+    width: 100px;
+    background-color: #141414;
+    color: #fff;
+    top: -33px;
+    left: 50%;
+    transform: translateX(-50%);
+    text-align: center;
+    border-radius: 3px;
+    padding: 5px 0;
+    position: absolute;
+    z-index: 9;
+    transition: 0.2s;
+    font-size: 10px;
+    &::before {
+        content: "";
+        width: 8px;
+        height: 8px;
+        background-color: rgb(0, 0, 0);
+        position: absolute;
+        bottom: -4px;
+        left: 50%;
+        transform: translateX(-50%) rotate(45deg);
+    }
+}

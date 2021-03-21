@@ -1,0 +1,207 @@
+.navbar-section{
+    width: rem(60px);
+    min-width: 60px;
+    height: 100vh;
+    background-color: #292f4c;
+    display: flex;
+    flex-direction: column;
+    border-right: 1px solid #373d58;
+    // flex-shrink: 0;
+    position: sticky;
+    top: 0;
+    z-index:4;
+    .icon-wrapper {
+        // margin-bottom: 32px;
+        // display: flex;
+        // justify-content: center;
+        // align-items: center;
+        // position: relative;
+        // color: rgb(233, 233, 233);
+        margin: auto;
+        margin-bottom: 16px;
+        padding: 8px;
+        display: flex;
+        width: fit-content;
+        justify-content: center;
+        align-items: center;
+        position: relative;
+        color: #e9e9e9;
+        transition: 0.2s;
+        &:hover{
+            background-color: #1b2038;
+            border-radius: 5px;
+        }
+        &.selected{
+            background-color: #3e4462;
+            border-radius: 5px;
+        }
+    }
+}
+.navbar-first-area{
+    flex-grow: 1;
+}
+.navbar-second-area{
+    flex-shrink: 0;
+}
+.logo{
+    // margin: 13px 0px 26px;
+    margin-top:11px;
+    display: flex;
+    justify-content: center;
+    // >img{
+    //     width: 41px;
+    // }
+    label{
+        cursor: pointer;
+        display: inline-block;
+        position: relative;
+        height: 43px;
+        margin-bottom: 12px;
+        // img{ 
+        //     display: block;
+        //     pointer-events: none;
+        //     position: relative;
+        //     width: 41px;
+        //     top: -22px;
+        //     max-height: 41px;
+        // }
+        div{
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+            display: block;
+            pointer-events: none;
+            position: relative;
+            width: 41px;
+            top: -22px;
+            height: 41px;
+        }
+        input{
+            width: 0;
+        }
+        transition:opacity 0.2s;
+        &:hover{
+            opacity: 0.8;
+        }
+    }
+    label::before{
+        content: "";
+        display: block;
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        z-index: -1;
+    }
+    
+}
+.navbar-icon{
+    width: 22px;
+    height: 22px;
+}
+.avatar-image-wrapper{
+    color: rgb(204, 204, 204);
+    height: 34px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 15px;
+    position: relative;
+}
+.avatar-image-border{
+    width: 34px;
+    height: 34px;
+    border: 3px solid rgb(204, 204, 204);
+    border-radius: 50%;
+    overflow: hidden;
+    transition: 0.2s;
+    &:hover{
+        width: 30px;
+        height: 30px;
+    }
+}
+.user-avatar{
+    cursor: pointer;
+    border-radius: 50%;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 100%;
+    width: 100%;
+}
+.icon-wrapper:hover .label-text{
+    visibility: visible;
+}
+
+.label-text{
+    visibility: hidden;
+    // display: inline-block;
+    white-space: nowrap;
+    min-width: 100px;
+    margin-left: 168px;
+    background-color: #494f70;
+    color: #fff;
+    text-align: center;
+    border-radius: 3px;
+    padding:5px 7px;
+    position: absolute;
+    z-index: 2; 
+    transition: 0.2s;
+    font-size: 10px;
+    &:after {
+        content: '';
+        position: absolute;
+        top: 9px;
+        left: -4px;
+        transform: rotate(45deg);
+        width: 0;
+        height: 0;
+        border: 7px solid transparent;
+        border-left-color: #494f70;
+        border-bottom: 0;
+        margin-left: 0;
+    }
+    &.arrow-up{
+        top: 30px;
+        left: -188px;
+        margin-left: 140px;
+        &::after{
+            top: -1px;
+            left: 49px;
+            transform: rotate(134deg);
+        }
+    }
+    &.text-editor-label{
+        top: 35px;
+        left: -184px;
+        margin-left: 140px;
+    }
+    &.arrow-down{
+        margin-left: 0;
+        top: -30px;
+        left: 50%;
+        transform: translateX(-50%);
+        &::after{
+            top: 15px;
+            left: 50%;
+            transform: translateX(-50%) rotate(314deg);
+        }
+        &.status-label{
+            &::after{
+                top: 19px;
+            }
+        }
+    }
+    &.edit-name{
+        transition:0s;
+        top: -30px;
+        right: -14px;
+        min-width: fit-content;
+        &::after{
+            top: 15px;
+            left: 50%;
+            transform: translateX(-50%) rotate(314deg);
+        }
+    }
+}
