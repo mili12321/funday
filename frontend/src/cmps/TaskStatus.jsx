@@ -35,7 +35,8 @@ export class TaskStatus extends Component {
             ...task,
             status:statusLabel
         }
-        this.props.onEditTask(table,updatedTask)
+        const desc = `changed task "${task.name}" status from "${task.status.name}" to "${statusLabel.name}"`
+        this.props.onEditTask(table,updatedTask,desc)
         this.setState({isStatusModalOpen:false})
     }
     openEditLabelsModal=()=>{
@@ -62,14 +63,15 @@ export class TaskStatus extends Component {
                 }
             ]
         },()=>{
-            const newBoard = {...this.props.board,
+            const newBoard = {
+                ...this.props.board,
                  statusLabelList:[...this.props.board.statusLabelList,{
                     _id:(new Date()).getTime().toString(),
                     color:currColor,
                     name:'New Label'
                 }]
             }
-            this.props.onEditBoard(newBoard)
+            this.props.onEditBoard(newBoard,null)
         })
     }
     onRemoveLabel=(labelId)=>{
@@ -77,10 +79,11 @@ export class TaskStatus extends Component {
         this.setState({
             statusLabelList:newstatusLabelList
         },()=>{
-            const newBoard = {...this.props.board,
+            const newBoard = {
+                ...this.props.board,
                 statusLabelList:newstatusLabelList
             }
-            this.props.onEditBoard(newBoard)
+            this.props.onEditBoard(newBoard,null)
         })
     }
     updateLabel=(newLabel)=>{
@@ -91,7 +94,7 @@ export class TaskStatus extends Component {
             const newBoard = {...this.props.board,
                 statusLabelList:newstatusLabelList
             }
-            this.props.onEditBoard(newBoard)
+            this.props.onEditBoard(newBoard,null)
         })
     }
     onToggleUpdateLabelColor=(currLabel)=>{
@@ -123,8 +126,7 @@ export class TaskStatus extends Component {
                 this.state.boardCopy.statusLabelList.splice(destination.index, 0, statusLabelListCopy);
                 return this.state.boardCopy
         })  
-
-        this.props.onEditBoard(this.state.boardCopy)
+        this.props.onEditBoard(this.state.boardCopy,null)
    }
     render() {
         const { isStatusModalOpen,isEditLabelsModalOpen,statusLabelList,isUpdateLabelColor } = this.state

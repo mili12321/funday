@@ -36,7 +36,8 @@ export class TaskName extends Component {
             ...this.props.table,
             tasks:this.props.table.tasks.filter(task=>task._id!==currTask._id)
         }
-        this.props.onEditTable(newTable)
+        const desc = `removed task "${currTask.name}" from "${this.props.table.name}"`
+        this.props.onEditTable(newTable,desc)
         this.setState({isShowOptionsModal:false})
     }
 
@@ -58,13 +59,13 @@ export class TaskName extends Component {
                     value={this.state.task[taskKey]} 
                     onChange={this.handleChangeName}
                     onBlur={() => {
-                        // if (this.props.task[taskKey] === this.state.task[taskKey]) return
-                        // const desc = `${loggedUser.fullName} Changed the task name from ${task[taskKey]} to ${this.state.task.name}`
+                        if (this.props.task[taskKey] === this.state.task[taskKey]) return
+                        const desc = `changed the task name from ${this.props.task[taskKey]} to ${this.state.task[taskKey]}`
                         const updatedTask = {
                             ...this.props.task,
                             name: this.state.task.name
                         }
-                        this.props.onEditTask(table,updatedTask)
+                        this.props.onEditTask(table,updatedTask,desc)
                         this.setState({isUpdating:false})
                     }}
                     onKeyDown={(ev) => {

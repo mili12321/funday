@@ -32,7 +32,8 @@ export function BoardToolbarMenu({
     deleteWorkspace,
     onGettingCurrentWorkspace,
     onManageWorkspace,
-    toolbarActiveBtn
+    toolbarActiveBtn,
+    onEditBoard
 }) {
 
 const [scroll, setScroll] = useState(0)
@@ -64,6 +65,7 @@ useEffect(() => {
                         moveBoard={moveBoard}
                         moveBoardToFolder={moveBoardToFolder}
                         scroll={scroll}
+                        onEditBoard={onEditBoard}
                         />
                         :
                         <>
@@ -117,6 +119,7 @@ useEffect(() => {
                                             scroll={scroll}
                                             isNewFolderCreated={isNewFolderCreated}
                                             onEndNewFolderUpdating={onEndNewFolderUpdating}
+                                            onEditBoard={onEditBoard}
         
                                         />
                                     }
@@ -130,6 +133,7 @@ useEffect(() => {
                                             moveBoard={moveBoard}
                                             moveBoardToFolder={moveBoardToFolder}
                                             scroll={scroll}
+                                            onEditBoard={onEditBoard}
                                         />
                                     }
 

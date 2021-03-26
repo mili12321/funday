@@ -1,10 +1,11 @@
 import React, { Component } from 'react'
+import { connect } from 'react-redux'
 import ContentEditable from 'react-contenteditable';
 import { BiGridVertical } from 'react-icons/bi'
 import { CgExpand } from 'react-icons/cg'
 import { AiOutlineShrink } from 'react-icons/ai'
 
-export class TableColumnPreview extends Component {
+class _TableColumnPreview extends Component {
     state={
         table:{},
         board:{},
@@ -88,12 +89,12 @@ export class TableColumnPreview extends Component {
                         onChange={this.handleChangeGroupName}
                         onBlur={() => {
                             if (this.props.table.name === this.state.table.name) return
-                            // const desc = `${loggedUser.fullName} Changed the task name from ${task[taskKey]} to ${this.state.task.name}`
+                            const desc = `changed group name from "${this.props.table.name}" to "${this.state.table.name}"`
                             const updatedTable = {
                                 ...this.props.table,
                                 name: this.state.table.name
                             }
-                            this.props.onEditTable(updatedTable)
+                            this.props.onEditTable(updatedTable,desc)
                         }}
                         onKeyDown={(ev) => {
                             if (ev.key === 'Enter') {
@@ -114,10 +115,17 @@ export class TableColumnPreview extends Component {
                         onChange={this.handleChangeGroupTitle}
                         onBlur={() => {
                              if (this.props.tableColumn.title === this.state.currTableColumn.title) return
-                            // const desc = `${loggedUser.fullName} Changed the task name from ${task[taskKey]} to ${this.state.task.name}`
+                            const desc = `changed the table column name from ${this.props.tableColumn.title} to ${this.state.currTableColumn.title}`
                             const updatedBoard = {
                                 ...this.props.board,
-                                tableColumns: [...this.state.board.tableColumns]
+                                tableColumns: [...this.state.board.tableColumns],
+                                activities:[
+                                    {
+                                        desc: desc,
+                                        userId: this.props.loggedInUser._id,
+                                        createdAt: Date.now()
+                                    },
+                                    ...this.props.board.activities]
                             }
                             this.props.onEditBoard(updatedBoard)
                         }}
@@ -151,3 +159,10 @@ export class TableColumnPreview extends Component {
         )
     }
 }
+const mapStateToProps = state => {
+    return {
+        loggedInUser: state.user.loggedInUser
+    }
+}
+
+export const TableColumnPreview = connect(mapStateToProps)(_TableColumnPreview)

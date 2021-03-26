@@ -27,7 +27,8 @@ export function FolderPreview({
     index,
     isNewFolderCreated,
     onEndNewFolderUpdating,
-    folders
+    folders,
+    onEditBoard
 }) {
     const [isFolderOpen, setIsFolderOpen] = useState(false);
     const [isOpenModal, setIsOpenModal] = useState(false);
@@ -235,6 +236,7 @@ export function FolderPreview({
                      moveBoardToFolder={moveBoardToFolder}
                      object='insideFolder'
                      scroll={scroll}
+                     onEditBoard={onEditBoard}
 
                 />
              }

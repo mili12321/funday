@@ -7,6 +7,7 @@ import { BoardMain } from '../cmps/BoardMain'
 import { BoardDetails } from '../cmps/BoardDetails'
 
 import { ConversationModal } from '../cmps/ConversationModal'
+import { ActivitiesModal } from '../cmps/ActivitiesModal'
 import { NewWorkspaceBoardMain } from '../cmps/NewWorkspaceBoardMain'
 import { loadWorkspaces, updateWorkspace,updateCurrWorkspace, addWorkspace,removeWorkspace} from '../store/actions/workspaceActions'
 import { getCurrBoard, updateCurrBoard} from '../store/actions/workspaceActions'
@@ -49,6 +50,8 @@ export class _Workspace extends Component {
         folder:null,
         task:{},
         isOpenConversationModal:false,
+        isOpenActivitiesModal:false,
+        isShowModal:false,
         isNewFolderCreated:false,
         isNewWorkspaceCreated:false,
         toolbarActiveBtn:''
@@ -141,34 +144,105 @@ export class _Workspace extends Component {
     }
    
 
-    onEditBoard=(updatedBoard)=>{
-        this.updateBoard(updatedBoard)
+    onEditBoard=(updatedBoard,desc)=>{
+        let newBoard={}
+
+        desc?
+
+        newBoard = {
+            ...updatedBoard,
+            activities:[
+                {
+                    desc: desc,
+                    userId: this.props.loggedInUser._id,
+                    createdAt: Date.now()
+                },
+                ...updatedBoard.activities]
+        }
+        :
+        newBoard = {
+            ...updatedBoard,
+        }
+
+        this.updateBoard(newBoard)
     }
 
     onAddNewTable=()=>{
         const newBoard = boardService.addTable(this.state.board)
-        this.updateBoard(newBoard)
+        const desc = `added a new group`
+        const updatedBoard = {
+            ...newBoard,
+            activities:[
+                {
+                    desc: desc,
+                    userId: this.props.loggedInUser._id,
+                    createdAt: Date.now()
+                },
+                ...newBoard.activities]
+        }
+        this.updateBoard(updatedBoard)
     }
  
-    onEditTable=(updatedTable)=>{
+    onEditTable=(updatedTable,desc)=>{
         const newBoard = boardService.updateTable(this.state.board,updatedTable)
-        this.updateBoard(newBoard)
+        const updatedBoard = {
+            ...newBoard,
+            activities:[
+                {
+                    desc: desc,
+                    userId: this.props.loggedInUser._id,
+                    createdAt: Date.now()
+                },
+                ...newBoard.activities]
+        }
+        this.updateBoard(updatedBoard)
     }
 
-    removeTable=(tableId)=>{
+    removeTable=(tableId,boardName)=>{
+        const desc = `removed group "${boardName}" from "${this.state.board.name}"`
         const newBoard = boardService.removeTable(tableId,this.state.board)
-        this.updateBoard(newBoard)
+        const updatedBoard = {
+            ...newBoard,
+            activities:[
+                {
+                    desc: desc,
+                    userId: this.props.loggedInUser._id,
+                    createdAt: Date.now()
+                },
+                ...newBoard.activities]
+        }
+        this.updateBoard(updatedBoard)
     }
 
-    onAddNewTask=(currTable,newTaskName)=>{
+    onAddNewTask=(currTable,newTaskName,desc)=>{
         if(!newTaskName.split(' ').join(''))return
         const newBoard = boardService.addTask(currTable,this.state.board,newTaskName,this.props.loggedInUser)
-        this.updateBoard(newBoard)
+        const updatedBoard = {
+            ...newBoard,
+            activities:[
+                {
+                    desc: desc,
+                    userId: this.props.loggedInUser._id,
+                    createdAt: Date.now()
+                },
+                ...newBoard.activities]
+        }
+        this.updateBoard(updatedBoard)
     }
 
-    onEditTask=(currTable,currTask)=>{
+    onEditTask=(currTable,currTask,desc)=>{
         const newBoard = boardService.updateTask(currTable,this.state.board,currTask,this.props.loggedInUser)
-        this.updateBoard(newBoard)
+        const updatedBoard = {
+            ...newBoard,
+            activities:[
+                {
+                    desc: desc,
+                    userId: this.props.loggedInUser._id,
+                    createdAt: Date.now()
+                },
+                ...newBoard.activities]
+        }
+        this.updateBoard(updatedBoard)
     }
 
     onRemoveTask=(taskId,currTable)=>{
@@ -389,7 +463,12 @@ export class _Workspace extends Component {
     }
 
     openConversationModal=()=>{
+        this.setState({isShowModal:true})
         this.setState({isOpenConversationModal:true})
+    }    
+    openActivitiesModal=()=>{
+        this.setState({isShowModal:true})
+        this.setState({isOpenActivitiesModal:true})
     }
 
     onManageWorkspace=()=>{
@@ -443,6 +522,7 @@ export class _Workspace extends Component {
                     onGettingCurrentWorkspace={this.onGettingCurrentWorkspace}
                     onManageWorkspace={this.onManageWorkspace}
                     toolbarActiveBtn={this.state.toolbarActiveBtn}
+                    onEditBoard={this.onEditBoard}
                 />
                 <BoardDetails
                    isNewWorkspaceCreated={isNewWorkspaceCreated}
@@ -457,22 +537,27 @@ export class _Workspace extends Component {
                    openConversationModal={this.openConversationModal}
                    updateWorkspace={this.updateWorkspace}
                    deleteWorkspace={this.deleteWorkspace}
+                   openActivitiesModal={this.openActivitiesModal}
                 />
                 { 
-                <div className={`conversation-modal-wrapper ${this.state.isOpenConversationModal?'':'hide'}`}>
-                    <div className={`conversation-modal ${this.state.isOpenConversationModal?' slide-left':'slide-right'}`}
+                <div className={`conversation-modal-wrapper ${this.state.isShowModal?'':'hide'}`}>
+                    <div className={`conversation-modal ${this.state.isShowModal?' slide-left':'slide-right'}`}
                     // tabIndex='0' 
                     // onBlur={()=>{
                     // this.setState({isOpenConversationModal:false})}}
                     >
                         <GrClose className='conversation-close-btn' onClick={()=>{
-                        this.setState({isOpenConversationModal:false})}}
-
+                        this.setState({isShowModal:false},()=>{
+                            this.setState({isOpenConversationModal:false})
+                            this.setState({isOpenActivitiesModal:false})
+                        })
+                        }}
                         />
-                        <ConversationModal 
+                        {this.state.isOpenActivitiesModal&&<ActivitiesModal/>}
+                        {this.state.isOpenConversationModal&&<ConversationModal 
                         isOpenConversationModal={this.state.isOpenConversationModal}
                         onEditTask={this.onEditTask}
-                        />
+                        />}
                     </div>
                 </div>
                 }

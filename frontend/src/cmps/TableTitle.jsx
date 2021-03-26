@@ -39,12 +39,12 @@ export class TableTitle extends Component {
                         onChange={this.handleChangeGroupName}
                         onBlur={() => {
                             if (this.props.table.name === this.state.table.name) return
-                            // const desc = `${loggedUser.fullName} Changed the task name from ${task[taskKey]} to ${this.state.task.name}`
+                            const desc = `changed the group name from "${this.props.table.name}" to "${this.state.table.name}"`
                             const updatedTable = {
                                 ...this.props.table,
                                 name: this.state.table.name
                             }
-                            this.props.onEditTable(updatedTable)
+                            this.props.onEditTable(updatedTable,desc)
                         }}
                         onKeyDown={(ev) => {
                             if (ev.key === 'Enter') {

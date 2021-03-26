@@ -66,7 +66,8 @@ export function TaskText({onEditTask,table,task,setUpdatingText}){
                                 ...task,
                                 text: text
                             }
-                            onEditTask(table,updatedTask)
+                            const desc = `changed task "${task.name}" text to "${text}"`
+                            onEditTask(table,updatedTask,desc)
                             setUpdateText(false)
                             setShowModal(false)
                             setUpdatingText(false)

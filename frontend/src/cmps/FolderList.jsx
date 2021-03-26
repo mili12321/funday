@@ -17,8 +17,8 @@ export function FolderList({
     moveBoardToFolder,
     scroll,
     isNewFolderCreated,
-    onEndNewFolderUpdating
-
+    onEndNewFolderUpdating,
+    onEditBoard
 }) {
     // const currWorkspace = useSelector(state => state.workspace.currWorkspace);
  
@@ -45,6 +45,7 @@ export function FolderList({
             index={index}
             isNewFolderCreated={isNewFolderCreated}
             onEndNewFolderUpdating={onEndNewFolderUpdating}
+            onEditBoard={onEditBoard}
             />
        )}
       </>

@@ -1,0 +1,48 @@
+.activities-container{
+    .title{
+        >span{
+            font-weight: bold;
+        }
+        margin-bottom: 20px;
+    }
+}
+.activities-list{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 72vh;
+    overflow: auto;
+}
+
+.activity-preview{
+    display: flex;
+    place-items: center;
+    .time{
+        display: flex;
+        margin-right:10px;
+        span{
+            margin-left: 3px;
+        }
+    }
+    .user{
+        min-height: 25px;
+        min-width: 25px;
+        border-radius: 50%;
+        margin-right:7px;
+        background-color: rgb(206, 206, 206);
+    }
+    .desc{
+        .username{
+            text-transform: capitalize
+        }
+    }
+}
+tr{
+    border-bottom: 1px solid black;
+    padding: 7px;
+}
+.background{
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}

@@ -9,6 +9,7 @@ export function FavoriteBoards({
     onGettingCurrentBoard,
     CgViewComfortable,
     scroll,
+    onEditBoard
     // removeBoard,
     // editBoard,
     // moveBoard,
@@ -166,6 +167,7 @@ export function FavoriteBoards({
                         moveBoardToFolder={moveBoardToFolder}
                         scroll={scroll}
                         cmp='favorite'
+                        onEditBoard={onEditBoard}
                     />
                     }
                      {
@@ -181,6 +183,7 @@ export function FavoriteBoards({
                         scroll={scroll}
                         object='insideFolder'
                         cmp='favorite'
+                        onEditBoard={onEditBoard}
                     />
                     }
                 </div>

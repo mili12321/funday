@@ -45,6 +45,7 @@ export function TablePreview({
 }){
     // const [tableColumns, setTableColumns] = useState(board.tableColumns);
     const users = useSelector(state => state.user.users);
+    const loggedInUser = useSelector(state => state.user.loggedInUser);
     const board = useSelector(state => state.workspace.currBoard);
     const [newTaskName, setNewTaskName] = useState('');
     const [isInputBtnVisable, setIsInputBtnVisable] = useState(false);
@@ -139,15 +140,15 @@ export function TablePreview({
     const addNewTaskKeyUp=(ev,currTable,newTaskName)=>{
         if (ev.keyCode === 13) {
             ev.preventDefault();
-            onAddNewTask(currTable,newTaskName)
+            const desc = `added new task "${newTaskName}" to group "${currTable.name}"`
+            onAddNewTask(currTable,newTaskName,desc)
             setNewTaskName('')
         }
     }
 
-    const onRemoveTable=(tableId)=>{
-        removeTable(tableId)
+    const onRemoveTable=(tableId,boardName)=>{
+        removeTable(tableId,boardName)
         setIsShowTableOptionsModal(false)
-        //*add message popup
     }   
     
     const toggleHover=()=>{
@@ -158,7 +159,9 @@ export function TablePreview({
             ...table,
             color
         }
-        onEditTable(updatedTable)
+        if (table.color === color) return
+        const desc = `changed the group color from "${table.color}" to "${color}"`
+        onEditTable(updatedTable,desc)
         setIsOpenTableColorModal(false)
     } 
     const onOpenTableColorModal=()=>{
@@ -190,11 +193,13 @@ export function TablePreview({
             prev.tasks.splice(destination.index, 0, itemCopy);
             return prev
         })
-        onEditTable(tableCopy)
+        const desc = `changed the tasks order inside "${tableCopy.name}" group`
+        onEditTable(tableCopy,desc)
     }
     function addColumn(type){
         let newColumn = {}
         let updatedBoard = {}
+        let desc=''
         switch (type) {
             case 'People':
                 newColumn = {
@@ -203,9 +208,17 @@ export function TablePreview({
                     type:'People',
                     taskKey:'owner'
                 }
+                desc = `added new people column`
                 updatedBoard = {
                     ...board,
-                    tableColumns: [...board.tableColumns,newColumn]
+                    tableColumns: [...board.tableColumns,newColumn],
+                    activities:[
+                        {
+                            desc: desc,
+                            userId: loggedInUser._id,
+                            createdAt: Date.now()
+                        },
+                        ...board.activities]
                 }
                 onEditBoard(updatedBoard)
                 break;
@@ -216,9 +229,17 @@ export function TablePreview({
                     type:'Status',
                     taskKey:'status'
                 }
+                desc = `added new status column`
                 updatedBoard = {
                     ...board,
-                    tableColumns: [...board.tableColumns,newColumn]
+                    tableColumns: [...board.tableColumns,newColumn],
+                    activities:[
+                        {
+                            desc: desc,
+                            userId: loggedInUser._id,
+                            createdAt: Date.now()
+                        },
+                        ...board.activities]
                 }
                 onEditBoard(updatedBoard)
                 break;
@@ -229,9 +250,17 @@ export function TablePreview({
                     type:'Date',
                     taskKey:'createdAt'
                 }
+                desc = `added new date column`
                 updatedBoard = {
                     ...board,
-                    tableColumns: [...board.tableColumns,newColumn]
+                    tableColumns: [...board.tableColumns,newColumn],
+                    activities:[
+                        {
+                            desc: desc,
+                            userId: loggedInUser._id,
+                            createdAt: Date.now()
+                        },
+                        ...board.activities]
                 }
                 onEditBoard(updatedBoard)
                 break;
@@ -242,9 +271,17 @@ export function TablePreview({
                     type:'Text',
                     taskKey:'text'
                 }
+                desc = `added new text column`
                 updatedBoard = {
                     ...board,
-                    tableColumns: [...board.tableColumns,newColumn]
+                    tableColumns: [...board.tableColumns,newColumn],
+                    activities:[
+                        {
+                            desc: desc,
+                            userId: loggedInUser._id,
+                            createdAt: Date.now()
+                        },
+                        ...board.activities]
                 }
                 onEditBoard(updatedBoard)
                 break;
@@ -255,9 +292,17 @@ export function TablePreview({
                     type:'CheckBox',
                     taskKey:'checkBox'
                 }
+                desc = `added new checkBox column`
                 updatedBoard = {
                     ...board,
-                    tableColumns: [...board.tableColumns,newColumn]
+                    tableColumns: [...board.tableColumns,newColumn],
+                    activities:[
+                        {
+                            desc: desc,
+                            userId: loggedInUser._id,
+                            createdAt: Date.now()
+                        },
+                        ...board.activities]
                 }
                 onEditBoard(updatedBoard)
                 break;
@@ -268,9 +313,17 @@ export function TablePreview({
                     type:'LastUpdated',
                     taskKey:'lastUpdated'
                 }
+                desc = `added new lastUpdated column`
                 updatedBoard = {
                     ...board,
-                    tableColumns: [...board.tableColumns,newColumn]
+                    tableColumns: [...board.tableColumns,newColumn],
+                    activities:[
+                        {
+                            desc: desc,
+                            userId: loggedInUser._id,
+                            createdAt: Date.now()
+                        },
+                        ...board.activities]
                 }
                 onEditBoard(updatedBoard)
                 break;
@@ -321,7 +374,7 @@ export function TablePreview({
                                     </div>
         
                                     <div className='delete-btn-wrapper'>
-                                        <div className='modal-btn item-actions-btn' onClick={()=>{onRemoveTable(table._id)}}>
+                                        <div className='modal-btn item-actions-btn' onClick={()=>{onRemoveTable(table._id,table.name)}}>
                                             <BsTrashFill className="icon"/>
                                             <span>Delete</span>
                                         </div>
@@ -480,7 +533,11 @@ export function TablePreview({
                                     />
                                      {isInputBtnVisable&&<div 
                                     className={`add-new-task-btn ${newTaskName.split(' ').join('').length>0?'active':''}`}
-                                    onMouseDown ={()=>onAddNewTask(table,newTaskName)}
+
+                                    onMouseDown ={()=>{
+                                        const desc = `added new task "${newTaskName}" to group "${table.name}"`
+                                        onAddNewTask(table,newTaskName,desc)
+                                    }}
                                 >Add</div>}
                                 </div>
                                 <div className='table-cell add-cell'></div>

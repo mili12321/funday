@@ -67,7 +67,7 @@ function addBoard(currWorkspace, boardName) {
                     name:"To do"
                 }
             ],
-            activities : [ ],
+            activities : [],
             isPrivate : false,
             owner : {},
             tableColumns : [ 

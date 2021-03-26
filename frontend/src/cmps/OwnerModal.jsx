@@ -54,20 +54,22 @@ export function OwnerModal({
             }
     }, [users,owners])
 
-    const updateTaskOwner=(userId)=>{
+    const updateTaskOwner=(userId,userName)=>{
         const updatedTask = {
             ...task,
             owner:[...task.owner,userId]
         }
-        onEditTask(table,updatedTask)
+        const desc = `added new owner "${userName}" to task "${updatedTask.name}" inside "${table.name}"`
+        onEditTask(table,updatedTask,desc)
         // setToggleOwnerModal(false)
     }
-    const removeOwner=(userId)=>{
+    const removeOwner=(userId,userName)=>{
         const updatedTask = {
             ...task,
             owner:task.owner.filter(id=>id!==userId),
         }
-        onEditTask(table,updatedTask)
+        const desc = `removed owner "${userName}" from task "${updatedTask.name}" inside "${table.name}"`
+        onEditTask(table,updatedTask,desc)
     }
 const getUserName=(name)=>{
     let content  = []
@@ -97,7 +99,7 @@ function getLine(){
                     <img className="user-img" src={`${owner.avatar}`} alt="" srcset=""/>
                     <span className="user-name">{owner.username}</span>
                     <span className="remove-user"
-                    onClick={()=>removeOwner(owner._id)}
+                    onClick={()=>removeOwner(owner._id,owner.username)}
                     >x</span>
                  </div>
             )}
@@ -113,7 +115,7 @@ function getLine(){
             </div>
             {newUsers&&newUsers.map(user=>
             user.username.toLowerCase().includes(search.toLowerCase())?
-                <div className="user-details" onClick={()=>updateTaskOwner(user._id)}>
+                <div className="user-details" onClick={()=>updateTaskOwner(user._id,user.username)}>
                     <img className="user-img" src={`${user.avatar}`} alt="" srcset=""/>
                     <span className="user-name">
                        { getUserName(user.username)}

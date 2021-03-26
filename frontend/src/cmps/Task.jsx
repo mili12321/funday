@@ -1,6 +1,6 @@
 import React, { useEffect,useState,useRef } from 'react';
 import { FaRegUserCircle,FaPencilAlt } from 'react-icons/fa'
-import { TiArrowSortedDown } from 'react-icons/ti'
+import { TiArrowSortedDown, TiVendorAndroid } from 'react-icons/ti'
 import { TaskStatus } from "./TaskStatus";
 import { TaskText } from "./TaskText";
 import { TaskCheckBox } from "./TaskCheckBox";
@@ -12,7 +12,7 @@ import { addCheckedTasks,removeCheckedTasks} from '../store/actions/workspaceAct
 import { useDispatch, useSelector } from "react-redux";
 import { loadUsers } from '../store/actions/userActions'
 import { updateTaskConversation } from '../store/actions/workspaceActions'
-
+import moment from 'moment'
 
 export function Task({
     task,
@@ -35,9 +35,8 @@ export function Task({
     const [isUpdating, setIsUpdating] = useState(false);
     const [isOwnerModalShown, setToggleOwnerModal] = useState(false);
     const [isUpdatingText, setUpdatingText] = useState(false);
-    const [newDate, setNewDate] = useState(new Date().getTime());
-    const [timePassString, setTimePassString] = useState('');
     const [isChecked, setCheckTask] = useState(false);
+    const [getCurrTime, setCurrTime] = useState(null);
     const [owners, setOwners] = useState(task.owner);
     const editableTaskName = useRef()
     const btnEl = useRef()
@@ -46,7 +45,8 @@ export function Task({
 
     useEffect(() => {
         dispatch(loadUsers())
-    }, [dispatch])   
+    }, [dispatch]) 
+
     
     function mapOrder (array, order, key) {
         array.sort( function (a, b) {
@@ -129,6 +129,35 @@ export function Task({
         }
     }
 
+    // useEffect(() => {
+    //     const interval = setInterval(() => {
+    //       console.log('This will run every second!');
+    //       tick()
+    //     }, 1000);
+    //     return () => clearInterval(interval);
+    //   }, []);
+
+      useEffect(() => {
+        tick()
+      }, [task]);
+
+    const tick =()=>{
+        console.log("tick")
+        let date = moment(task.lastUpdated.date).fromNow()
+        if(date==='a few seconds ago'){
+            date = 'Just now'
+        }
+        setCurrTime(date)
+    }
+    // const getLastUpdatedDate =()=>{
+    //     let date = moment(task.lastUpdated.date).fromNow()
+    //     if(date==='a few seconds ago'){
+    //         date = 'Just now'
+    //     }
+    //     return date
+    // }
+    
+
     const getTaskValue=(taskKey)=>{
         let content = [];
         switch(taskKey) {
@@ -147,13 +176,13 @@ export function Task({
                             value={currTask[taskKey]} 
                             onChange={handleChangeName}
                             onBlur={() => {
-                                // if (task[taskKey] === currTask[taskKey]) return
-                                // const desc = `${loggedUser.fullName} Changed the task name from ${task[taskKey]} to ${currTask.name}`
+                                if (currTask.name === task.name) return
+                                const desc = `changed the task name from ${task.name} to ${currTask.name}`
                                 const updatedTask = {
                                     ...task,
                                     name: currTask.name
                                 }
-                                onEditTask(table,updatedTask)
+                                onEditTask(table,updatedTask,desc)
                                 setIsUpdating(false)
                             }}
                             onKeyDown={(ev) => {
@@ -262,12 +291,11 @@ export function Task({
                 ) 
                 break;
             case 'lastUpdated':
-                if(task[taskKey]){
-                    // const string  = getTimePass()
-                    // setTimePassString(string)
+                if(task[taskKey]&&task[taskKey].date){
                     content.push(
                         <div className="last-updated-task-container">
-                            {timePassString}
+                            {/* {getLastUpdatedDate()} */}
+                            {getCurrTime}
                         </div>
                     ) 
                 }
@@ -326,7 +354,8 @@ export function Task({
             ...table,
             tasks:table.tasks.filter(task=>task._id!==currTask._id)
         }
-        onEditTable(newTable)
+        const desc = `removed the task "${currTask.name}" from "${table.name}"`
+        onEditTable(newTable,desc)
         setIsShowOptionsModal(false)
     }
 

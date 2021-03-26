@@ -21,7 +21,8 @@ export function BoardPreview({
     moveBoardToFolder,
     object,
     scroll,
-    cmp
+    cmp,
+    onEditBoard
 }) {
 
     const workspaces = useSelector(state => state.workspace.workspaces)
@@ -111,6 +112,19 @@ export function BoardPreview({
     }
     const onToggleFavUserBoardList=()=>{
         dispatch(toggleFavUserBoardList(loggedInUser,board._id))
+        const desc = `${loggedInUser.favBoards.includes(board._id)?'added board to ':'removed board from '}favorites`
+        const updatedBoard = {
+         ...board,
+        activities:[
+             {
+                 desc: desc,
+                 userId: loggedInUser._id,
+                 createdAt: Date.now()
+             },
+             ...board.activities]
+        }
+        onEditBoard(updatedBoard)
+        updateCurrBoard(updatedBoard)
         setIsOpenModal(false)
     }
 

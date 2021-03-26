@@ -16,7 +16,8 @@ export function TaskCheckBox({onEditTask,table,task}){
             ...task,
             checkBox: val
         }
-        onEditTask(table,updatedTask)
+        const desc = `${val?"unchecked":"checked"} task "${updatedTask.name}" inside ${table.name}`
+        onEditTask(table,updatedTask,desc)
     }
     return (
         <div 

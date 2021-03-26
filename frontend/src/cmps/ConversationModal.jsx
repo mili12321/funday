@@ -74,7 +74,8 @@ export function ConversationModal({
             ...currTask,
             conversations: [...currTask.conversations, newConversations]
         }
-        onEditTask(currTable,updatedTask)
+        const desc = `added new conversation to task "${updatedTask.name}" inside "${currTable.name}"`
+        onEditTask(currTable,updatedTask,desc)
         setMsg('')
     }
 

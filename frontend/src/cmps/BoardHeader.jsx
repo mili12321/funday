@@ -72,11 +72,18 @@ export class _BoardHeader extends Component {
                         disabled={false}  
                         onChange={this.handleChangeBoardName}
                         onBlur={() => {
-                            // if (this.props.board.name === this.state.board.name) return
-                            // const desc = `${loggedUser.username} Changed the task name from ${task[taskKey]} to ${this.state.task.name}`
+                            if (this.props.board.name === this.state.name) return
+                            const desc = `changed the board name from "${this.props.board.name}" to "${this.state.name}"`
                             const updatedBoard = {
                                 ...this.props.board,
-                                name: this.state.name
+                                name: this.state.name,
+                                activities:[
+                                    {
+                                        desc: desc,
+                                        userId: this.props.loggedInUser._id,
+                                        createdAt: Date.now()
+                                    },
+                                    ...this.props.board.activities]
                             }
                             this.props.onEditBoard(updatedBoard)
                             this.props.updateCurrBoard(updatedBoard)
@@ -99,12 +106,18 @@ export class _BoardHeader extends Component {
                         disabled={false}  
                         onChange={this.handleChangeBoardDesc}
                         onBlur={() => {
-                            // if (this.props.tableColumn.taskKey === this.state.currTableColumn.taskKey&&this.props.tableColumn.title === this.state.currTableColumn.title) return
-                            //  if (this.props.board.desc === this.state.board.desc) return
-                            // const desc = `${loggedUser.fullName} Changed the task name from ${task[taskKey]} to ${this.state.task.name}`
+                            if (this.props.board.desc === this.state.desc) return
+                            const desc = `changed the board description from "${this.props.board.desc}" to "${this.state.desc}"`
                             const updatedBoard = {
                                 ...this.props.board,
-                                desc:this.state.desc
+                                desc:this.state.desc,
+                                activities:[
+                                    {
+                                        desc: desc,
+                                        userId: this.props.loggedInUser._id,
+                                        createdAt: Date.now()
+                                    },
+                                    ...this.props.board.activities]
                             }
                             this.props.onEditBoard(updatedBoard)
                             this.props.updateCurrBoard(updatedBoard)
@@ -128,6 +141,19 @@ export class _BoardHeader extends Component {
     }
     toggleFavUserBoardList=()=>{
        this.props.toggleFavUserBoardList(this.props.loggedInUser,this.props.board._id)
+       const desc = `${this.props.loggedInUser.favBoards.includes(this.props.board._id)?'added board to ':'removed board from '}favorites`
+       const updatedBoard = {
+        ...this.props.board,
+        activities:[
+            {
+                desc: desc,
+                userId: this.props.loggedInUser._id,
+                createdAt: Date.now()
+            },
+            ...this.props.board.activities]
+        }
+        this.props.onEditBoard(updatedBoard)
+        this.props.updateCurrBoard(updatedBoard)
     }
     render() {
         const {
@@ -176,8 +202,10 @@ export class _BoardHeader extends Component {
                                     <BsPeople/>
                                     <span> / 1</span>
                                 </div>
-                                <div className="board-activities">
-                                    Activities / 0
+                                <div className="board-activities" 
+                                onClick={this.props.openActivitiesModal}
+                                >
+                                    Activities / {this.props.board.activities.length>0?this.props.board.activities.length:0}
                                 </div>
                                 <div className="board-more-options">
                                     <BsThreeDots />

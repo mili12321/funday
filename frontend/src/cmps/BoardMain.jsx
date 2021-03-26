@@ -51,32 +51,78 @@ class _BoardMain extends Component {
         // board.statusLabelList
        const tableCopy = {...this.props.board.tables[source.index]}
        this.setState({ // no previous or latest old state passed 
-            board:{...this.state.board}
+            board:{
+                ...this.state.board
+            }
             }, ()=>{
                 this.state.board.tables.splice(source.index,1);
                 this.state.board.tables.splice(destination.index, 0, tableCopy);
                 return this.state.board
         })  
-
-        this.props.onEditBoard(this.state.board)
+        const desc = `changed groups order`
+        this.props.onEditBoard(this.state.board,desc)
    }
 
    onRemoveCheckedTasks =()=>{
-       const ids = []
-       const tables = []
+       let ids = []
+       let tables = []
+       let removedTasks=[]
+       const seen = new Set();
        this.props.checkedTasks.forEach(item=>
             {ids.push(item._id)
             tables.push(item.table)}
         )
-        tables.forEach(table => {
+        const filteredTables = tables.filter(el => {
+            const duplicate = seen.has(el._id);
+            seen.add(el._id);
+            return !duplicate;
+          });
+        console.log('ids',ids)
+        console.log('tables',tables)
+        console.log('filteredTables',filteredTables)
+        filteredTables.forEach(table => {
             const newTable = {
                 ...table,
                 tasks:table.tasks.filter(task=>!ids.includes(task._id))
             }
-            this.props.onEditTable(newTable)
+            // this.props.onEditTable(newTable)
+            removedTasks = table.tasks.filter(task=>ids.includes(task._id))
+            console.log('removedTasks',removedTasks)
+            removedTasks.forEach(task=>{
+                const desc = `removed task "${task.name}" from "${table.name}"`
+                console.log('desc',desc)
+                this.props.onEditTable(newTable,desc)
+            })
        });
        this.setState({unCheckTasks:true})
    }
+
+
+//    onRemoveCheckedTasks =()=>{
+//     const ids = []
+//     const tables = []
+//     this.props.checkedTasks.forEach(item=>
+//          {ids.push(item._id)
+//          tables.push(item.table)}
+//      )
+//      console.log('ids',ids)
+//      console.log('tables',tables)
+//      tables.forEach(table => {
+//          const newTable = {
+//              ...table,
+//              tasks:table.tasks.filter(task=>!ids.includes(task._id))
+//          }
+//          const removedTasks = table.tasks.filter(task=>ids.includes(task._id))
+//          console.log('removedTasks',removedTasks)
+//          removedTasks.forEach(task=>{
+//              const desc = `removed task "${task.name}" from "${table.name}"`
+//              console.log('desc',desc)
+//              this.props.onEditTable(newTable,desc)
+//          })
+//          // this.props.onEditTable(newTable,desc)
+//     });
+//     this.setState({unCheckTasks:true})
+// }
     render() {
         const { 
             board,

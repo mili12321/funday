@@ -12,7 +12,8 @@ export function BoardList({
     moveBoardToFolder,
     object,
     scroll,
-    cmp
+    cmp,
+    onEditBoard
 }) {
 
     // const boards = useSelector(state => state.workspace.boards);
@@ -33,6 +34,7 @@ export function BoardList({
               object={object}
               scroll={scroll}
               cmp={cmp}
+              onEditBoard={onEditBoard}
               />
         )}
       </>

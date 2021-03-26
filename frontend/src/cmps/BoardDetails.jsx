@@ -16,7 +16,8 @@ export function BoardDetails({
     onRemoveTask,
     openConversationModal,
     updateWorkspace,
-    deleteWorkspace
+    deleteWorkspace,
+    openActivitiesModal
 }){
     const workspace = useSelector(state => state.workspace.currWorkspace);
     const [search, setSearch] = useState("");
@@ -30,6 +31,7 @@ export function BoardDetails({
                 onAddNewTable={onAddNewTable}
                 onEditBoard={onEditBoard}
                 setSearch={setSearch} 
+                openActivitiesModal={openActivitiesModal}
             />:
             <div className="new-workspace-board-header"></div>
         }
