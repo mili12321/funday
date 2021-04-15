@@ -40,6 +40,7 @@ import { CgViewComfortable } from 'react-icons/cg'
 import { HiPlusCircle } from 'react-icons/hi'
 import { GrClose } from 'react-icons/gr'
 import { workspaceService } from '../services/workspaceService'
+import { socketService } from '../services/socketService'
 
 export class _Workspace extends Component {
     state={
@@ -69,6 +70,7 @@ export class _Workspace extends Component {
             this.props.updateCurrWorkspace(workspace)
         }):null))[0];
     }
+
     focusText = () => {
         setTimeout(() => {
             document.execCommand('selectAll', false, null)
@@ -146,24 +148,40 @@ export class _Workspace extends Component {
 
     onEditBoard=(updatedBoard,desc)=>{
         let newBoard={}
+        let activitiesArray=[]
 
-        desc?
-
-        newBoard = {
-            ...updatedBoard,
-            activities:[
-                {
-                    desc: desc,
-                    userId: this.props.loggedInUser._id,
-                    createdAt: Date.now()
-                },
-                ...updatedBoard.activities]
+        if(desc){
+            if( typeof desc!=="string" ){
+                desc.forEach(_desc => {
+                    activitiesArray.unshift({
+                        desc: _desc,
+                        userId: this.props.loggedInUser._id,
+                        createdAt: Date.now()
+                    })
+                })
+    
+                newBoard = {
+                    ...updatedBoard,
+                    activities:[...activitiesArray, ...updatedBoard.activities]
+                }
+    
+            }else{
+                newBoard = {
+                    ...updatedBoard,
+                    activities:[
+                        {
+                            desc: desc,
+                            userId: this.props.loggedInUser._id,
+                            createdAt: Date.now()
+                        },
+                        ...updatedBoard.activities]
+                }
+            }
+        }else{
+            newBoard = {
+                ...updatedBoard,
+            }
         }
-        :
-        newBoard = {
-            ...updatedBoard,
-        }
-
         this.updateBoard(newBoard)
     }
 
@@ -538,6 +556,7 @@ export class _Workspace extends Component {
                    updateWorkspace={this.updateWorkspace}
                    deleteWorkspace={this.deleteWorkspace}
                    openActivitiesModal={this.openActivitiesModal}
+                   updateBoard={this.updateBoard}
                 />
                 { 
                 <div className={`conversation-modal-wrapper ${this.state.isShowModal?'':'hide'}`}>

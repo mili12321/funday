@@ -45,6 +45,7 @@ function addBoard(currWorkspace, boardName) {
         desc : "Add board description",
         createdAt : Date.now(),
         lastUpdated : null,
+        dropdownLabels:[],
         statusLabelList: [
                 {
                     _id : uniqId(),
@@ -80,19 +81,19 @@ function addBoard(currWorkspace, boardName) {
                 {
                     _id :uniqId(),
                     title : "Person123",
-                    type : "user/users array selector/picker",
+                    type : "People",
                     taskKey : "owner"
                 }, 
                 {
                     _id : uniqId(),
                     title : "Status123",
-                    type : "selector",
+                    type : "Status",
                     taskKey : "status"
                 }, 
                 {
                     _id : uniqId(),
                     title : "Date",
-                    type : "string",
+                    type : "Date",
                     taskKey : "createdAt"
                 }
             ],
@@ -111,6 +112,7 @@ function addBoard(currWorkspace, boardName) {
                             conversations : [],
                             package : "",
                             owner : [],
+                            dropdown : [],
                             milestone : "",
                             status : {
                                 name : "Done",
@@ -139,6 +141,7 @@ function addBoard(currWorkspace, boardName) {
                             conversations : [],
                             package : "",
                             owner : [],
+                            dropdown : [],
                             milestone : "",
                             status : {
                                 name : "Working on it",
@@ -167,6 +170,7 @@ function addBoard(currWorkspace, boardName) {
                             conversations : [],
                             package : "",
                             owner : [],
+                            dropdown : [], 
                             milestone : "",
                             status : {
                                 name : "",
@@ -204,6 +208,7 @@ function addBoard(currWorkspace, boardName) {
                             conversations : [],
                             package : "",
                             owner : [],
+                            dropdown : [],
                             milestone : "",
                             status : {
                                 name : "",
@@ -232,6 +237,7 @@ function addBoard(currWorkspace, boardName) {
                             conversations : [],
                             package : "",
                             owner : [],
+                            dropdown : [],
                             milestone : "",
                             status : {
                                 name : "",
@@ -270,6 +276,7 @@ function addBoardInFolder(currWorkspace,folder,boardName="New Board") {
         desc : "Add board description",
         createdAt : Date.now(),
         lastUpdated : null,
+        dropdownLabels:[],
         statusLabelList: [
                 {
                     _id : uniqId(),
@@ -305,19 +312,19 @@ function addBoardInFolder(currWorkspace,folder,boardName="New Board") {
                 {
                     _id :uniqId(),
                     title : "Person123",
-                    type : "user/users array selector/picker",
+                    type : "People",
                     taskKey : "owner"
                 }, 
                 {
                     _id : uniqId(),
                     title : "Status123",
-                    type : "selector",
+                    type : "Status",
                     taskKey : "status"
                 }, 
                 {
                     _id : uniqId(),
                     title : "Date",
-                    type : "string",
+                    type : "Date",
                     taskKey : "createdAt"
                 }
             ],
@@ -336,6 +343,7 @@ function addBoardInFolder(currWorkspace,folder,boardName="New Board") {
                             conversations : [],
                             package : "",
                             owner : [],
+                            dropdown : [],
                             milestone : "",
                             status : {
                                 name : "Done",
@@ -364,6 +372,7 @@ function addBoardInFolder(currWorkspace,folder,boardName="New Board") {
                             conversations : [],
                             package : "",
                             owner : [],
+                            dropdown : [],
                             milestone : "",
                             status : {
                                 name : "Working on it",
@@ -392,6 +401,7 @@ function addBoardInFolder(currWorkspace,folder,boardName="New Board") {
                             conversations : [],
                             package : "",
                             owner : [],
+                            dropdown : [],
                             milestone : "",
                             status : {
                                 name : "",
@@ -429,6 +439,7 @@ function addBoardInFolder(currWorkspace,folder,boardName="New Board") {
                             conversations : [],
                             package : "",
                             owner : [],
+                            dropdown : [],
                             milestone : "",
                             status : {
                                 name : "",
@@ -457,6 +468,7 @@ function addBoardInFolder(currWorkspace,folder,boardName="New Board") {
                             conversations : [],
                             package : "",
                             owner : [],
+                            dropdown : [],
                             milestone : "",
                             status : {
                                 name : "",
@@ -611,6 +623,7 @@ function addTask(currTable,currBoard,userInput,user) {
         conversations : [],
         package : "",
         owner : [],
+        dropdown : [],
         milestone : "",
         status : {
             name : "",
@@ -646,7 +659,7 @@ function addTask(currTable,currBoard,userInput,user) {
 
 function updateTask(currTable,currBoard,updatedTask,user) {
     updatedTask.lastUpdated={
-        byUser : user,
+        byUser : user._id,
         date :new Date().getTime()
     }
     const newBoard ={

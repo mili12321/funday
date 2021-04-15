@@ -21,9 +21,9 @@ import { MdUpdate } from 'react-icons/md'
 import { IoMdCheckboxOutline } from 'react-icons/io'
 import {colorsPicker} from '../data/colorPicker'
 import { loadUsers } from '../store/actions/userActions'
+import { getColumnWidth } from "./task-cells-width.js";
 
 export function TablePreview({
-    // board,
     taskKeys,
     table,
     IoMdNotifications,
@@ -41,9 +41,10 @@ export function TablePreview({
     onShrink,
     search,
     unCheckTasks,
-    provided
+    provided,
+    updateBoard
 }){
-    // const [tableColumns, setTableColumns] = useState(board.tableColumns);
+
     const users = useSelector(state => state.user.users);
     const loggedInUser = useSelector(state => state.user.loggedInUser);
     const board = useSelector(state => state.workspace.currBoard);
@@ -66,18 +67,36 @@ export function TablePreview({
         dispatch(loadUsers())
     }, [dispatch])    
     
+    
+    function mapOrder (array, order, key) {
+        array.sort( function (a, b) {
+          var A = a[key], B = b[key];
+          if (order.indexOf(A) > order.indexOf(B)) {
+            return 1;
+          } else {
+            return -1;
+          }
+        });
+        return array;
+    };
 
+    
     useEffect(() => {
         let idList = []
-        table.tasks.map(task=>    
-            idList=[...idList,  ...task.owner]    
+        table.tasks.map(task=>
+            idList=[...idList,  ...task.owner]
         )
         const uniqIdList = [...new Set(idList)];
-        setAllOwners(
-            users.filter(user=>
-                uniqIdList.includes(user._id)
-            )
-        )
+        const usersArray = users.filter(user=>
+                    uniqIdList.includes(user._id)
+                )
+        const orderedArray = mapOrder(usersArray, uniqIdList, '_id');
+        setAllOwners(orderedArray)
+        // setAllOwners(
+        //     users.filter(user=>
+        //         uniqIdList.includes(user._id)
+        //     )
+        // )
     }, [table,table.tasks,newTaskName,users]) 
 
 
@@ -90,7 +109,7 @@ export function TablePreview({
         )   
         const sortedList = list.sort((a, b) => a.name.localeCompare(b.name)) 
         setStatusesSum( list.length)
-        //string of the exisiting used statuses names in the table
+        //string of the exisiting used status names in the table
         //sorted
         const sortedStatusesNameInUse = statusesNameInUse.sort((a, b) => a.localeCompare(b)) 
         const uniq = [...new Set(sortedStatusesNameInUse)];
@@ -196,9 +215,24 @@ export function TablePreview({
         const desc = `changed the tasks order inside "${tableCopy.name}" group`
         onEditTable(tableCopy,desc)
     }
+
+    function EditBoard(newColumn,desc) {
+        const updatedBoard = {
+            ...board,
+            tableColumns: [...board.tableColumns,newColumn],
+            activities:[
+                {
+                    desc: desc,
+                    userId: loggedInUser._id,
+                    createdAt: Date.now()
+                },
+                ...board.activities]
+        }
+        onEditBoard(updatedBoard)
+    }
+
     function addColumn(type){
         let newColumn = {}
-        let updatedBoard = {}
         let desc=''
         switch (type) {
             case 'People':
@@ -209,18 +243,7 @@ export function TablePreview({
                     taskKey:'owner'
                 }
                 desc = `added new people column`
-                updatedBoard = {
-                    ...board,
-                    tableColumns: [...board.tableColumns,newColumn],
-                    activities:[
-                        {
-                            desc: desc,
-                            userId: loggedInUser._id,
-                            createdAt: Date.now()
-                        },
-                        ...board.activities]
-                }
-                onEditBoard(updatedBoard)
+                EditBoard(newColumn,desc)
                 break;
             case 'Status':
                 newColumn = {
@@ -230,18 +253,7 @@ export function TablePreview({
                     taskKey:'status'
                 }
                 desc = `added new status column`
-                updatedBoard = {
-                    ...board,
-                    tableColumns: [...board.tableColumns,newColumn],
-                    activities:[
-                        {
-                            desc: desc,
-                            userId: loggedInUser._id,
-                            createdAt: Date.now()
-                        },
-                        ...board.activities]
-                }
-                onEditBoard(updatedBoard)
+                EditBoard(newColumn,desc)
                 break;
             case 'Date':
                 newColumn = {
@@ -251,18 +263,7 @@ export function TablePreview({
                     taskKey:'createdAt'
                 }
                 desc = `added new date column`
-                updatedBoard = {
-                    ...board,
-                    tableColumns: [...board.tableColumns,newColumn],
-                    activities:[
-                        {
-                            desc: desc,
-                            userId: loggedInUser._id,
-                            createdAt: Date.now()
-                        },
-                        ...board.activities]
-                }
-                onEditBoard(updatedBoard)
+                EditBoard(newColumn,desc)
                 break;
             case 'Text':
                 newColumn = {
@@ -272,18 +273,17 @@ export function TablePreview({
                     taskKey:'text'
                 }
                 desc = `added new text column`
-                updatedBoard = {
-                    ...board,
-                    tableColumns: [...board.tableColumns,newColumn],
-                    activities:[
-                        {
-                            desc: desc,
-                            userId: loggedInUser._id,
-                            createdAt: Date.now()
-                        },
-                        ...board.activities]
+                EditBoard(newColumn,desc)
+                break;
+            case 'Numbers':
+                newColumn = {
+                    _id:Date.now(),
+                    title:'Numbers',
+                    type:'Numbers',
+                    taskKey:'numbers'
                 }
-                onEditBoard(updatedBoard)
+                desc = `added new numbers column`
+                EditBoard(newColumn,desc)
                 break;
             case 'CheckBox':
                 newColumn = {
@@ -293,18 +293,7 @@ export function TablePreview({
                     taskKey:'checkBox'
                 }
                 desc = `added new checkBox column`
-                updatedBoard = {
-                    ...board,
-                    tableColumns: [...board.tableColumns,newColumn],
-                    activities:[
-                        {
-                            desc: desc,
-                            userId: loggedInUser._id,
-                            createdAt: Date.now()
-                        },
-                        ...board.activities]
-                }
-                onEditBoard(updatedBoard)
+                EditBoard(newColumn,desc)
                 break;
             case 'LastUpdated':
                 newColumn = {
@@ -314,23 +303,147 @@ export function TablePreview({
                     taskKey:'lastUpdated'
                 }
                 desc = `added new lastUpdated column`
-                updatedBoard = {
-                    ...board,
-                    tableColumns: [...board.tableColumns,newColumn],
-                    activities:[
-                        {
-                            desc: desc,
-                            userId: loggedInUser._id,
-                            createdAt: Date.now()
-                        },
-                        ...board.activities]
+                EditBoard(newColumn,desc)
+                break;
+            case 'Timeline':
+                newColumn = {
+                    _id:Date.now(),
+                    title:'Timeline',
+                    type:'Timeline',
+                    taskKey:'timeline'
                 }
-                onEditBoard(updatedBoard)
+                desc = `added new timeline column`
+                EditBoard(newColumn,desc)
+                break;
+            case 'Dropdown':
+                newColumn = {
+                    _id:Date.now(),
+                    title:'Dropdown',
+                    type:'Dropdown',
+                    taskKey:'dropdown'
+                }
+                desc = `added new dropdown column`
+                EditBoard(newColumn,desc)
                 break;
             default:
                 break;
         }
         setToggleAddColumnModal(false)
+    }
+
+    const getSumColumnContent=(columnName)=>{
+        let content = [];
+        switch (columnName) {
+            case 'status':
+                content.push(
+                    <div className='table-cell sum-cell sum-cell-content-wrapper'>
+                        <div className="sum-status-wrapper">
+                            {statusTitles.map((title,idx)=>
+                             <span 
+                             key={idx} 
+                             style={{backgroundColor:`${allTablestatuses[`${title}`].color}`, width:`${allTablestatuses[`${title}`].num/statusesSum*100}%`}}>
+                                 <span className="label-text arrow-down status-label">
+                                     <span>{title===''?'Empty':title}</span>
+                                     <span>{allTablestatuses[`${title}`].num}/{statusesSum}</span>
+                                     <span>{Math.round(allTablestatuses[`${title}`].num/statusesSum*100)}%</span>
+                                 </span>
+                             </span>
+                            )}
+                        </div>
+                    </div>
+                ) 
+                break;     
+            case 'owner':
+                content.push(
+                    <div className='table-cell sum-cell sum-cell-content-wrapper'>
+                        {allOwners.length>0&&
+                        <div className="owner-container">
+                            <div className="owner-avatar-wrapper">
+                                <img src={`${allOwners[0].avatar}`} alt=""/>
+                            </div>
+                            {
+                                allOwners.length>1?
+                                <div className="owners-count">
+                                    +{allOwners.length-1}
+                                </div>:
+                                null
+                            }
+                        </div>
+                        }
+                    </div>
+                ) 
+                break;
+            default:
+                content.push(
+                    <div className={`table-cell sum-cell ${getColumnWidth(columnName)}`}></div>
+                ) 
+                break;
+        }
+        return content;
+    }
+
+    const columnBtnsContent = [
+        {
+            icon:<GoThreeBars className="icon"/>,
+            name:'Status'
+        },{
+            icon:<BsBoxArrowDown className="icon"/>,
+            name:'Dropdown'
+        }, {
+            icon:<IoTextSharp className="icon"/>,
+            name:'Text'
+        }, {
+            icon:<MdDateRange className="icon"/>,
+            name:'Date'
+        }, {
+            icon:<BsPeopleCircle className="icon"/>,
+            name:'People'
+        }, {
+            icon:<TiSortNumerically className="icon"/>,
+            name:'Numbers'
+        },{
+            icon:<FcTimeline className="icon"/>,
+            name:'Timeline'
+        },{
+            icon:<MdUpdate className="icon"/>,
+            name:'LastUpdated'
+        },{
+            icon:<IoMdCheckboxOutline className="icon"/>,
+            name:'CheckBox'
+        },{
+            icon:<HiHashtag className="icon"/>,
+            name:'Tags'
+        },
+    ]
+
+    const getColumnInUseStyle=(btnName)=>{
+        let columnsInUse = []
+        board.tableColumns.forEach(column=>
+            {for(const property in column) {
+                if (property === 'type')
+                columnsInUse.push(`${column[property]}`)
+            }}
+        )
+        const uniq = [ ...new Set(columnsInUse) ];
+        if(uniq.includes(btnName)){
+            return 'column-in-use'
+        }
+            
+    }
+
+    const getColumnBtnContent =(btnIcon,btnName)=>{
+        let content  = [ <div onClick={()=>addColumn(`${btnName}`)} 
+                            className={getColumnInUseStyle(btnName)} >
+                            {btnIcon}
+                            <span>{`${
+                                btnName==='LastUpdated'?
+                                'Last Updated':
+                                btnName==='CheckBox'?
+                                'Check Box':
+                                btnName
+                            }`}</span>
+                        </div>]
+        return content
     }
 
 
@@ -410,6 +523,7 @@ export function TablePreview({
                                         toggleExpandeTable={toggleExpandeTable}
                                         isExpand={isExpand}
                                         dragHandle={dragHandle}
+                                        onEditTask={onEditTask} 
                                     />
                                 ) 
                             }
@@ -429,51 +543,21 @@ export function TablePreview({
                                         >
                                            <div className="title">Essentials</div>
                                            <div className='column-types-container'>
-                                                <div onClick={()=>addColumn('Status')}>
-                                                    <GoThreeBars className="icon"/>
-                                                    <span>Status</span>
-                                                </div>
-                                                <div onClick={()=>addColumn('Dropdown')}>
-                                                    <BsBoxArrowDown className="icon"/>
-                                                    <span>Dropdown</span>
-                                                </div>
-                                                <div onClick={()=>addColumn('Text')}>
-                                                    <IoTextSharp className="icon"/>
-                                                    <span>Text</span>
-                                                </div>
-                                                <div onClick={()=>addColumn('Date')}>
-                                                    <MdDateRange className="icon"/>
-                                                    <span>Date</span>
-                                                </div>
-                                                <div onClick={()=>addColumn('People')}>
-                                                    <BsPeopleCircle className="icon"/>
-                                                    <span>People</span>
-                                                </div>
-                                                <div onClick={()=>addColumn('Numbers')}>
-                                                    <TiSortNumerically className="icon"/>
-                                                    <span>Numbers</span>
-                                                </div>
+                                               {
+                                                    columnBtnsContent.slice(0,6).map(content=>
+                                                        getColumnBtnContent(content.icon,content.name)
+                                                    )
+                                               }
                                             </div>
 
                                             <div className="title">Super Useful</div>
 
                                             <div className='column-types-container'>
-                                                <div>
-                                                    <FcTimeline className="icon"/>
-                                                    <span>Timeline</span>
-                                                </div>
-                                                <div onClick={()=>addColumn('LastUpdated')}>
-                                                    <MdUpdate className="icon"/>
-                                                    <span>Last Updated</span>
-                                                </div>
-                                                <div onClick={()=>addColumn('CheckBox')}>
-                                                    <IoMdCheckboxOutline className="icon"/>
-                                                    <span>Check box</span>
-                                                </div>
-                                                <div>
-                                                    <HiHashtag className="icon"/>
-                                                    <span>Tags</span>
-                                                </div>
+                                                {
+                                                    columnBtnsContent.slice(6).map(content=>
+                                                        getColumnBtnContent(content.icon,content.name)
+                                                    )
+                                                }
                                             </div>
                                         </div>}
                                     </div>
@@ -504,6 +588,7 @@ export function TablePreview({
                                         onEditBoard={onEditBoard}
                                         openConversationModal={openConversationModal}
                                         unCheckTasks={unCheckTasks}
+                                        updateBoard={updateBoard}
                                         />
                                     )}
                                 </Draggable>
@@ -545,45 +630,7 @@ export function TablePreview({
                     <div className="table-row sum-row">
                         {
                             taskKeys.map((taskKey)=>
-                                taskKey==="status"?
-                                <div className='table-cell sum-cell sum-cell-content-wrapper'>
-                                    <div className="sum-status-wrapper">
-                                        {statusTitles.map((title,idx)=>
-                                         <span 
-                                         key={idx} 
-                                         style={{backgroundColor:`${allTablestatuses[`${title}`].color}`, width:`${allTablestatuses[`${title}`].num/statusesSum*100}%`}}>
-                                             <span className="label-text arrow-down status-label">
-                                                 <span>{title===''?'Empty':title}</span>
-                                                 <span>{allTablestatuses[`${title}`].num}/{statusesSum}</span>
-                                                 <span>{Math.round(allTablestatuses[`${title}`].num/statusesSum*100)}%</span>
-                                             </span>
-                                         </span>
-                                        )}
-                                    </div>
-                                </div>
-                                :
-                                taskKey==="owner"?
-                                <div className='table-cell sum-cell sum-cell-content-wrapper'>
-                                    {allOwners.length>0&&
-                                    <div className="owner-container">
-                                        <div className="owner-avatar-wrapper">
-                                            <img src={`${allOwners[0].avatar}`} alt=""/>
-                                        </div>
-                                        {
-                                            allOwners.length>1?
-                                            <div className="owners-count">
-                                                +{allOwners.length-1}
-                                            </div>:
-                                            null
-                                        }
-                                    </div>
-                                    }
-                                </div>
-                                :
-                                taskKey==="checkBox"?
-                                <div className='table-cell sum-cell checkbox-sum-cell'></div>
-                                :
-                                <div className='table-cell sum-cell'></div>
+                                getSumColumnContent(taskKey)
                             )
                         }
                         <div className='table-cell sum-cell'></div>

@@ -17,7 +17,8 @@ export function BoardDetails({
     openConversationModal,
     updateWorkspace,
     deleteWorkspace,
-    openActivitiesModal
+    openActivitiesModal,
+    updateBoard
 }){
     const workspace = useSelector(state => state.workspace.currWorkspace);
     const [search, setSearch] = useState("");
@@ -49,6 +50,7 @@ export function BoardDetails({
                 onRemoveTask={onRemoveTask}
                 openConversationModal={openConversationModal}
                 search={search} 
+                updateBoard={updateBoard}
             />:
             <NewWorkspaceBoardMain 
             updateWorkspace={updateWorkspace}

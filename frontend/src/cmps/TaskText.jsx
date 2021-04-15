@@ -1,6 +1,6 @@
 import React, { useEffect,useState,useRef } from 'react';
 import { stickers } from '../data/stickers'
-import { FaRegSmile} from 'react-icons/fa'
+import { FaRegSmile } from 'react-icons/fa'
 
 export function TaskText({onEditTask,table,task,setUpdatingText}){
     const [text, setText] = useState('');
@@ -51,8 +51,7 @@ export function TaskText({onEditTask,table,task,setUpdatingText}){
     return (
         <div
          className="task-text" onClick={onUpdating}
-        //  tabIndex="0"
-        //  onBlur={()=>setUpdateText(false)}
+         title={text}
          >
             {isUpdating?
                 <div className="updating-container">
@@ -62,6 +61,11 @@ export function TaskText({onEditTask,table,task,setUpdatingText}){
                     value={text}
                     onBlur={()=>
                         {
+                            if(text===task.text){
+                                setUpdateText(false)
+                                setUpdatingText(false)
+                                return
+                            }
                             const updatedTask = {
                                 ...task,
                                 text: text

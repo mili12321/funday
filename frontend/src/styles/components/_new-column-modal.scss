@@ -31,6 +31,14 @@
                 margin-right:7px;
                 color: #626262;
             }
+            &.column-in-use{
+                opacity: 0.5;
+                pointer-events: none;
+                &:hover{
+                    background-color: transparent;
+                    color: #424242;
+                }
+            }
         }
 
     }

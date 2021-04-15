@@ -5,13 +5,14 @@ import { loadUsers } from '../store/actions/userActions'
 export function OwnerModal({
     task,
     table,
-    onEditTask,
+    onEditTask
 }){
     const dispatch = useDispatch();
     const users = useSelector(state => state.user.users);
     const [owners, setOwners] = useState(null);
     const [newUsers, setNewUsers] = useState(null);
     const [search, setSearch] = useState('');
+    const inputEl = useRef(null)
 
     useEffect(() => {
         dispatch(loadUsers())
@@ -91,6 +92,13 @@ function getLine(){
     }
     return content
 }
+
+// useEffect(() => {
+//     if(inputEl&&inputEl.current){
+//         inputEl.current.focus()
+//     }
+// }, [])
+
     return (
        <>
             <div className="owners-container">
@@ -99,13 +107,16 @@ function getLine(){
                     <img className="user-img" src={`${owner.avatar}`} alt="" srcset=""/>
                     <span className="user-name">{owner.username}</span>
                     <span className="remove-user"
-                    onClick={()=>removeOwner(owner._id,owner.username)}
+                    onClick={()=>{
+                        removeOwner(owner._id,owner.username)
+                    }}
                     >x</span>
                  </div>
             )}
             </div>
             <input type="text" placeholder='Enter name'
             className="owner-modal-input"
+            ref={inputEl}
             onChange={(e)=>setSearch(e.target.value)}
             /> 
             <div className="title">
@@ -113,9 +124,14 @@ function getLine(){
                <span className="title-contant"> People </span>
                 {getLine()}
             </div>
+            <div className="owner-list-wrapper">
             {newUsers&&newUsers.map(user=>
             user.username.toLowerCase().includes(search.toLowerCase())?
-                <div className="user-details" onClick={()=>updateTaskOwner(user._id,user.username)}>
+                <div className="user-details" onClick={()=>
+                {
+                    updateTaskOwner(user._id,user.username)
+                }}
+                >
                     <img className="user-img" src={`${user.avatar}`} alt="" srcset=""/>
                     <span className="user-name">
                        { getUserName(user.username)}
@@ -124,6 +140,7 @@ function getLine(){
                 :
                 null
             )}
+            </div>
           {/* <div>Teames</div> */}
         </>
     )

@@ -32,6 +32,7 @@ function off(eventName, cb) {
 }
 
 function emit(eventName, data) {
+  console.log('ON emit')
   socket.emit(eventName, data)
 }
 

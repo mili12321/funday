@@ -1,0 +1,30 @@
+.title-cell-options-wrapper{
+    position: absolute;
+    right: 10px;
+    display: flex;
+    place-items: center;
+}
+.title-cell-options-btn{
+    background-color: transparent;
+    display: flex;
+    justify-content: center;
+    place-items: center;
+    opacity: 0;
+    transition: 0.2s;
+    cursor: pointer;
+    &:hover{
+        color: #0085ff; 
+    }
+    &.updating{
+        color: #0085ff; 
+    }
+}
+.title-cell-options-modal{
+    z-index: 1;
+    top: 19px;
+    right: 0;
+    .delete-btn{
+        display: flex;
+        white-space: nowrap;
+    }
+}

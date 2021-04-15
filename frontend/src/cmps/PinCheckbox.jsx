@@ -11,7 +11,7 @@ export function PinCheckbox({workspace}){
 
     useEffect(() => {
         setChecked(loggedInUser.pinnedWorkspaces.includes(workspace._id))
-    }, [workspace,loggedInUser.pinnedWorkspaces])
+    }, [workspace,loggedInUser.pinnedWorkspaces.length])
 
 
     function handleChange(workspaceId) {

@@ -44,6 +44,7 @@
     width: 150px;
     display:flex;
     border-left: 2px solid rgb(255, 255, 255);
+    transition:background-color 0.2s;
     &:first-child{
         min-width: 300px;
         flex-grow: 1;
@@ -60,16 +61,35 @@
     &:not(:first-child){
         justify-content: center;
         color:  #424242  !important;
+        &:hover{
+            background-color: rgba(230, 233, 239, 0.6);
+            .title-cell-options-wrapper .title-cell-options-btn{
+                opacity: 1;
+            }
+        }
+        &.updating{
+            background-color: rgba(230, 233, 239, 0.6);
+            .title-cell-options-wrapper .title-cell-options-btn{
+                opacity: 1;
+            }
+        }
     }
     &:first-child{
        font-size: 20px;
        opacity: 0.5;
+       &:hover{
+        background-color: rgba(230, 233, 239,1);
+       }
     }
-    >span{
-        margin-left: 5px;
+    .date-title-wrapper{
+        display: flex;
+        place-items: center;
+        >span{
+            margin-left: 5px;
+        }
     }
     &.checkBox-title{
-        width: 50px;
+        // width: 50px;
         justify-content: start;
         >.content-editable{
             width: 50px;
@@ -106,10 +126,14 @@
     .cell-content-wrapper{
         display: flex;
         place-items: center;
+        position: relative;
         &.name-wrapper-cell{
             &:hover .task-name-span{
                 color: #0085ff;
             }
+        }
+        &.dropdown-wrapper-cell{
+            width: 100%;
         }
     }
 }
@@ -134,11 +158,12 @@
     &:hover .add-owner{
         opacity: 1;
     } 
-    &:hover .add-owner-btn-wrapper{
+    &:hover .add-cell-content-btn-wrapper{
         opacity: 1;
     }
     &.text-style{
         transition: 0.1s;
+        // width: 170px;
         &:hover{
             background-color:#c5e7ff92 ;
         }
@@ -146,9 +171,31 @@
             background-color:#c5e7ff92 ;
         }
     }
+    &.numbers-style{
+        transition: 0.1s;
+        // width: 170px;
+        &:hover{
+            background-color:#ffc5f192 ;
+        }
+        &.updating-numbers{
+            background-color:#ffc5f592 ;
+        }
+    }
     &.checkBox-style{
-        width: 50px;
+        // width: 50px;
         padding: 0;
+    }
+    &.lastUpdated-style{
+        justify-content: start;
+        // width: 163px;
+    } 
+    &.dropdown-style{
+        cursor: pointer;
+    }
+    &.dropdown-style, &.timeline-style{
+        &.not-empty{
+            background-color:#c5e7ff92 ;
+        }
     }
 }
 .drag-handle-btn{
@@ -178,9 +225,7 @@
     display: flex;
     justify-content: center;
 }
-.checkbox-sum-cell{
-    width: 50px;
-}
+
 .add-status-cell{
     background-color: #e6e9ef31 ;
 }

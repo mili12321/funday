@@ -1,21 +1,15 @@
-import React, { useEffect,useState,useRef } from 'react';
+import React from 'react';
 import { useSelector } from "react-redux";
 import { AiOutlineClockCircle } from 'react-icons/ai'
 import moment from 'moment'
 
-export function ActivitiesModal({}) {
+export function ActivitiesModal() {
 
     const currBoard = useSelector(state => state.workspace.currBoard);
     const users = useSelector(state => state.user.users);
 
-    useEffect(() => {
-        console.log('currBoard.activities', currBoard.activities)
-    }, [currBoard])
-
     function getUser(userId) {
-        console.log('userId',userId)
         const user = users.filter(user=>user._id===userId)[0]
-        console.log('user111111111111111',user)
         return user
     }
 
@@ -68,27 +62,6 @@ export function ActivitiesModal({}) {
             :
             <div>No activities</div>
         }
-
-{/* 
-        <div className="activities-list">
-            ActivitiesModal
-            {
-                currBoard.activities.length>0?
-                currBoard.activities.map(activity=>
-                    <div className="activity-preview">
-                        <div className="time">
-                            <AiOutlineClockCircle/><span>{getTime(activity.createdAt)}</span>
-                        </div>
-                        <div className="user background" style={{backgroundImage:`url(${loggedInUser.avatar})`}}></div>
-                        <div className="desc">
-                            <span>{loggedInUser.username}</span> <span>{activity.desc}</span>
-                        </div>
-                    </div>
-                )
-                :
-                <div>No activities</div>
-            }
-        </div> */}
 
         </div>
     )

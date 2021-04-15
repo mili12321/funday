@@ -1,9 +1,18 @@
 .task-text{
-    width: 141px;
+    width: 211px;
     height: 29px;
     display: flex;
     place-items: center;
     position: relative;
+    &.numbers{
+        width: 138px;
+    }
+    .text-content{
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        overflow: hidden;
+        width: 207px;
+    }
     .updating-container{
         position: absolute;
         z-index: 1;
@@ -12,9 +21,12 @@
         display: flex;
         >input{
             height: 93%;
-            width: 77%;
+            width: 83%;
             padding: 0 3px;
             border: 1px dashed #0085ff;
+            &.numbers{
+                width: 100%;
+            }
         }
         >span{
             flex-grow: 1;

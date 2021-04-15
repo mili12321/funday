@@ -8,6 +8,8 @@ import { DragDropContext,Droppable ,Draggable   } from 'react-beautiful-dnd';
 export class TaskStatus extends Component {
     state={
         statusLabelList:[],
+        isStatusModalOpen:false,
+        isEditLabelsModalOpen:false,
         newLabelColor:null,
         isUpdateLabelColor:false,
         currLabel:{},
@@ -21,6 +23,14 @@ export class TaskStatus extends Component {
         this.setState({boardCopy:this.props.board})
     }
 
+    toggleStatusModal=()=>{
+        this.setState({isStatusModalOpen:!this.state.isStatusModalOpen})
+    }
+    closeStatusModal=()=>{
+        if(this.state.isEditLabelsModalOpen)return
+        this.setState({isStatusModalOpen:false})
+        this.closeEditLabelsModal()
+    }
     updateTask=(table,task,statusLabel)=>{
         const updatedTask = {
             ...task,
@@ -28,7 +38,13 @@ export class TaskStatus extends Component {
         }
         const desc = `changed task "${task.name}" status from "${task.status.name}" to "${statusLabel.name}"`
         this.props.onEditTask(table,updatedTask,desc)
-        this.props.setIsStatusModalOpen(false)
+        this.setState({isStatusModalOpen:false})
+    }
+    openEditLabelsModal=()=>{
+        this.setState({isEditLabelsModalOpen:true})
+    }
+    closeEditLabelsModal=()=>{
+        this.setState({isEditLabelsModalOpen:false})
     }
     onChangeNewLabelColor=(currColor)=>{
         this.setState({newLabelColor:currColor})
@@ -114,14 +130,27 @@ export class TaskStatus extends Component {
         this.props.onEditBoard(this.state.boardCopy,null)
    }
     render() {
-        const { task, table, FaPencilAlt, board, isEditLabelsModalOpen, openEditLabelsModal, closeEditLabelsModal} = this.props
+        const { isStatusModalOpen,isEditLabelsModalOpen,statusLabelList,isUpdateLabelColor } = this.state
+        const { task , table, taskKey, FaPencilAlt,onEditTask,board } = this.props
+
 
         if (!task) return <div>Loading....</div>
         return (
-            <div className="status-modal-wrapper">
+            <div className='table-cell task-cell'
+             tabIndex="0" 
+             onBlur={this.closeStatusModal}
+             >
+            <div className='task-cell-status' style={{backgroundColor:`${task.status.color}`}} onClick={this.toggleStatusModal}>
+                <div className="cell-content-wrapper">
+                {task[taskKey].name}
+                </div>
+            </div>
+
+            <div className="status-container">
                 {
+                isStatusModalOpen&&
                     !isEditLabelsModalOpen&&
-                    <>
+                    <div className="status-modal-wrapper">
                         <div className="status-label-list-container">
                             {
                             board.statusLabelList.map((statusLabel,idx)=>
@@ -136,14 +165,15 @@ export class TaskStatus extends Component {
                                 </div> 
                             )}
                         </div>
-                        <div className="status-label-btn edit-status" onClick={openEditLabelsModal}>
+                        <div className="status-label-btn edit-status" onClick={this.openEditLabelsModal}>
                             <FaPencilAlt className="status-FaPencilAlt"/>
                             <span>Add/Edit Labels</span>
                         </div>
-                    </>
+                    </div>
                 }{
+                isStatusModalOpen&&
                  isEditLabelsModalOpen&&
-                    <>
+                    <div className="status-modal-wrapper">
                         <DragDropContext  onDragEnd={this.handleDragEnd} >
                             <Droppable droppableId='statusLabelList'>
                             {(provided) => (
@@ -185,11 +215,12 @@ export class TaskStatus extends Component {
                                 ></div>
                             )}
                         </div>}
-                        <div className="status-label-btn" onClick={closeEditLabelsModal}>
+                        <div className="status-label-btn" onClick={this.closeEditLabelsModal}>
                             <span>Apply</span>
                         </div>
-                    </>
+                    </div>
                 }
+            </div>
             </div>
         )
     }

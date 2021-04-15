@@ -1,0 +1,92 @@
+.timeline-task-container{
+    .timeline-content{
+        height: 25px;
+        width: 115px;
+        display: flex;
+        justify-content: center;
+        place-items: center;
+        color: white;
+        border-radius: 20px;
+        transition: 0.2s;
+        cursor: pointer;
+        font-size: 14px;
+        &.empty , &.updating{
+            background-color: rgb(206, 206, 206);
+            &::after{
+                content: "-";
+            }
+        }
+        &.empty{
+            &:hover{
+                background-color: darkgray;
+                &::after{
+                    content: "Set Dates"; 
+                }
+            } 
+            &.updating{
+                background-color: darkgray;
+                &:hover{
+                    &::after{
+                        content: "-"; 
+                    }
+                } 
+            }
+        }
+        &.dates{
+            background-color: #0e2359;
+            &.updating{
+                background-color: darkgray;
+                &::after{
+                    content: ""; 
+                }
+                &:hover{
+                    &::after{
+                        content: ""; 
+                    }
+                } 
+            }
+        }
+    }
+    .timeline-delete-btn{
+        position: absolute;
+        right: -10px;
+        top: 50%;
+        transform: translateY(-50%);
+        cursor: pointer;
+        color:darkgray ;
+        visibility: hidden;
+    }
+    &:hover{
+        .timeline-delete-btn{
+            visibility: visible;
+        }
+    }
+}
+.datePicker-wrapper{
+    z-index: 1;
+    top: 43px;
+    position: absolute;
+    right: 0px;
+    &::before{
+        content: '';
+        position: absolute;
+        width: 0;
+        height: 0;
+        border-left: 13px solid transparent;
+        border-right: 13px solid transparent;
+        border-bottom: 10px solid #7b7b7b;
+        right: 31px;
+        top: -10px;
+    }
+    &::after{
+        content: '';
+        position: absolute;
+        width: 0;
+        height: 0;
+        border-left: 15px solid transparent;
+        border-right: 15px solid transparent;
+        border-bottom: 11px solid #f0f0f0;
+        right: 29px;
+        top: -9px;
+    }
+}

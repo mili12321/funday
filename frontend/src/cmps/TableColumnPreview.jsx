@@ -4,13 +4,16 @@ import ContentEditable from 'react-contenteditable';
 import { BiGridVertical } from 'react-icons/bi'
 import { CgExpand } from 'react-icons/cg'
 import { AiOutlineShrink } from 'react-icons/ai'
+import { getColumnWidth } from "./task-cells-width.js";
+import { TitleOptionsBtn } from './TitleOptionsBtn'
 
 class _TableColumnPreview extends Component {
     state={
         table:{},
         board:{},
         currTableColumn:{},
-        isDivOnFocus:false
+        isDivOnFocus:false,
+        isShownTitleOptionsModal:false
     }
     componentDidMount(){
         this.setState({table:this.props.table})
@@ -141,19 +144,60 @@ class _TableColumnPreview extends Component {
             return content;
     }
 
+    
+    getTitleColumnStyle = (columnName) =>
+    {
+        switch (columnName) {
+            case 'checkBox':
+                return 'checkBox-title'
+            default:
+                return ''
+        }
+    }
+
+    toggleTitleOptionsModal=()=>{
+        this.setState({isShownTitleOptionsModal:!this.state.isShownTitleOptionsModal})
+    }    
+    closeTitleOptionsModal=()=>{
+        this.setState({isShownTitleOptionsModal:false})
+    }
+
     render() {
         const { board, tableColumn, table, IoMdNotifications } = this.props
         if (!tableColumn) return <div>Loading....</div>
         return (
-            <div key={tableColumn._id} className={`table-cell title-cell ${tableColumn.taskKey==="checkBox"?'checkBox-title':''}`} style={{color:`${table.color}` }}>
+            <div key={tableColumn._id} className={`table-cell title-cell ${this.getTitleColumnStyle(tableColumn.taskKey)} ${getColumnWidth(tableColumn.taskKey)} ${this.state.isShownTitleOptionsModal?'updating':''}`} style={{color:`${table.color}` }}>
                 {tableColumn.taskKey==="createdAt"?
-                    <React.Fragment>
-                        <IoMdNotifications style={{ width: '18px', height: '18px' }}/>
-                        <span>{this.changeToContentEditable(tableColumn)}</span>
-                        {/* <span>{tableColumn.title}</span> */}
-                    </React.Fragment>
+                    <>
+                        <div className="date-title-wrapper">
+                            <IoMdNotifications style={{ width: '18px', height: '18px' }}/>
+                            <span>{this.changeToContentEditable(tableColumn)}</span>
+                        </div>
+                        <TitleOptionsBtn 
+                        toggleTitleOptionsModal={this.toggleTitleOptionsModal}
+                        isShownTitleOptionsModal={this.state.isShownTitleOptionsModal}
+                        closeTitleOptionsModal={this.closeTitleOptionsModal}
+                        tableColumn={this.props.tableColumn}
+                        table={this.props.table}
+                        onEditBoard={this.props.onEditBoard}
+                        onEditTable={this.props.onEditTable}
+                        onEditTask={this.props.onEditTask} 
+                        />
+                    </>
                     :
-                    this.changeToContentEditable(tableColumn)
+                    <>
+                    {this.changeToContentEditable(tableColumn)}
+                    <TitleOptionsBtn 
+                    toggleTitleOptionsModal={this.toggleTitleOptionsModal}
+                    isShownTitleOptionsModal={this.state.isShownTitleOptionsModal}
+                    closeTitleOptionsModal={this.closeTitleOptionsModal}
+                    tableColumn={this.props.tableColumn}
+                    table={this.props.table}
+                    onEditBoard={this.props.onEditBoard}
+                    onEditTable={this.props.onEditTable}
+                    onEditTask={this.props.onEditTask} 
+                    />
+                    </>
                 }
             </div>
         )
