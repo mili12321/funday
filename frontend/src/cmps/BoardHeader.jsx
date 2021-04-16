@@ -3,11 +3,8 @@ import ContentEditable from 'react-contenteditable';
 import { withRouter } from "react-router";
 import { connect } from 'react-redux'
 import { loadWorkspaces, updateWorkspace } from '../store/actions/workspaceActions'
-import { getCurrBoard, updateCurrBoard} from '../store/actions/workspaceActions'
-import { boardService } from '../services/boardService'
-// import { useDispatch, useSelector } from "react-redux";
+import { updateCurrBoard} from '../store/actions/workspaceActions'
 import { toggleFavUserBoardList } from '../store/actions/userActions'
-
 import { BsFillStarFill,BsPeople,BsThreeDots,BsFilter } from 'react-icons/bs'
 import { SiProbot } from 'react-icons/si'
 import { ImTable } from 'react-icons/im'
@@ -181,7 +178,7 @@ export class _BoardHeader extends Component {
                             </div>
                             <div>
                                 <div className="board-viewers">
-                                    img
+                                    {/* img */}
                                 </div>
                                 <div className="board-integrations">
                                     <div className="icons-container">
@@ -219,7 +216,7 @@ export class _BoardHeader extends Component {
                         <div className="board-actions">
                             <div>
                                 <ImTable style={{ width: '15px', height: '15px' }}/>
-                                <span className="main-table">Main Table / 4</span>
+                                <span className="main-table">Main Table / {this.props.board.tables.length}</span>
                                 <IoIosArrowDown style={{ width: '12px', height: '12px' }}/>
                             </div>
                             <div className="actions-continer">

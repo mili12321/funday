@@ -22,6 +22,10 @@ export class TaskStatus extends Component {
     }
 
     updateTask=(table,task,statusLabel)=>{
+        if(task.status.name===statusLabel.name){
+            this.props.setIsStatusModalOpen(false)
+            return
+        }
         const updatedTask = {
             ...task,
             status:statusLabel

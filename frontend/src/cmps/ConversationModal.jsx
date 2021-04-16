@@ -7,15 +7,91 @@ import { BsTextLeft,BsTextRight} from 'react-icons/bs'
 import { GoMention} from 'react-icons/go'
 import { TiAttachment } from 'react-icons/ti'
 import { BiSmile } from 'react-icons/bi'
-import { AiOutlineLike } from 'react-icons/ai'
+import { AiOutlineLike,AiFillLike } from 'react-icons/ai'
 import { RiReplyLine } from 'react-icons/ri'
-import {  useSelector } from "react-redux";
+import { useSelector } from "react-redux";
+import moment from 'moment'
+
+function ReplyMsgPreview({replyMsg,getUserById,conversation,currTask,onEditTask,currTable}) {
+
+    const loggedInUser = useSelector(state => state.user.loggedInUser);
+
+    function onUpdateReplyLikes(replyMsg) {
+        let updatedTask = {}
+        if(replyMsg.likes.users.includes(loggedInUser._id)){
+            updatedTask = {
+                ...currTask,
+                conversations: currTask.conversations.map((_conversation)=>
+                    _conversation._id===conversation._id?
+                    {
+                        ..._conversation,
+                        replys:conversation.replys.map(_reply=>
+                            _reply._id===replyMsg._id?
+                            {
+                                ..._reply,
+                                likes:{
+                                    count:_reply.likes.count-1,
+                                    users:_reply.likes.users.filter(userId=>userId!==loggedInUser._id)
+                                }
+                            }
+                            :_reply
+                            )}
+                        :_conversation)
+            }
+        }else{
+            updatedTask = {
+                ...currTask,
+                conversations: currTask.conversations.map((_conversation)=>
+                    _conversation._id===conversation._id?
+                    {
+                        ..._conversation,
+                        replys:conversation.replys.map(_reply=>
+                            _reply._id===replyMsg._id?
+                            {
+                                ..._reply,
+                                likes:{
+                                    count:_reply.likes.count+1,
+                                    users:[..._reply.likes.users,loggedInUser._id]
+                                }
+                            }
+                            :_reply
+                            )}
+                        :_conversation)
+            }
+        }
+        const desc = `liked reply "${replyMsg.msg}" on conversation inside task "${currTask.name}"`
+            
+        onEditTask(currTable,updatedTask,desc)
+    }
+
+    return(
+        <div className="reply-msg-preview">
+            <div className="user-img" style={{backgroundImage:`url(${getUserById(replyMsg.userId).avatar})`}}></div>
+            <div className="reply-content-wrapper">
+                <div className="reply-msg-txt">
+                    <span className="user-name">{getUserById(replyMsg.userId).username}</span>
+                    <span>{replyMsg.msg}</span>
+                </div>
+                <div className="reply-msg-info flex">
+                    {
+                    replyMsg.likes.users.includes(loggedInUser._id)?
+                    <AiFillLike onClick={()=>onUpdateReplyLikes(replyMsg)} className='liked pointer'/>
+                    :
+                    <AiOutlineLike onClick={()=>onUpdateReplyLikes(replyMsg)} className="pointer"/>
+                    }
+                    {replyMsg.likes.count>0&&replyMsg.likes.count}
+                </div>
+            </div>
+        </div>
+    )
+}
 
 function ConversationPreview({onEditTask,currTable,currTask,conversation,getUserById,onUpdateMsgLikes,attachmentBtns}) {
 
     const loggedInUser = useSelector(state => state.user.loggedInUser);
     const [isReplyActive, setIsReplyActive] = useState(false);
     const [reply, setReply] = useState('');
+    const [replyTextareaFocus, setReplyTextareaFocus] = useState(false);
 
     useEffect(() => {
         if(!isReplyActive){
@@ -31,7 +107,11 @@ function ConversationPreview({onEditTask,currTable,currTask,conversation,getUser
             msg:reply,
             files:[],
             img:'',
-            likes:0
+            likes:{
+                count:0,
+                users:[]
+            },
+            createdAt:new Date().getTime()
         }
         const updatedTask = {
             ...currTask,
@@ -41,62 +121,90 @@ function ConversationPreview({onEditTask,currTable,currTask,conversation,getUser
         onEditTask(currTable,updatedTask,desc)
         setReply('')
         setIsReplyActive(false)
+        setReplyTextareaFocus(false)
     }
-
 
     return (
         <div className="conversation-wrapper" key={conversation._id}>
-                                    <div className="content-wrapper">
-                                        <div className="sender-details">
-                                            <div className='sender-img' style={{backgroundImage:`url(${getUserById(conversation.userId).avatar})`}}></div>
-                                            <div className='sender-name'>{getUserById(conversation.userId).username}</div>
-                                        </div>
-                                        <div className="msg">{conversation.msg}</div>
-                                        <div>{conversation.likes}</div>
-                                    </div>
-                                    <div className="btns-wrapper">
-                                        <div className="btn-wrapper">
-                                            <div 
-                                            className="like-btn"
-                                            onClick={()=>onUpdateMsgLikes(conversation)}
-                                            >
-                                                <AiOutlineLike/>
-                                                <span>Like</span>
-                                            </div>
-                                        </div>
-                                        <div className="btn-wrapper">
-                                            <div className='reply-btn' onClick={()=>setIsReplyActive(cur=>!cur)}>
-                                                <RiReplyLine/>
-                                                <span>Reply</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    {isReplyActive&&<div className="reply-wrapper">
-                                        <div className="user-img" style={{backgroundImage:`url(${loggedInUser.avatar})`}}></div>
-                                        <div className="reply-msg-wrapper">
-                                            <textarea 
-                                            name="" 
-                                            id="" 
-                                            cols="30" 
-                                            rows="4"
-                                            className="reply-textarea"
-                                            value={reply}
-                                            onChange={(e)=>setReply(e.target.value)}
-                                            ></textarea>
-                                            <div className="attachments-bar">
-                                                {attachmentBtns.map(btn=>
-                                                    <div className="attachment-btn">
-                                                        {btn.icon}
-                                                        <span>{btn.name}</span>
-                                                    </div>
-                                                )}
-                                                <div className="add-msg-btn"
-                                                onClick={()=>onReplyMsg(conversation)}
-                                                >Reply</div>
-                                            </div>
-                                        </div>
-                                    </div>}
+            <div className="content-wrapper">
+                <div className="sender-details">
+                    <div className='sender-img' style={{backgroundImage:`url(${getUserById(conversation.userId).avatar})`}}></div>
+                    <div className='sender-name'>{getUserById(conversation.userId).username}</div>
+                </div>
+                <div className="msg">{conversation.msg}</div>
+                <div className="flex">
+                    <AiOutlineLike onClick={()=>onUpdateMsgLikes(conversation)} className="pointer"/>
+                    {conversation.likes.count>0&&conversation.likes.count}
+                </div>
+            </div>
+            <div className="btns-wrapper">
+                <div className="btn-wrapper">
+                    <div 
+                    className={`like-btn ${ conversation.likes.users.includes(loggedInUser._id)? 'liked':''}`}
+                    onClick={()=>onUpdateMsgLikes(conversation)}
+                    >
+                        {
+                            conversation.likes.users.includes(loggedInUser._id)?
+                            <AiFillLike/>
+                            :
+                            <AiOutlineLike/>
+                        }
+                        <span>Like</span>
+                    </div>
+                </div>
+                <div className="btn-wrapper">
+                    <div className='reply-btn' onClick={()=>setIsReplyActive(cur=>!cur)}>
+                        <RiReplyLine/>
+                        <span>Reply</span>
+                    </div>
+                </div>
+            </div>
+            {(conversation.replys.length>0||isReplyActive)&&<div className={`reply-wrapper ${conversation.replys.length>0?'column-reverse':''}`}>
+                <div className={`add-reply-textarea ${(!replyTextareaFocus&&conversation.replys.length>0)?'reply-close-textarea':''}`}>
+                    <div className="user-img" style={{backgroundImage:`url(${loggedInUser.avatar})`}}></div>
+                    <div className="reply-msg-wrapper">
+                        <textarea 
+                        name="" 
+                        id="" 
+                        cols="30" 
+                        rows={`${!replyTextareaFocus&&conversation.replys.length>0?'1':'4'}`}
+                        className={`reply-textarea ${!replyTextareaFocus&&conversation.replys.length>0?'reply-close-textarea':''}`}
+                        placeholder={`${!replyTextareaFocus&&conversation.replys.length>0?'Write a reply...':''}`}
+                        value={reply}
+                        onChange={(e)=>setReply(e.target.value)}
+                        onFocus={()=>setReplyTextareaFocus(true)}
+                        onBlur={()=>setReplyTextareaFocus(false)}
+                        ></textarea>
+                        {(replyTextareaFocus||conversation.replys.length<1)&&<div className="attachments-bar">
+                            {attachmentBtns.map(btn=>
+                                <div className="attachment-btn">
+                                    {btn.icon}
+                                    <span>{btn.name}</span>
                                 </div>
+                            )}
+                            <div className="add-msg-btn"
+                            onMouseDown={()=>onReplyMsg(conversation)}
+                            >Reply</div>
+                        </div>}
+                    </div>
+                </div>
+
+                <div className="reply-msgs-list">
+                    {
+                        conversation.replys.map(replyMsg=>
+                            <ReplyMsgPreview 
+                            replyMsg={replyMsg}
+                            getUserById={getUserById}
+                            conversation={conversation}
+                            currTask={currTask}
+                            onEditTask={onEditTask}
+                            currTable={currTable}
+                            />
+                        )
+                    }
+                </div>
+            </div>}
+        </div>
     )
 }
 
@@ -114,6 +222,8 @@ export function ConversationModal({
     const [isActiveInput, setActiveInput] = useState(false);
     const [msg, setMsg] = useState('');
     const inuptRef = useRef()
+
+
 
     useEffect(() => {
         if(conversationLocation.tableId){
@@ -156,8 +266,12 @@ export function ConversationModal({
             msg:msg,
             files:[],
             img:'',
-            likes:0,
-            replys:[]
+            likes:{
+                count:0,
+                users:[]
+            },
+            replys:[],
+            createdAt:new Date().getTime()
         }
         const updatedTask = {
             ...currTask,
@@ -168,15 +282,39 @@ export function ConversationModal({
         setMsg('')
     }
 
-    function onUpdateMsgLikes(conversation) {
-        const updatedTask = {
-            ...currTask,
-            conversations: currTask.conversations.map((_conversation)=>_conversation._id===conversation._id?{..._conversation,likes:_conversation.likes+1}:_conversation)
+    function onUpdateMsgLikes(conversation) {;
+        if(conversation.likes.users.includes(loggedInUser._id)){
+            const updatedTask = {
+                ...currTask,
+                conversations: currTask.conversations.map((_conversation)=>
+                _conversation._id===conversation._id?
+                {
+                    ...conversation,
+                    likes:{
+                        count:conversation.likes.count-1,
+                        users:conversation.likes.users.filter(userId=>userId!==loggedInUser._id)
+                    }
+                }:_conversation)
+            }
+            const desc = `liked conversation "${conversation.msg}" inside task "${currTask.name}"`
+            onEditTask(currTable,updatedTask,desc)
+        }else{
+            const updatedTask = {
+                ...currTask,
+                conversations: currTask.conversations.map((_conversation)=>
+                _conversation._id===conversation._id?
+                {
+                    ...conversation,
+                    likes:{
+                        count:conversation.likes.count+1,
+                        users:[...conversation.likes.users,loggedInUser._id]
+                    }
+                }:_conversation)
+            }
+            const desc = `liked conversation "${conversation.msg}" inside task "${currTask.name}"`
+            onEditTask(currTable,updatedTask,desc)
         }
-        const desc = `liked conversation "${conversation.msg}" inside task "${currTask.name}"`
-        onEditTask(currTable,updatedTask,desc)
     }
-
 
     const editorBtns=[
         {
@@ -235,10 +373,10 @@ export function ConversationModal({
     return (
         <div className={`conversation-modal-content`}>
           <div className='conversation-modal-title'>
-              Customer Confirms Use Case(s) are Successfully Implemented
+          {currTask&&currTask.name}
           </div>
           <div className='conversation-modal-updates'> 
-              Updates
+              Updates {currTask&&currTask.conversations.length>0&&`/ ${currTask.conversations.length}`}
           </div>
           <div className="updates-section-content">
             {isActiveInput?

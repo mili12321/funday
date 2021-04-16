@@ -34,7 +34,7 @@ export class StatusLabelPreview extends Component {
         
     }
     render() {
-        const { isUpdateLabelColor,currLabel } = this.state
+        const { isUpdateLabelColor } = this.state
         const { BsDroplet,statusLabel,colorsPicker,idx,updateLabel ,provided } = this.props
         return (
             <>

@@ -92,8 +92,8 @@
   border: 1px solid lightgrey;
   border-radius: 5px ;
   .sender-img,.user-img{
-    width: 30px;
-    height: 30px;
+    width: 35px;
+    height: 35px;
     border-radius: 50%;
     margin-right: 7px;
     background-position: center;
@@ -153,9 +153,19 @@
   padding: 10px;
   display: flex;
   border-top: 1px solid lightgrey;
+  flex-direction: column;
   .user-img{
-    width: 25px;
-    height: 25px;
+    width: 30px;
+    height: 30px;
+  }
+  &.column-reverse{
+    flex-direction: column-reverse;
+  }
+  .add-reply-textarea{
+    display: flex;
+    &.reply-close-textarea{
+      place-items: center;
+    }
   }
   .reply-msg-wrapper{
     flex: 1;
@@ -164,20 +174,57 @@
     .reply-textarea{
       border-radius: 7px;
       border: 1px solid gray;
+      &.reply-close-textarea{
+        border-radius: 20px;
+      }
+    }
+  }
+}
+.reply-msgs-list{
+  .reply-msg-preview{
+    margin-bottom: 25px;
+    flex: 1;
+    display: flex;
+    .reply-content-wrapper{
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+      max-width: fit-content;
+      .reply-msg-txt{
+        display: flex;
+        background-color: #e6e9ef9f;
+        padding: 10px;
+        min-height: 20px;
+        border-radius: 15px;
+        .user-name{
+          color: #0085ff;
+          margin-right: 5px;
+        }
+        span{
+          &:not(:first-child){
+            word-break: break-all;
+          }
+        }
+      }
+      .reply-msg-info{
+        font-size: 14px;
+        margin-top: 5px;
+      }
     }
   }
 }
 
 
-
-
-
-
-
-
-
-
-
+.liked{
+  color: #0085ff;
+}
+.flex{
+  display: flex;
+  height: 20px;
+}
+.pointer{
+  cursor: pointer;
+}
 
 /**
  * ----------------------------------------
