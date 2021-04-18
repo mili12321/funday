@@ -7,6 +7,7 @@ import {IoSettingsOutline} from 'react-icons/io5'
 import {CgArrowsExchangeAlt} from 'react-icons/cg'
 import { ForwardModal } from "./ForwardModal";
 import { WorkspaceIconPicker } from "./WorkspaceIconPicker";
+import { DynamicFaIcon } from "../data/dynamicFaIcon";
 
 export function UpdateWorkspace({updateWorkspace,deleteWorkspace,onGettingCurrentWorkspace,onManageWorkspace}){
     const dispatch = useDispatch()
@@ -24,8 +25,6 @@ export function UpdateWorkspace({updateWorkspace,deleteWorkspace,onGettingCurren
     const [workspaceName, setWorkspaceName] = useState(workspace.name);
     const [isOpenModal, setIsOpenModal] = useState(false);
     const inputEl = useRef()
-
-
     
     const [isShownMoveToWorkspaceModal, setIsShownMoveToWorkspaceModal] = useState(false)
     const btnEl = useRef()
@@ -81,7 +80,7 @@ export function UpdateWorkspace({updateWorkspace,deleteWorkspace,onGettingCurren
     }
     return(
     <div className={`workspace-title ${isOpenModal?'open-modal':''}`}>
-        <div className="workspace-symbol" style={{backgroundColor:`${workspaceColor}`}}>{workspaceIcon}</div>
+        <div className="workspace-symbol" style={{backgroundColor:`${workspaceColor}`}}> <DynamicFaIcon name={`${workspaceIcon}`} /></div>
        { isUpdateName?
         <input
             type="text"
@@ -113,7 +112,7 @@ export function UpdateWorkspace({updateWorkspace,deleteWorkspace,onGettingCurren
         className={`workspace-name ${workspaceName.length>12?'ellipsis-board-name':''}`}
         >{workspaceName}</div>
        }
-        <div className={`workspace-name-options-btn-wrapper workspace-title-btn ${isOpenModal?'show-btn':''}`}
+        <div className={`workspace-name-options-btn-wrapper more-options-btn ${isOpenModal?'active':''}`}
         tabIndex='0'
         onBlur={()=>setIsOpenModal(false)}
         ref={btnEl}

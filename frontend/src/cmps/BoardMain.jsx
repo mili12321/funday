@@ -88,6 +88,7 @@ class _BoardMain extends Component {
             onEditBoard,
             onRemoveTask,
             openConversationModal,
+            isOpenConversationModal,
             search,
             updateBoard
         } = this.props
@@ -123,6 +124,7 @@ class _BoardMain extends Component {
                                          onRemoveTask={onRemoveTask}
                                          removeTable={removeTable}
                                          openConversationModal={openConversationModal}
+                                         isOpenConversationModal={isOpenConversationModal}
                                          isShrink={this.state.isShrink}
                                          onShrink={this.onShrink}
                                          search={search}

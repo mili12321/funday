@@ -1,4 +1,4 @@
-import React, { useEffect,useState } from 'react';
+import React, { useEffect,useState,useRef } from 'react';
 import { IoMdNotificationsOutline, IoIosSearch } from 'react-icons/io'
 import { BsGrid } from 'react-icons/bs'
 import { AiOutlineUserAdd } from 'react-icons/ai'
@@ -9,14 +9,18 @@ import { FiLogOut } from "react-icons/fi";
 import { FaRegUser } from "react-icons/fa";
 import { Link } from "react-router-dom"
 import { UploadImg } from "./UploadImg"
+import { NotificationsModal } from "./NotificationsModal"
 
 
 export function Navbar(){
     const [isOpenModal, setIsOpenModal] = useState(false);
     const [activeBtn, setActiveBtn] = useState(null)
+    const [isShown, setShowModal] = useState(null)
     const loggedInUser = useSelector(state => state.user.loggedInUser);
     const dispatch = useDispatch();
     const history = useHistory();
+    const notificationsModal = useRef('')
+
     const _logout=()=>{
         dispatch(logout())
         window.location.assign('/')
@@ -28,6 +32,13 @@ export function Navbar(){
             }
         }, 0);
     }, [])
+
+
+    useEffect(() => {
+        if(isShown&&notificationsModal&&notificationsModal.current){
+            notificationsModal.current.focus()
+        }
+    }, [isShown])
 
     return (
         <div className="navbar-section">
@@ -42,18 +53,30 @@ export function Navbar(){
                 <Link to={`/boards`} >
                     <div 
                     className={`icon-wrapper ${activeBtn==='workspaces'?'selected':''}`}
-                    onClick={()=>{setActiveBtn('workspaces')}} 
+                    onClick={()=>{ 
+                        setActiveBtn('workspaces')
+                    }} 
                     >
                         <BsGrid className='navbar-icon'/>
                         <span className="label-text">Wrokspaces</span>
                     </div>
                 </Link>
                 <div 
-                className={`icon-wrapper ${activeBtn==='notifications'?'selected':''}`}
-                onClick={()=>{setActiveBtn('notifications')}} 
+                className={`icon-wrapper ${isShown?'selected':''} `}
+                onClick={()=>{setShowModal(true)}} 
                 >
                     <IoMdNotificationsOutline className={`navbar-icon`}/>
-                    <span className="label-text">Notifications</span>
+                    {!isShown&&<span className="label-text">Notifications</span>}
+
+                    {isShown&&
+                    <div
+                    className="modal-default-style notifications-modal"
+                    tabIndex="0"
+                    ref={notificationsModal}
+                    onBlur={()=>setShowModal(false)}
+                    >
+                        <NotificationsModal/>
+                    </div>}
                 </div>
                 <div 
                 className={`icon-wrapper ${activeBtn==='downloads'?'selected':''}`} 

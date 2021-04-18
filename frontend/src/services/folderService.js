@@ -1,8 +1,5 @@
 export const folderService = {
-    // query,
     getById,
-    // remove,
-    // add,
     update
     
 }

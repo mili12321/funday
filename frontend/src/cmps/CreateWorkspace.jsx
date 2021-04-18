@@ -4,6 +4,7 @@ import { SiPandora } from 'react-icons/si';
 import { BiCheck } from 'react-icons/bi';
 import {colorsPicker } from '../data/shortColorPicker.js';
 import {iconsPicker } from '../data/iconsPicker';
+import { DynamicFaIcon } from "../data/dynamicFaIcon";
 
 export function CreateWorkspace({setIsShown,addNewWorkspace}) {
 
@@ -38,7 +39,7 @@ export function CreateWorkspace({setIsShown,addNewWorkspace}) {
             tabIndex="0"
             onBlur={()=>{setIsOpenModal(false)}}
             >
-           {newWorkspaceIcon}
+           <DynamicFaIcon name={newWorkspaceIcon} />
            {!isOpenModal&&<div className="workspace-icon-edit" >
                <div><FaPencilAlt className="workspace-edit-pencil"/></div>
                <div>Edit</div>
@@ -56,12 +57,12 @@ export function CreateWorkspace({setIsShown,addNewWorkspace}) {
                 </div>
                 <div className="small-font">Icon</div>
                 <div className="icon-picker">
-                    {iconsPicker.map(icon=>
+                    {iconsPicker.map(iconStr=>
                         <div className="icon"
                         style={{backgroundColor:`${newWorkspaceColor}`}}
-                         onClick={()=>setNewWorkspaceIcon(icon)}
+                         onClick={()=>setNewWorkspaceIcon(iconStr)}
                          >
-                           {icon}
+                           <DynamicFaIcon name={iconStr} />
                          </div>
                     )}
                 </div>

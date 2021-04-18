@@ -3,6 +3,7 @@ import { useSelector } from "react-redux";
 import { CreateWorkspace } from "./CreateWorkspace";
 import { PopupModal } from "./PopupModal";
 import { ToolbarOptionsModal } from "./ToolbarOptionsModal";
+import { DynamicFaIcon } from "../data/dynamicFaIcon";
 
 export function BoardToolbar({BsLightning, BsStar, BsThreeDots, onGettingCurrentWorkspace,addNewWorkspace,onSetToolbarMenu}) {
     const allWorkspaces = useSelector(state => state.workspace.workspaces);
@@ -19,6 +20,9 @@ export function BoardToolbar({BsLightning, BsStar, BsThreeDots, onGettingCurrent
     const btnEl = useRef()
     const [isSorted, setIsSorted] = useState(false)
     const [pinedworkspaces, setPinedworkspaces] = useState(false)
+
+
+
 
     useEffect(() => {
         setWorkspaces(allWorkspaces.filter(
@@ -37,11 +41,6 @@ export function BoardToolbar({BsLightning, BsStar, BsThreeDots, onGettingCurrent
 
     useEffect(() => {
         if(!isShownPinWorkspaceModal){
-            // if(btnEl.current){
-            //     setTimeout(() => {
-            //         btnEl.current.focus()
-            //     }, 0);
-            // }
             setTimeout(() => {
                 if(btnEl&&btnEl.current){
                     btnEl.current.focus()
@@ -97,7 +96,9 @@ export function BoardToolbar({BsLightning, BsStar, BsThreeDots, onGettingCurrent
                         className="workspace-icon" 
                         onClick={()=>onGettingCurrentWorkspace(workspace)}
                         style={{backgroundColor:workspace.color}}
-                        >{workspace.img}</div>
+                        >
+                        <DynamicFaIcon name={workspace.img} />
+                        </div>
                     </div>
                 )
             }

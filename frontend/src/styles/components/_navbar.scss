@@ -2,7 +2,7 @@
     width: rem(60px);
     min-width: 60px;
     height: 100vh;
-    background-color: #292f4c;
+    background-color: $primaryBackgroundClr;
     display: flex;
     flex-direction: column;
     border-right: 1px solid #373d58;
@@ -130,8 +130,13 @@
     height: 100%;
     width: 100%;
 }
-.icon-wrapper:hover .label-text{
-    visibility: visible;
+
+.icon-wrapper{
+    &:hover{
+        >.label-text{
+            visibility: visible;
+        }
+    }
 }
 
 .label-text{
@@ -170,6 +175,11 @@
             top: -1px;
             left: 49px;
             transform: rotate(134deg);
+        }
+        &.notification{
+            top: 23px;
+            left: -51px;
+            margin: 0;
         }
     }
     &.text-editor-label{

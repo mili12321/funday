@@ -80,6 +80,16 @@ export function updateTaskConversation(location) {
   }
 }
 
+export function toggleTaskConversationModal() {
+  return async (dispatch) => {
+    try {
+      dispatch({ type: 'TOGGLE_TASK_CONVERSATION_MODAL' })
+    } catch (err) {
+      console.log('WorkspaceActions: err in toggleTaskConversationModal', err)
+    }
+  }
+}
+
 
 
 export function updateBoards(newBoard) {

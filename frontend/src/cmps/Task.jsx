@@ -29,6 +29,7 @@ export function Task({
     provided,
     isDragging,
     openConversationModal,
+    isOpenConversationModal,
     onEditTable,
     onEditTask,
     unCheckTasks,
@@ -61,6 +62,8 @@ export function Task({
     //status
     const [isStatusModalOpen, setIsStatusModalOpen] =useState(false)
     const [isEditLabelsModalOpen, setIsEditLabelsModalOpen] =useState(false)
+
+    const conversationLocation = useSelector(state => state.workspace.conversationLocation)
 
     useEffect(() => {
       dispatch(loadUsers())
@@ -592,7 +595,7 @@ export function Task({
                 }
                 </div>
             </div>
-            <div className="table-row task-row" >
+            <div className={`table-row task-row ${isOpenConversationModal&&task._id===conversationLocation.taskId?'conversation-modal-open':''}`} >
                 {taskKeys.map((taskKey)=>
                     taskKey==="status"?
                     <div 
@@ -665,17 +668,20 @@ export function Task({
             className={`modal-default-style ${getModalStyle()}`}
             style={{...modalPosition}}
             onClick={(ev) => ev.stopPropagation()}>
+
                 {isOwnerModalShown&&<OwnerModal
                 task={task} 
                 onEditTask={onEditTask} 
                 table={table}
                 setToggleOwnerModal={setToggleOwnerModal}/>}
+
                 {isDropdownModalShown&&<DropdownModal
                 task={task} 
                 onEditTask={onEditTask} 
                 table={table}
                 setToggleDropdownModal={setToggleDropdownModal}
                 onEditBoard={onEditBoard}/>}
+                
                 {/* {isStatusModalOpen&&<TaskStatus 
                 task={task} 
                 table={table} 

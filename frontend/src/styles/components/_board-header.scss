@@ -145,7 +145,7 @@
             border-radius: 4px;
             padding: 6px 5px;
             box-sizing: border-box;
-            background-color: #0085ff;
+            background-color: $secondaryClr;
             color: rgb(255, 255, 255);
             cursor: pointer;
         }
@@ -169,7 +169,7 @@ background-color: rgb(245, 246, 249);
     padding:6px 5px;
     transition: all 0.2s ease;
     &:hover{
-        background-color: #dddddd;
+        background-color: $hoverBackgroundClr2;
         cursor: pointer;
         border-radius: 4px;
     }
@@ -185,7 +185,7 @@ background-color: rgb(245, 246, 249);
     padding:5px;
     transition: 0.2s;
     border-radius: 5px;
-    border: 1px solid #0085ff;
+    border: 1px solid $secondaryClr;
     margin: 8px 0;
     width:80px;
     &.menu-btn{

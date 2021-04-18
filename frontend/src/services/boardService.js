@@ -1,4 +1,3 @@
-import httpService from './httpService'
 export const boardService = {
     getById,
     addBoard,
@@ -644,8 +643,8 @@ function addTask(currTable,currBoard,userInput,user) {
         dateCompleted : null,
         progress : "",
         lastUpdated : {
-            byUser : user,
-            date : new Date().getTime() // if Date.now()-time stemp < 1 min then output "just now" else output 1 minute ago
+            byUser : user._id,
+            date : new Date().getTime()
         }
     }
     newTask.owner.push(user._id)

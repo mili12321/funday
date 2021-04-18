@@ -47,7 +47,7 @@
 }
 .TiArrowSortedDown-task-wrapper{
     border-radius: 5px;
-    background-color: #c1c3c79f;
+    background-color: $hoverBackgroundClr1;
 }
 
 .TiArrowSortedDown-wrapper{
@@ -126,11 +126,11 @@ input{
         transition:color 0.2s;
         cursor: pointer;
         &.active{
-            color: #0085ff;
+            color: $secondaryClr;
             opacity: 1;
         }
         &:hover{
-            color: #0085ff;
+            color: $secondaryClr;
             opacity: 1;
         }
     }
@@ -200,7 +200,7 @@ input{
         transition: 0.1s;
         cursor: pointer;
         &:hover{
-            background-color: #0085ff;
+            background-color: $secondaryClr;
             color: white;
         }
         .user-img{

@@ -3,6 +3,7 @@ import { useSelector } from "react-redux";
 import { BiCheck } from 'react-icons/bi';
 import {colorsPicker } from '../data/shortColorPicker.js';
 import {iconsPicker } from '../data/iconsPicker';
+import { DynamicFaIcon } from "../data/dynamicFaIcon";
 
 export function WorkspaceIconPicker({updateWorkspace}) {
 
@@ -49,12 +50,12 @@ export function WorkspaceIconPicker({updateWorkspace}) {
             </div>
         <div className="small-font">Icon</div>
             <div className="icon-picker">
-                {iconsPicker.map(icon=>
+                {iconsPicker.map(iconStr=>
                     <div className="icon"
                     style={{backgroundColor:`${newWorkspaceColor}`}}
-                    onClick={()=>setNewWorkspaceIcon(icon)}
+                    onClick={()=>setNewWorkspaceIcon(iconStr)}
                     >
-                       {icon}
+                       <DynamicFaIcon name={iconStr} />
                      </div>
                 )}
         </div>

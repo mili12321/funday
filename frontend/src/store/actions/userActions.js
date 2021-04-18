@@ -103,3 +103,75 @@ export function toggleFavUserBoardList(loggedInUser,boardId){
     }
 }
 
+export function sendNotification(toUser,from,section,content,taskId,tableId,boardId,WorkspaceId){
+  return async dispatch => {
+    try{
+      const user =await userService.sendNotification(toUser,from,section,content,taskId,tableId,boardId,WorkspaceId)
+      if(toUser._id===from){
+        dispatch({ type: 'UPDATE_USER', user })
+      }
+    }catch(err){
+        console.log('UserActions: err in sendNotification', err); 
+    }
+  }
+}
+
+export function removeNotification(currUser, notificationId){
+  return async dispatch => {
+    try{
+      const user =await userService.removeNotification(currUser, notificationId)
+      dispatch({ type: 'UPDATE_USER', user })
+    }catch(err){
+        console.log('UserActions: err in removeNotification', err); 
+    }
+  }
+}
+
+export function removeAllNotifications(currUser){
+  return async dispatch => {
+    try{
+      const user =await userService.removeAllNotifications(currUser)
+      dispatch({ type: 'UPDATE_USER', user })
+    }catch(err){
+        console.log('UserActions: err in removeAllNotifications', err); 
+    }
+  }
+}
+
+
+export function markAsRead(currUser, notificationId){
+  return async dispatch => {
+    try{
+      const user = await userService.markAsRead(currUser, notificationId)
+      dispatch({ type: 'UPDATE_USER', user })
+    }catch(err){
+      console.log('UserActions: err in markAsRead', err); 
+    }
+  }
+}
+
+
+export function toggleMarkAsRead(currUser, notificationId){
+  return async dispatch => {
+    try{
+      const user = await userService.toggleMarkAsRead(currUser, notificationId)
+      dispatch({ type: 'UPDATE_USER', user })
+    }catch(err){
+      console.log('UserActions: err in toggleMarkAsRead', err); 
+    }
+  }
+}
+
+
+export function markAllAsRead(currUser){
+  return async dispatch => {
+    try{
+      const user = await userService.markAllAsRead(currUser)
+      dispatch({ type: 'UPDATE_USER', user })
+    }catch(err){
+      console.log('UserActions: err in markAllAsRead', err); 
+    }
+  }
+}
+
+

@@ -5,7 +5,8 @@ const initialState = {
     currBoard: {},
     checkedTasks:[],
     boardWorkspace:{},
-    conversationLocation:{}
+    conversationLocation:{},
+    isTaskConversationModalOpen:false,
 }
 
 export function workspaceReducer(state = initialState, action) {
@@ -81,6 +82,11 @@ export function workspaceReducer(state = initialState, action) {
             return {
                 ...state,
                 conversationLocation: action.location
+            }  
+        case 'TOGGLE_TASK_CONVERSATION_MODAL':
+            return {
+                ...state,
+                isTaskConversationModalOpen: !state.isTaskConversationModalOpen
             } 
         default:
             return state

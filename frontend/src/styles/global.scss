@@ -17,6 +17,10 @@
 @import "views/board.scss";
 
 // Components
+// @import "components/loading.scss";
+@import "components/login-modal.scss";
+@import "components/home-background.scss";
+@import "components/loading.scss";
 @import "components/modal-default-style.scss";
 @import "components/navbar.scss";
 @import "components/board-toolbar.scss";
@@ -56,3 +60,5 @@
 @import "components/task-timeline.scss";
 @import "components/title-cell-options-btn.scss";
 @import "components/opacity-for-currently-unavailable-btns.scss";
+@import "components/notifications-modal.scss";
+@import "components/notification-preview.scss";

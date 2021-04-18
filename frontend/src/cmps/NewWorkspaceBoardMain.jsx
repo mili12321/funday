@@ -4,13 +4,14 @@ import { FaPencilAlt } from 'react-icons/fa'
 import { BiCheck } from 'react-icons/bi';
 import { BsThreeDots,BsTrashFill } from 'react-icons/bs';
 import { WorkspaceIconPicker } from "./WorkspaceIconPicker";
+import { DynamicFaIcon } from "../data/dynamicFaIcon";
 
 export function NewWorkspaceBoardMain({updateWorkspace,deleteWorkspace}) {
     const workspace = useSelector(state => state.workspace.currWorkspace);
     const[isOpenModal,setIsOpenModal]=useState(false)
     const[isShowModal,setIsShowModal]=useState(false)
     const[newWorkspaceColor,setNewWorkspaceColor]=useState(workspace.color)
-    const[newWorkspaceIcon,setNewWorkspaceIcon]=useState(workspace.img)
+    const[newWorkspaceIcon,setNewWorkspaceIcon]=useState(workspace.img) 
     const [isUpdateName, setIsUpdateName] = useState(false);
     const [workspaceName, setWorkspaceName] = useState(workspace.name);
     const [isUpdateDesc, setIsUpdateDesc] = useState(false);
@@ -20,7 +21,7 @@ export function NewWorkspaceBoardMain({updateWorkspace,deleteWorkspace}) {
 
     useEffect(() => {
         setNewWorkspaceColor(workspace.color)
-        setNewWorkspaceIcon(workspace.img)
+        setNewWorkspaceIcon(workspace.img) 
         setWorkspaceName(workspace.name)
         setWorkspaceDesc(workspace.desc)
     }, [workspace])
@@ -66,7 +67,7 @@ export function NewWorkspaceBoardMain({updateWorkspace,deleteWorkspace}) {
                     setIsOpenModal(false)
                 }}
             >
-                {newWorkspaceIcon}
+                <DynamicFaIcon name={newWorkspaceIcon} />
                 {!isOpenModal&&
                     <div className="workspace-icon-edit" >
                         <div><FaPencilAlt className="workspace-edit-pencil"/></div>

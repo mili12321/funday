@@ -154,7 +154,7 @@ class _Login extends Component {
     return (
       <React.Fragment>
         <Particles
-          canvasClassName='example'
+          canvasClassName='login-particles-background'
           params={{
             particles: {
               number: {

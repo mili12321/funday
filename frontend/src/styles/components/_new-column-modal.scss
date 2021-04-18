@@ -24,8 +24,8 @@
             border-radius: 3px;
             cursor: pointer;
             &:hover{
-                background-color: #dddddd;
-                color: #424242;
+                background-color: $hoverBackgroundClr2;
+                color: $primaryClr;
             }
             >.icon{
                 margin-right:7px;
@@ -36,7 +36,7 @@
                 pointer-events: none;
                 &:hover{
                     background-color: transparent;
-                    color: #424242;
+                    color: $primaryClr;
                 }
             }
         }

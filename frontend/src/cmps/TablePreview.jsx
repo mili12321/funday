@@ -35,6 +35,7 @@ export function TablePreview({
     onRemoveTask,
     removeTable,
     openConversationModal,
+    isOpenConversationModal,
     dragHandle,
     isDragging,
     isShrink,
@@ -368,6 +369,15 @@ export function TablePreview({
                                 </div>:
                                 null
                             }
+                            <span className="label-text arrow-down" style={{ top:  `-${40+((allOwners.length-1)*13)}px`}}>
+                                <div className="label-text-content">
+                                    {
+                                        allOwners.map(owner=>
+                                            <div style={{height:'13px'}}>{owner.username}</div>
+                                        )
+                                    }
+                                </div>
+                            </span>
                         </div>
                         }
                     </div>
@@ -587,6 +597,7 @@ export function TablePreview({
                                         board={board}
                                         onEditBoard={onEditBoard}
                                         openConversationModal={openConversationModal}
+                                        isOpenConversationModal={isOpenConversationModal}
                                         unCheckTasks={unCheckTasks}
                                         updateBoard={updateBoard}
                                         />

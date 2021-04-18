@@ -13,10 +13,10 @@
     transition: 0.2s;
     cursor: pointer;
     &:hover{
-        color: #0085ff; 
+        color: $secondaryClr; 
     }
     &.updating{
-        color: #0085ff; 
+        color: $secondaryClr; 
     }
 }
 .title-cell-options-modal{

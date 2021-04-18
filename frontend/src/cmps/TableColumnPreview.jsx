@@ -65,7 +65,7 @@ class _TableColumnPreview extends Component {
             if(value.taskKey==='name'){
                 content.push(
                     <div 
-                    className={`${this.props.isOpenTableColorModal?'':'table-name-wrapper'}`}
+                    className={`${this.props.isOpenTableColorModal?'':'table-name-wrapper'} ${this.editableGroupName&&this.editableGroupName.current&&(document.activeElement === this.editableGroupName.current)?'title-editable-focus':''}`}
                     tabIndex='0' 
                     onClick={()=> this.toggleFocusOnDiv(true)} 
                     onBlur={()=>
@@ -149,7 +149,7 @@ class _TableColumnPreview extends Component {
     {
         switch (columnName) {
             case 'checkBox':
-                return 'checkBox-title'
+                return `checkBox-title ${this.state.isShownTitleOptionsModal?'updating':''}`
             default:
                 return ''
         }

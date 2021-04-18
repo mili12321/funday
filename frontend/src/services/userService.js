@@ -11,7 +11,13 @@ export default {
   removeFavBoard,
   addFavBoard,
   loginByGoogle,
-  guestLogin
+  guestLogin,
+  sendNotification,
+  markAsRead,
+  toggleMarkAsRead,
+  removeNotification,
+  removeAllNotifications,
+  markAllAsRead
 }
 
 function getUsers() {
@@ -71,8 +77,82 @@ async function addFavBoard(user,boardId){
   const newUser = await httpService.put(`user/${user._id}`, user)
   return _handleLogin(newUser)
 }
+
 async function removeFavBoard(user,boardId){
   user.favBoards = user.favBoards.filter(_boardId=>_boardId!==boardId)
+  const newUser = await httpService.put(`user/${user._id}`, user)
+  return _handleLogin(newUser)
+}
+
+async function sendNotification(user,from,section,content,taskId,tableId,boardId,WorkspaceId){
+
+  const notification = {
+    _id:Date.now().toString(16) + Math.random().toString(16),
+    from,
+    to:user._id,
+    section,
+    content,
+    createdAt: Date.now(),
+    isRead:false,
+    //for opening the conversation modal with the curr task conversation
+    conversationLocation:{
+        taskId,
+        tableId,
+        boardId,
+        WorkspaceId,
+    }
+  }
+
+  user.notifications = [notification,...user.notifications]
+  const newUser = await httpService.put(`user/${user._id}`, user)
+  if(user._id===from){
+    return _handleLogin(newUser)
+  }
+}
+
+async function markAsRead(user, notificationId){
+  const notification = user.notifications.filter(_notification=>_notification._id===notificationId)[0]
+  user.notifications = user.notifications.map(_notification=>
+      _notification._id===notificationId?{...notification, isRead:true}:_notification
+  )
+  const newUser = await httpService.put(`user/${user._id}`, user)
+  return _handleLogin(newUser)
+}
+
+async function toggleMarkAsRead(user, notificationId){
+  const notification = user.notifications.filter(_notification=>_notification._id===notificationId)[0]
+  if(notification.isRead){
+    user.notifications = user.notifications.map(_notification=>
+      _notification._id===notificationId?{...notification, isRead:false}:_notification
+      )
+  }else{
+    user.notifications = user.notifications.map(_notification=>
+      _notification._id===notificationId?{...notification, isRead:true}:_notification
+      )
+  }
+  const newUser = await httpService.put(`user/${user._id}`, user)
+  return _handleLogin(newUser)
+}
+
+async function markAllAsRead(user){
+
+  user.notifications.forEach(notification => {
+    notification.isRead=true
+  });
+
+  const newUser = await httpService.put(`user/${user._id}`, user)
+  return _handleLogin(newUser)
+}
+
+
+async function removeNotification(user, notificationId) {
+  user.notifications = user.notifications.filter(notification=>notification._id!==notificationId)
+  const newUser = await httpService.put(`user/${user._id}`, user)
+  return _handleLogin(newUser)
+}
+
+async function removeAllNotifications(user) {
+  user.notifications = []
   const newUser = await httpService.put(`user/${user._id}`, user)
   return _handleLogin(newUser)
 }

@@ -1,0 +1,91 @@
+.notification-preview{
+    display: flex;
+    flex-direction: column;
+    padding: 10px 5px;
+    border-radius: 5px;
+    margin-bottom: 3px;
+    cursor: pointer;
+    position: relative;
+    &:hover{
+        background-color: #c5e7ff92;
+        .options{
+            visibility: visible;
+        }
+    }
+    &.unread{
+        background-color: #c5e7ff92;
+        &:hover{
+            background-color: #b0deffab;
+        }
+    }
+    .notification-content-wrapper{
+        display: flex;
+        .user-img{
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            margin-right: 9px;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+    
+        .notification-content-wrapper{
+            display: flex;
+            flex-direction: column;
+            .main{
+                display: flex;
+                .icon{
+                    margin-right: 2px;
+                    width: 17px;
+                    height: 17px;
+                }
+            }
+            .header{
+                margin-bottom: 5px;
+            }
+            .header, .main{
+                display: flex;
+                >div{
+                    &:first-child{
+                        margin-right: 5px;
+                    }
+                }
+                .colored-txt{
+                   display: flex;
+                }
+            }
+            .sender-name
+            {
+                font-weight: bold;
+            }
+        }
+    }
+    .options{
+        display: flex;
+        justify-content: flex-end;
+        visibility: hidden;
+        position: absolute;
+        right: 0;
+        bottom: 0;
+        .options-icon-wrapper{
+            position: relative;
+            margin-right: 7px;
+            cursor: pointer;
+            &:hover{
+                color: $secondaryClr;
+                .label-text{
+                    visibility: visible;
+                }
+            } 
+        }
+    }
+}
+.colored-txt{
+    color: $secondaryClr;
+}
+.capitalize{
+    &::first-letter{
+        text-transform: capitalize;
+    }
+}

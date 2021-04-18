@@ -25,7 +25,7 @@
             border-radius: 5px;
             cursor: pointer;
             font-size: 10px;
-            color: #0085ff;
+            color: $secondaryClr;
             place-items: center;
             flex-direction: column;
             justify-content: center;
@@ -57,7 +57,7 @@
     margin-bottom: 20px;
     font-size: 12px;
     &:focus{
-        border: 1px solid #0085ff;
+        border: 1px solid $secondaryClr;
     }
 }
 .btns-container{
@@ -70,7 +70,7 @@
     }
     .add-btn{
         padding: 5px 10px;
-        background-color: #0085ff;
+        background-color: $secondaryClr;
         color: white;
         border-radius: 5px;
         cursor: pointer;

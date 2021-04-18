@@ -1,10 +1,10 @@
 .table{
     margin-right: 65px;
     &.shrink{
-        background-color: #e6e9ef9f;
+        background-color: $taskCellBackgroundClr;
         transition: 0.2s;
         &:hover{
-            background-color: #c1c3c79f;
+            background-color: $hoverBackgroundClr1;
         }
     }
 }
@@ -27,10 +27,13 @@
     margin-bottom: 2px;
     flex-grow: 1;
     &:hover{
-        background-color: #c1c3c79f;
+        background-color: $hoverBackgroundClr1;
         .task-cell-status{
             opacity: 0.8 !important; 
         }
+    }
+    &.conversation-modal-open{
+        background-color: #c5e7ff;
     }
 }
 .add-row, .task-row{
@@ -60,7 +63,7 @@
     position: relative;
     &:not(:first-child){
         justify-content: center;
-        color:  #424242  !important;
+        color:  $primaryClr  !important;
         &:hover{
             background-color: rgba(230, 233, 239, 0.6);
             .title-cell-options-wrapper .title-cell-options-btn{
@@ -97,6 +100,16 @@
             white-space: nowrap;  
             text-overflow: ellipsis; 
         }
+        &:hover{
+            >.content-editable{
+                width: 18px;
+            }
+        }
+        &.updating{
+            >.content-editable{
+                width: 18px;
+            } 
+        }
     }
 }
 .add-column-btn{
@@ -105,7 +118,7 @@
     cursor: pointer;
     transition: 0.1s;
     &:hover{
-        color: #0085ff; 
+        color: $secondaryClr; 
     }
 }
 .task-cell, .add-cell{
@@ -129,7 +142,7 @@
         position: relative;
         &.name-wrapper-cell{
             &:hover .task-name-span{
-                color: #0085ff;
+                color: $secondaryClr;
             }
         }
         &.dropdown-wrapper-cell{
@@ -217,13 +230,31 @@
     max-height: 20px;
 }
 .sum-cell-content-wrapper, .task-cell{
-    background-color: #e6e9ef9f ;
+    background-color: $taskCellBackgroundClr ;
 }
 .sum-cell-content-wrapper{
     border-radius: 0 0 5px 5px;
     width: calc(150px - 12px);
     display: flex;
     justify-content: center;
+    .owner-container{
+        position: relative;
+        >.label-text{
+            text-align: start;
+            &::after{
+                top: auto;
+                bottom: 0px;
+            }
+        }
+        &:hover .label-text{
+            visibility: visible;
+        }
+        .label-text-content{
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+    }
 }
 
 .add-status-cell{
@@ -305,7 +336,7 @@
         color: #000000;
     }
     &:focus{
-        border: 1px solid #0085ff; 
+        border: 1px solid $secondaryClr; 
         outline: none;
     }
 }
@@ -320,7 +351,7 @@
     place-items: center;
     justify-content: center;
     padding: 0 10px;
-    background-color: #0085ff; 
+    background-color: $secondaryClr; 
     color: white;
     opacity: 0.5;
     cursor: pointer;

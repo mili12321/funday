@@ -1,12 +1,15 @@
 import React, { useEffect,useState,useRef } from 'react';
 import { useDispatch, useSelector } from "react-redux";
-import { loadUsers } from '../store/actions/userActions'
+import { loadUsers,sendNotification } from '../store/actions/userActions'
 
 export function OwnerModal({
     task,
     table,
     onEditTask
 }){
+    const loggedInUser = useSelector(state => state.user.loggedInUser);
+    const currBoard = useSelector(state => state.workspace.currBoard);
+    const currWorkspace = useSelector(state => state.workspace.currWorkspace);
     const dispatch = useDispatch();
     const users = useSelector(state => state.user.users);
     const [owners, setOwners] = useState(null);
@@ -55,15 +58,31 @@ export function OwnerModal({
             }
     }, [users,owners])
 
-    const updateTaskOwner=(userId,userName)=>{
+    const updateTaskOwner=(user,userName)=>{
         const updatedTask = {
             ...task,
-            owner:[...task.owner,userId]
+            owner:[...task.owner,user._id]
         }
         const desc = `added new owner "${userName}" to task "${updatedTask.name}" inside "${table.name}"`
         onEditTask(table,updatedTask,desc)
         // setToggleOwnerModal(false)
+
+        //send notification to user
+        dispatch(sendNotification(
+            user, //to user
+            loggedInUser._id, //from user
+            'assigned', //section
+            `you to the item "${updatedTask.name}"`, //content
+            task._id, //taskId
+            table._id, //tableId
+            currBoard._id, //boardId
+            currWorkspace._id//WorkspaceId
+        ))
+
+        //! send the notification msg to user with sockets
+
     }
+
     const removeOwner=(userId,userName)=>{
         const updatedTask = {
             ...task,
@@ -72,32 +91,29 @@ export function OwnerModal({
         const desc = `removed owner "${userName}" from task "${updatedTask.name}" inside "${table.name}"`
         onEditTask(table,updatedTask,desc)
     }
-const getUserName=(name)=>{
-    let content  = []
-    for (var i = 0; i < name.length; i++) {
-        content.push(
-            <span className={`${search.toLowerCase().includes(name[i].toLowerCase())?'bold':''}`}>{name[i]}</span>
-        )
-    }
-    return content
-}
-function getLine(){
-    let content  = []
-    for (let i = 0; i < 12; i++) {
-        content.push(
-            <span className="title-line">
-               -
-            </span>
-        )
-    }
-    return content
-}
 
-// useEffect(() => {
-//     if(inputEl&&inputEl.current){
-//         inputEl.current.focus()
-//     }
-// }, [])
+    const getUserName=(name)=>{
+        let content  = []
+        for (var i = 0; i < name.length; i++) {
+            content.push(
+                <span className={`${search.toLowerCase().includes(name[i].toLowerCase())?   'bold':''}`}>{name[i]}</span>
+            )
+        }
+        return content
+    }
+
+    function getLine(){
+        let content  = []
+        for (let i = 0; i < 12; i++) {
+            content.push(
+                <span className="title-line">
+                   -
+                </span>
+            )
+        }
+        return content
+    }
+
 
     return (
        <>
@@ -129,7 +145,7 @@ function getLine(){
             user.username.toLowerCase().includes(search.toLowerCase())?
                 <div className="user-details" onClick={()=>
                 {
-                    updateTaskOwner(user._id,user.username)
+                    updateTaskOwner(user,user.username)
                 }}
                 >
                     <img className="user-img" src={`${user.avatar}`} alt="" srcset=""/>

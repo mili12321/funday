@@ -1,9 +1,10 @@
 import React, { Component } from 'react'
-import { NavLink, withRouter } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux'
 import { logout } from '../store/actions/userActions'
 import { LoginModal } from '../cmps/LoginModal';
 import {guestLogin} from '../store/actions/userActions'
+import { HomeBackground } from "../cmps/HomeBackground";
 
 export class _Home extends Component {
     state ={
@@ -29,23 +30,45 @@ export class _Home extends Component {
     }
 
     render() {
-        return (
-            <div className="home-page">
-                <div className="login-btn">
-                {!this.props.loggedInUser&& 
-                <div className="user-login  after-canvas" onClick={this.onOpenModal}>Log in</div>
-                }
-                {this.props.loggedInUser && <div className="user-name">Hello {this.props.loggedInUser.username}</div>}
-                {this.props.loggedInUser&&<div id="logout-btn" onClick={this.logout}>Logout</div>}
+        return (  
+            <>
+                <HomeBackground/>
+
+                <div  className="home-page">
+
+                    <div className="title-wrapper" >
+                        <div className="title">FUNDAY</div>
+                        <img class="title-img" src={process.env.PUBLIC_URL + "/assets/img/logo.png"} alt=''/>
+                    </div>
+
+                    <div className="desc-wraper" >
+                        The next step in multi-planning and productivity!
+                        Funday will help you keep track of hundreds of tasks.
+                        An efficient way to manage your co-workers / employees.
+                        Half the hassle and twice the fun.
+                    </div>
+
+                    <div className="btns-container">
+                        <div className="login-btn">
+                            {!this.props.loggedInUser&& 
+                                <div className="user-login  after-canvas" onClick=  {this.onOpenModal}>Log in</div>
+                            }
+                            {this.props.loggedInUser && <div    className="user-name">Hello {this.props.loggedInUser.username}</div>}
+                            {this.props.loggedInUser&&<div id="logout-btn"  onClick={this.logout}>Logout</div>}
+                    
+                        </div>
+                        {!this.props.loggedInUser&& 
+                            <div className="login-btn">
+                                <div className="user-login  after-canvas" onClick={this.onGuestLogin}>
+                                    Try as a guest
+                                </div>
+                            </div>
+                        }
+                        {this.state.showComponent&&<LoginModal onOpenModal= {this.onOpenModal}/>}
+                    </div>
 
                 </div>
-                {!this.props.loggedInUser&& <div className="login-btn">
-                <div className="user-login  after-canvas" onClick={this.onGuestLogin}>
-                    Try as a guest
-                </div>
-                </div>}
-                {this.state.showComponent&&<LoginModal onOpenModal={this.onOpenModal}/>}
-            </div>
+            </>
         )
     }
 }

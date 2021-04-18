@@ -6,7 +6,7 @@
         min-width: 197px;
         width: fit-content;
         z-index: 4;
-        color: #424242;
+        color: $primaryClr;
         max-height: 200px;
         overflow-y: scroll;
         overflow-x: auto;
@@ -84,7 +84,7 @@
     width: 100%;
     border-radius: 4px;
     outline: none;
-    border: 1px solid #0085ff;
+    border: 1px solid $secondaryClr;
     padding: 5px 10px;
     margin-bottom: 7px;
 }

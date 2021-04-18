@@ -72,6 +72,7 @@ export function TitleOptionsBtn({toggleTitleOptionsModal,isShownTitleOptionsModa
         }
        
         onEditBoard(updatedBoard)
+        toggleTitleOptionsModal()
     }
 
    const hideColumn=()=>{
@@ -88,6 +89,7 @@ export function TitleOptionsBtn({toggleTitleOptionsModal,isShownTitleOptionsModa
             ...board.activities]
     }
     onEditBoard(updatedBoard)
+    toggleTitleOptionsModal()
 }
 
     return(

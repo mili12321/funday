@@ -19,7 +19,7 @@
     display: flex;
     justify-content: space-between;
     flex-direction: column;
-    color: #424242;
+    color: $primaryClr;
     &.item-actions-modal{
         min-width:220px;
         padding: 7px;
@@ -40,22 +40,22 @@
     // &:hover{
     //     background-color: #0085ff1c;
     //     border-radius: 5px;
-        // color: #0085ff;
+        // color: $secondaryClr;
     // }
     &:hover{
-        background-color: #dddddd;
+        background-color: $hoverBackgroundClr2;
         border-radius: 3px;
-        color: #424242;
+        color: $primaryClr;
     }
     &.item-actions-btn{
         place-items: center;
         &:hover{
-            background-color: #dddddd;
+            background-color: $hoverBackgroundClr2;
             border-radius: 3px;
-            color: #424242;
+            color: $primaryClr;
         }
         &.open-modal{
-            background-color: #dddddd;
+            background-color: $hoverBackgroundClr2;
             border-radius: 3px;
         }
         &.move-workspace-btn, .pin-workspaces-btn{

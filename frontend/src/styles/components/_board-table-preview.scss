@@ -26,13 +26,22 @@
     color: white;
     transition: 0.2s;
     &.active{
-        color: #0085ff !important;
+        color: $secondaryClr !important;
     }
 }
 
 .table-name-wrapper{
     display: flex;
     &:hover{
+        .table-actions{
+            display: flex;
+            transition: 0.3s;
+        }
+        .expand-btn, .shrink-btn, .drag-btn{
+            opacity: 1;
+        }
+    }
+    &.title-editable-focus{
         .table-actions{
             display: flex;
             transition: 0.3s;

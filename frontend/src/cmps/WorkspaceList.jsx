@@ -1,6 +1,7 @@
 import React, { useState,useRef,useEffect } from 'react';
 import { useDispatch, useSelector } from "react-redux";
 import { PinCheckbox } from "./PinCheckbox";
+import { DynamicFaIcon } from "../data/dynamicFaIcon";
 
 export function WorkspaceList({
     onMoveObject,
@@ -45,7 +46,9 @@ export function WorkspaceList({
                             <div 
                             className="workspace-icon" 
                             style={{backgroundColor:workspace.color}}
-                            >{workspace.img}</div>
+                            >
+                            <DynamicFaIcon name={workspace.img} />
+                            </div>
                             <span  className="workspace-name">{workspace.name}</span>
                         </div>
                        {isCheckbox&&

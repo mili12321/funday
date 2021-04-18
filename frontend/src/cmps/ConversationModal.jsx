@@ -12,6 +12,8 @@ import { RiReplyLine } from 'react-icons/ri'
 import { useSelector } from "react-redux";
 import moment from 'moment'
 
+
+
 function ReplyMsgPreview({replyMsg,getUserById,conversation,currTask,onEditTask,currTable}) {
 
     const loggedInUser = useSelector(state => state.user.loggedInUser);
@@ -372,7 +374,16 @@ export function ConversationModal({
     ]
     return (
         <div className={`conversation-modal-content`}>
-          <div className='conversation-modal-title'>
+            {
+                !currTask?
+                <div className="no-task-msg">
+                    <div className="msg">Task was deleted...</div>
+                    <img className="illustration-img" 
+                    src={process.env.PUBLIC_URL + "/assets/img/illustration-red-x-mark.jpg"} alt="" srcset=""/>
+                </div>
+                :
+                <>
+                <div className='conversation-modal-title'>
           {currTask&&currTask.name}
           </div>
           <div className='conversation-modal-updates'> 
@@ -443,6 +454,78 @@ export function ConversationModal({
                 </div>
             }
           </div>
+                </>
+            }
+          {/* <div className='conversation-modal-title'>
+          {currTask&&currTask.name}
+          </div>
+          <div className='conversation-modal-updates'> 
+              Updates {currTask&&currTask.conversations.length>0&&`/ ${currTask.conversations.length}`}
+          </div>
+          <div className="updates-section-content">
+            {isActiveInput?
+                <input type="text" placeholder='Write an update...' className="conversation-input" onClick={()=>{
+                    setActiveInput(true)
+                    setTimeout(() => {
+                        if(inuptRef&&inuptRef.current){
+                            inuptRef.current.focus()
+                        }
+                    }, 0);
+                }}/>
+                :
+                <div className="new-msg-container">
+                <div className="textarea-editor-wrapper">
+                    <div className="buttons-bar">
+                        {editorBtns.map(btn=>
+                            <div className="editor-btn">
+                            {btn.icon}
+                                <span className="label-text arrow-up text-editor-label">{btn.name}</span>
+                            </div>
+                        )}
+                    </div>
+                    <textarea name="" id="" cols="30" rows="10" ref={inuptRef}
+                    onBlur={()=> setActiveInput(false)}
+                    value={msg}
+                    onChange={(ev)=>setMsg(ev.target.value)}
+                    />
+                </div>
+                <div className="attachments-bar">
+                        {attachmentBtns.map(btn=>
+                            <div className="attachment-btn">
+                                {btn.icon}
+                                <span>{btn.name}</span>
+                            </div>
+                        )}
+                        <div className="add-msg-btn"
+                        onClick={onAddMsg}
+                        >Update</div>
+                </div>
+                </div>
+            }
+            {
+                <div className='updates-list'>
+                    {
+                        currTask&&currTask.conversations.length>0?
+                            <>
+                            {currTask.conversations.map(conversation=>
+                                <ConversationPreview
+                                key={conversation._id}
+                                conversation={conversation}
+                                getUserById={getUserById}
+                                onUpdateMsgLikes={onUpdateMsgLikes}
+                                attachmentBtns={attachmentBtns}
+                                onEditTask={onEditTask}
+                                currTable={currTable}
+                                currTask={currTask}
+                                />
+                            )}
+                            </>
+                        :
+                            <span className='no-updates'>No updates yet...</span>
+                        }
+                </div>
+            }
+          </div> */}
         </div>
     );
 }

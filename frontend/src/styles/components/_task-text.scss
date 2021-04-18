@@ -23,7 +23,7 @@
             height: 93%;
             width: 83%;
             padding: 0 3px;
-            border: 1px dashed #0085ff;
+            border: 1px dashed $secondaryClr;
             &.numbers{
                 width: 100%;
             }
@@ -36,13 +36,13 @@
             place-items: center;
             justify-content: center;
             border-radius: 0 50% 50% 0;
-            border: 1px dashed #0085ff;
+            border: 1px dashed $secondaryClr;
             border-left: none;
-            color: #0085ff;
+            color: $secondaryClr;
             background-color: #fff;
             position: relative;
             &.active{
-                border: 1px solid #0085ff;
+                border: 1px solid $secondaryClr;
                 border-left: none;
                 border-radius: 0 50% 0 0;
                 border-bottom: 1px dashed #ffffff;
@@ -56,7 +56,7 @@
     border-radius: 0;
     z-index: 1;
     box-shadow: none;
-    border: 1px solid #0085ff;
+    border: 1px solid $secondaryClr;
     z-index: -1;
     padding: 10px;
     display: grid;

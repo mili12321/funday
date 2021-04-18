@@ -1,6 +1,6 @@
 .add-cell-content-btn-wrapper{
     &.dropdown{
-        color: #0085ff;
+        color: $secondaryClr;
         position: relative;
         &.add-first{
             left: 0px;
@@ -46,7 +46,7 @@
             padding: 5px 10px;
             margin-bottom: 5px;
             &:focus{
-                border: 1px solid #0085ff;
+                border: 1px solid $secondaryClr;
             }
         }
     }
@@ -65,7 +65,7 @@
         span{
             &:first-child{
                 margin-right: 5px;
-                color:  #0085ff;
+                color:  $secondaryClr;
                 text-overflow: ellipsis;
                 white-space: nowrap;
                 overflow: hidden;

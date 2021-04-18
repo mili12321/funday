@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
+import { Loading } from '../cmps/Loading'
 import { BoardToolbar } from '../cmps/BoardToolbar'
 import { BoardToolbarMenu } from '../cmps/BoardToolbarMenu'
 import { BoardHeader } from '../cmps/BoardHeader'
@@ -10,7 +11,7 @@ import { ConversationModal } from '../cmps/ConversationModal'
 import { ActivitiesModal } from '../cmps/ActivitiesModal'
 import { NewWorkspaceBoardMain } from '../cmps/NewWorkspaceBoardMain'
 import { loadWorkspaces, updateWorkspace,updateCurrWorkspace, addWorkspace,removeWorkspace} from '../store/actions/workspaceActions'
-import { getCurrBoard, updateCurrBoard} from '../store/actions/workspaceActions'
+import { getCurrBoard, updateCurrBoard,toggleTaskConversationModal} from '../store/actions/workspaceActions'
 import { updateUser} from '../store/actions/userActions'
 import { boardService } from '../services/boardService'
 import { folderService } from '../services/folderService'
@@ -497,9 +498,9 @@ export class _Workspace extends Component {
     }
 
     render() {
-        const { workspaces } = this.props
+        const { workspaces,loggedInUser } = this.props
         const { workspace,board ,isNewWorkspaceCreated} = this.state
-        if (!workspaces||!board||!workspace) return <div>Loading....</div>
+        if (!workspaces||!board||!workspace||!loggedInUser) return <Loading/>
         return (
             <div className="board-page-container">
                 <BoardToolbar 
@@ -553,14 +554,15 @@ export class _Workspace extends Component {
                    onEditTable={this.onEditTable}
                    onRemoveTask={this.onRemoveTask}
                    openConversationModal={this.openConversationModal}
+                   isOpenConversationModal={this.state.isOpenConversationModal}
                    updateWorkspace={this.updateWorkspace}
                    deleteWorkspace={this.deleteWorkspace}
                    openActivitiesModal={this.openActivitiesModal}
                    updateBoard={this.updateBoard}
                 />
                 { 
-                <div className={`conversation-modal-wrapper ${this.state.isShowModal?'':'hide'}`}>
-                    <div className={`conversation-modal ${this.state.isShowModal?' slide-left':'slide-right'}`}
+                <div className={`conversation-modal-wrapper ${this.state.isShowModal||this.props.isTaskConversationModalOpen?'':'hide'}`}>
+                    <div className={`conversation-modal ${this.state.isShowModal||this.props.isTaskConversationModalOpen?' slide-left':'slide-right'}`}
                     // tabIndex='0' 
                     // onBlur={()=>{
                     // this.setState({isOpenConversationModal:false})}}
@@ -570,10 +572,13 @@ export class _Workspace extends Component {
                             this.setState({isOpenConversationModal:false})
                             this.setState({isOpenActivitiesModal:false})
                         })
+                        if(this.props.isTaskConversationModalOpen){
+                            this.props.toggleTaskConversationModal()
+                        }
                         }}
                         />
                         {this.state.isOpenActivitiesModal&&<ActivitiesModal/>}
-                        {this.state.isOpenConversationModal&&<ConversationModal 
+                        {(this.state.isOpenConversationModal||this.props.isTaskConversationModalOpen)&&<ConversationModal 
                         isOpenConversationModal={this.state.isOpenConversationModal}
                         onEditTask={this.onEditTask}
                         />}
@@ -589,6 +594,7 @@ const mapStateToProps = state => {
         workspaces: state.workspace.workspaces,
         workspace: state.workspace.currWorkspace,
         board: state.workspace.currBoard,
+        isTaskConversationModalOpen: state.workspace.isTaskConversationModalOpen,
         loggedInUser: state.user.loggedInUser,
     }
 }
@@ -600,6 +606,7 @@ const mapDispatchToProps = {
     updateCurrBoard,
     addWorkspace,
     removeWorkspace,
-    updateUser
+    updateUser,
+    toggleTaskConversationModal
 }
 export const Workspace = connect(mapStateToProps, mapDispatchToProps)(_Workspace)

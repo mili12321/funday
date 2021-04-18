@@ -7,12 +7,14 @@ export function TaskDate({task,taskKey,onEditTask,table}) {
     const [startDate, setStartDate] = useState(task.createdAt?new Date(task.createdAt):new Date());
 
     useEffect(() => {
+      if( startDate.getTime() !== task.createdAt){
         const updatedTask = {
-            ...task,
-            createdAt: startDate.getTime()
+          ...task,
+          createdAt: startDate.getTime()
         }
         const desc = `changed date inside "${task.name}" `
         onEditTask(table,updatedTask,desc)
+      }
     }, [startDate])
 
     function getMonthName(month){

@@ -15,6 +15,7 @@ export function BoardDetails({
     onEditTable,
     onRemoveTask,
     openConversationModal,
+    isOpenConversationModal,
     updateWorkspace,
     deleteWorkspace,
     openActivitiesModal,
@@ -49,6 +50,7 @@ export function BoardDetails({
                 onEditBoard={onEditBoard}
                 onRemoveTask={onRemoveTask}
                 openConversationModal={openConversationModal}
+                isOpenConversationModal={isOpenConversationModal}
                 search={search} 
                 updateBoard={updateBoard}
             />:

@@ -5,10 +5,10 @@
             visibility: visible;
         }
         .conversations-count{
-            background-color: #0085ff;
+            background-color: $secondaryClr;
         }
         .conversation-bubble{
-            color: #0085ff;
+            color: $secondaryClr;
         }
     }
     .conversations-count{

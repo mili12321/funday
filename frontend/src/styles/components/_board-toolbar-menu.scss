@@ -32,10 +32,10 @@
         width: 27px;
         height: 18px;
         color: white;
-        border: 1px solid #0085ff;
+        border: 1px solid $secondaryClr;
         border-radius: 10px;
         right: -10px;
-        background-color: #0085ff;
+        background-color: $secondaryClr;
         .label-text{
             visibility: visible;
         }
@@ -46,10 +46,10 @@
         width: 27px;
         height: 18px;
         color: white;
-        border: 1px solid #0085ff;
+        border: 1px solid $secondaryClr;
         border-radius: 10px;
         right: -20px;
-        background-color: #0085ff;
+        background-color: $secondaryClr;
         .label-text{
             visibility: visible;
         }
@@ -86,14 +86,14 @@
         align-items: center;
         color: rgb(22, 22, 22);
         &:hover{
-            background-color: #dddddd;
+            background-color: $hoverBackgroundClr2;
             border-radius: 5px;
-            .workspace-title-btn{
+            .more-options-btn{
                 display: flex;
             }
         }
         &.open-modal{
-            background-color: #dddddd;
+            background-color: $hoverBackgroundClr2;
             border-radius: 5px;
         }
         .workspace-symbol {
@@ -121,20 +121,9 @@
                 background-color: white;
             }
         }
-        .workspace-title-btn{
-            padding: 3px;
-            margin-left: 5px;
+        .more-options-btn{
             display: none;
-            cursor: pointer;
-            &.show-btn{
-                display: flex;
-                color: #0085ff;
-                background-color: #d9edff;
-                border-radius: 5px;
-            }
-            &:hover{
-                color: #0085ff;
-            }
+            margin-left: 5px;
         }
     }
     .actions-container{
@@ -156,12 +145,12 @@
             &.active{
                 background-color: #0085ff1c;
                 border-radius: 5px;
-                color: #0085ff;
+                color: $secondaryClr;
             }
             &:hover{
                 background-color: #0085ff1c;
                 border-radius: 5px;
-                color: #0085ff;
+                color: $secondaryClr;
             }
         }
     }
@@ -171,7 +160,7 @@
     min-width: 16px;
     min-height: 16px;
     &.updating-style{
-        color: #0085ff;
+        color: $secondaryClr;
     }
 }
 .nav-second-area{
@@ -207,5 +196,20 @@
     .toolbar-menu-options-modal{
         left: 0px;
         top: 28px;
+    }
+}
+.more-options-btn{
+    padding: 3px;
+    margin-left: 5px;
+    // display: none;
+    cursor: pointer;
+    &.active{
+        display: flex;
+        color: $secondaryClr;
+        background-color: #d9edff;
+        border-radius: 5px;
+    }
+    &:hover{
+        color: $secondaryClr;
     }
 }

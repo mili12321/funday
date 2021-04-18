@@ -1,5 +1,5 @@
 ::selection {
-    background-color:#0085ff;
+    background-color:$secondaryClr;
     color: white;
 }
 
@@ -17,8 +17,8 @@ body {
     overflow-x: hidden;
     display: flex;
     flex-direction:column;
-    background-color: #292f4c;
-    color: #424242;
+    background-color: $primaryBackgroundClr;
+    color: $primaryClr;
 }
 
 *:focus{

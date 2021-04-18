@@ -30,7 +30,7 @@
     }
     &.active{
         background-color: #0085ff1c;
-        color: #0085ff;
+        color: $secondaryClr;
     }
     .name-wrapper{
         display: flex;
@@ -40,7 +40,7 @@
         .update-folder-name-input, .update-board-name-input{
             width: 100%;
             outline: none;
-            border:1px dashed #0085ff;
+            border:1px dashed $secondaryClr;
         }
     }
     span{
@@ -58,7 +58,7 @@
     }
     cursor: pointer;
     &:hover{
-        background-color: #dddddd;
+        background-color: $hoverBackgroundClr2;
         border-radius: 3px;
         .BsThreeDots{
             visibility: visible;
@@ -68,17 +68,17 @@
         }
     }
     &.open-modal{
-        background-color: #dddddd;
+        background-color: $hoverBackgroundClr2;
         border-radius: 3px;
         .BsThreeDots{
             visibility: visible;
-            color: #0085ff;
+            color: $secondaryClr;
         }
     }
     &.active{
         background-color: #0085ff1c;
         border-radius: 3px;
-        color: #0085ff;
+        color: $secondaryClr;
     }
 }
 
@@ -104,5 +104,5 @@
 .delete-btn-wrapper{
     margin-top: 5px;
     padding-top: 7px;
-    border-top: 1px solid #dddddd;
+    border-top: 1px solid $hoverBackgroundClr2;
 }
