@@ -15,7 +15,7 @@ async function loginByGoogle(email, username, avatar='https://res.cloudinary.com
       avatar,
       favBoards: [],
       pinnedWorkspaces:[],
-      alerts: [],
+      notifications: [],
     })
   }
   return user
@@ -52,7 +52,7 @@ async function signup(email, password, username) {
       "https://img.icons8.com/ios-filled/50/000000/gender-neutral-user.png",
     favBoards: [],
     pinnedWorkspaces:[],
-    alerts: [],
+    notifications: [],
   })
 }
 
