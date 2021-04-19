@@ -35,24 +35,42 @@ export function login(userCreds) {
     try {
       const user = await userService.login(userCreds)
       dispatch({ type: 'SET_USER', user })
-      return user
+      // return user
     } catch (err) {
       console.log('UserActions: err in login', err)
+      throw err;
     }
   }
 }
 export function signup(userCreds) {
-  return async (dispatch) => {
-    const user = await userService.signup(userCreds)
-    dispatch({ type: 'SET_USER', user })
+  return async dispatch => {
+    try {
+        const user = await userService.signup(userCreds);
+        dispatch({ type: 'SET_USER', user })
+    } catch (err) {
+        console.log('userActions: Couldn\'t signup', err);
+        return Promise.reject(err);
+    }
   }
+  // return async (dispatch) => {
+  //   const user = await userService.signup(userCreds)
+  //   dispatch({ type: 'SET_USER', user })
+  // }
 }
+
+
 export function logout() {
-  return async (dispatch) => {
-    await userService.logout()
-    dispatch({ type: 'SET_USER', user: null })
+  return dispatch => {
+      try {
+          userService.logout();
+          dispatch({ type: 'SET_USER', user: null })
+      } catch (err) {
+          console.log('userActions: Couldn\'t logout');
+          throw err;
+      }
   }
 }
+
 
 export function loginByGoogle(userCreds) {
   return async (dispatch) => {

@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux';
 import {userReducer} from './userReducer';
-import systemReducer from './systemReducer';
+import {systemReducer} from './systemReducer';
 import {workspaceReducer} from './workspaceReducer';
 import {boardReducer} from './boardReducer';
 

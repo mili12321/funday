@@ -1,21 +1,29 @@
 import React, { Component } from 'react'
+import { Route , withRouter} from 'react-router-dom';
 import { connect } from 'react-redux'
 import { GoogleLogin } from 'react-google-login';
 import { loginByGoogle } from '../store/actions/userActions'
+import { Loading } from './Loading'
 
 export class _GoogleOauth extends Component {
-    responseGoogle = (response) => {
+    state={
+        isLoading: false,
+    }
+    responseGoogle =async (response) => {
         const userCreds = { 
             email: response.profileObj.email,
             avatar:response.profileObj.imageUrl, 
             username: response.profileObj.givenName 
         }
-        this.props.loginByGoogle(userCreds)
-        this.props.closeModal()
-        window.location.assign('/#/boards/')
+        await this.props.loginByGoogle(userCreds)
+        this.setState({ isLoading: true })
+        await this.props.loadWorkspaces()
+        this.setState({ isLoading: false })
+        if (this.props.loggedInUser) this.props.history.push(`/boards`)
     }
        
     render() {
+        if (this.state.isLoading) return <Loading txt='SIGNING IN WITH GOOGLE...'/>
         return (
            <div>
                 <GoogleLogin
@@ -38,4 +46,4 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = {
     loginByGoogle
 }
-export const GoogleOauth = connect(mapStateToProps, mapDispatchToProps)(_GoogleOauth)
+export const GoogleOauth =  connect(mapStateToProps, mapDispatchToProps)(withRouter(_GoogleOauth))

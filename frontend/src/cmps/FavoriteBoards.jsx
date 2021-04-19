@@ -148,7 +148,7 @@ export function FavoriteBoards({
     return (
         <div className="favorite-toolbar-menu">
             <div className="title-wrapper">
-                <BsFillStarFill className='star'/>
+                <BsFillStarFill className='yellow-icon'/>
                 <div>Favorites</div>
             </div>
 

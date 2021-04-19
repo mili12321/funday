@@ -1,7 +1,8 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import Particles from 'react-particles-js'
-import { GoogleOauth } from '../cmps/GoogleOauth'
+import { GoogleOauth } from './GoogleOauth'
+import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
 
 import {
   loadUsers,
@@ -79,10 +80,6 @@ class _Login extends Component {
     window.location.assign('/#/boards/')
   }
 
-  // onGuestLogin = async () => {
-  //   await this.props.guestLogin();
-  //   window.location.assign('/#/boards/')
-  // }
 
   removeUser = (userId) => {
     this.props.removeUser(userId)
@@ -221,7 +218,7 @@ class _Login extends Component {
               </div>
             </div>
           </h1>
-          <h2 className='mag'>{this.state.msg}</h2>
+          <h2 className='msg'>{this.state.msg}</h2>
 
 
           <div className='auth-form'>

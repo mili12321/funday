@@ -1,5 +1,5 @@
 import React from 'react'
-import {Login} from '../pages/Login'
+import {Login} from './Login'
 export class LoginModal extends React.Component {
   state = {
     isShown: true,

@@ -8,7 +8,7 @@ import { DynamicFaIcon } from "../data/dynamicFaIcon";
 export function BoardToolbar({BsLightning, BsStar, BsThreeDots, onGettingCurrentWorkspace,addNewWorkspace,onSetToolbarMenu}) {
     const allWorkspaces = useSelector(state => state.workspace.workspaces);
     const loggedInUser = useSelector(state => state.user.loggedInUser);
-    const [workspaces,setWorkspaces] = useState(allWorkspaces.filter(
+    const [workspaces,setWorkspaces] = useState(loggedInUser&&allWorkspaces.filter(
         workspace=>loggedInUser.pinnedWorkspaces.includes(workspace._id))
         )
     const currWorkspace = useSelector(state => state.workspace.currWorkspace);
@@ -25,10 +25,12 @@ export function BoardToolbar({BsLightning, BsStar, BsThreeDots, onGettingCurrent
 
 
     useEffect(() => {
-        setWorkspaces(allWorkspaces.filter(
-            workspace=>loggedInUser.pinnedWorkspaces.includes(workspace._id))
-            )
-    }, [loggedInUser,loggedInUser.pinnedWorkspaces,allWorkspaces])
+        if(loggedInUser){
+            setWorkspaces(allWorkspaces.filter(
+                workspace=>loggedInUser.pinnedWorkspaces.includes(workspace._id))
+                )
+        }
+    }, [loggedInUser,allWorkspaces])
 
     useEffect(() => {
         setActiveBtn(currWorkspace._id)

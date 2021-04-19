@@ -1,6 +1,6 @@
 import React from 'react'
 
-export function HomeBackground() {
+export function HomeBackground({showComponent}) {
     return (
     <div class="container">
         <div class="stars-wrapper">
@@ -727,9 +727,18 @@ export function HomeBackground() {
         </div>
             
             
-        <div class="arwing-wrapper">
+        {!showComponent&&<div class="arwing-wrapper">
             <img class="arwing" src={process.env.PUBLIC_URL + "/assets/img/astronaut2.png"} alt=''/>
-        </div>
+        </div>}
+
+        {!showComponent&&<div class="arwing-wrapper2">
+            <img class="arwing2" src={process.env.PUBLIC_URL + "/assets/img/workspace-img-1.PNG"} alt=''/>
+        </div>}
+
+        {!showComponent&&<div class="arwing-wrapper3">
+            <img class="arwing2" src={process.env.PUBLIC_URL + "/assets/img/workspace-img-1.PNG"} alt=''/>
+        </div>}
+            
             
         <div>
             <svg class="wave" version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 100" preserveAspectRatio="none">

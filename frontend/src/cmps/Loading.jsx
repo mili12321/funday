@@ -1,7 +1,7 @@
-export function Loading() {
+export function Loading({txt}) {
     return (
         <div className="loading-wrapper">
-            <div className="title">LOADING WORKSPACES...</div>
+            <div className="title">{txt}</div>
             <div className="loading-container">
                 <div className="dot dot-1"></div>
                 <div className="dot dot-2"></div>

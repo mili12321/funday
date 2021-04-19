@@ -1,5 +1,13 @@
 body { padding:0; margin:0; }
-.container { width:100%; height:100vh;  background-image:radial-gradient( rgb(6, 6, 51),rgb(4, 4, 44),rgb(2, 2, 22), rgb(1, 1, 8)); position:relative; color: #fff;     overflow: hidden; }
+.container { 
+    width:100%; 
+    height:100vh;
+    // background-image:radial-gradient( rgb(6, 6, 51),rgb(4, 4, 44),rgb(2, 2, 22), rgb(1, 1, 8)); 
+    background: #b7ddff;
+    color: #252525;
+    position:relative;  
+    overflow: hidden; 
+}
 .stars-wrapper {     overflow: hidden;    position: absolute;    width: 100%;   height: 100%;    z-index: 0; color:#fff; }
 .stars-wrapper .left-constellation { position: absolute;    top: 0;    left: 0;    width: 50%;    height: 100% }
 .stars-wrapper .right-constellation { position: absolute;    top: 0;    left: 50%;    width: 50%;    height: 100% }
@@ -101,4 +109,41 @@ body { padding:0; margin:0; }
     background-repeat: repeat no-repeat;
     background-position: 0 bottom;
     transform-origin: center bottom;
+}
+
+
+
+.arwing-wrapper {
+    height: 363px;
+    left: 62%;
+    overflow: visible;
+    position: absolute;
+    top: 9%;
+    width: 40%;
+}
+
+.arwing-wrapper2 {
+    height: 363px;
+    left: 45%;
+    overflow: visible;
+    position: absolute;
+    top: 51%;
+    width: 79%;
+}
+
+.arwing-wrapper3 {
+    height: 363px;
+    left: 48%;
+    overflow: visible;
+    position: absolute;
+    top: 43%;
+    width: 79%;
+}
+    
+.arwing2 { 
+    -webkit-animation: arwingAnim 7s ease-in-out infinite;    
+    animation: arwingAnim 7s ease-in-out infinite;    
+    width: 657px;   
+    -webkit-transform: translateY(0);    
+    transform: translateY(0);
 }

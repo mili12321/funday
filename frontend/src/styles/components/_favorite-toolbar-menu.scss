@@ -18,7 +18,7 @@
             margin: auto;
             &:first-child{
                 margin-bottom: 15px;
-                .star{
+                .yellow-icon{
                     font-size: 25px;
                 }
             }
@@ -35,6 +35,6 @@
         }
     }
 }
-.star{
+.yellow-icon{
     color: #ffdf28;
 }

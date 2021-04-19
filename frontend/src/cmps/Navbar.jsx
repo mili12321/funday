@@ -10,9 +10,11 @@ import { FaRegUser } from "react-icons/fa";
 import { Link } from "react-router-dom"
 import { UploadImg } from "./UploadImg"
 import { NotificationsModal } from "./NotificationsModal"
+import { Loading } from "./Loading";
 
 
 export function Navbar(){
+    const [isLoading, setIsLoading] = useState(false);
     const [isOpenModal, setIsOpenModal] = useState(false);
     const [activeBtn, setActiveBtn] = useState(null)
     const [isShown, setShowModal] = useState(null)
@@ -22,9 +24,13 @@ export function Navbar(){
     const notificationsModal = useRef('')
 
     const _logout=()=>{
+        setIsLoading(true)
         dispatch(logout())
-        window.location.assign('/')
+        history.push('/')
+        setIsLoading(false)
     }
+
+
     useEffect(() => {
         setTimeout(() => {
             if(window.location.hash.includes('boards')){
@@ -40,7 +46,13 @@ export function Navbar(){
         }
     }, [isShown])
 
+
+  
     return (
+        <>
+        {isLoading?
+        <Loading txt='GOODBYE...'/>
+        :
         <div className="navbar-section">
             <div className="navbar-first-area">
            
@@ -144,6 +156,7 @@ export function Navbar(){
                     </div>}
                 </div>
             </div>
-        </div>
+        </div>}
+        </>
     )
 }

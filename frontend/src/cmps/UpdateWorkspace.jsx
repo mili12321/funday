@@ -14,7 +14,7 @@ export function UpdateWorkspace({updateWorkspace,deleteWorkspace,onGettingCurren
     const loggedInUser = useSelector(state => state.user.loggedInUser);
 
     const allWorkspaces = useSelector(state => state.workspace.workspaces);
-    const [workspaces,setWorkspaces] = useState(allWorkspaces.filter(
+    const [workspaces,setWorkspaces] = useState(loggedInUser&&allWorkspaces.filter(
         workspace=>loggedInUser.pinnedWorkspaces.includes(workspace._id))
         )
 
