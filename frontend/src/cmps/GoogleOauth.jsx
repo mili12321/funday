@@ -4,6 +4,7 @@ import { connect } from 'react-redux'
 import { GoogleLogin } from 'react-google-login';
 import { loginByGoogle } from '../store/actions/userActions'
 import { Loading } from './Loading'
+import { loadWorkspaces} from '../store/actions/workspaceActions'
 
 export class _GoogleOauth extends Component {
     state={
@@ -44,6 +45,7 @@ const mapStateToProps = (state) => {
     }
 }
 const mapDispatchToProps = {
-    loginByGoogle
+    loginByGoogle,
+    loadWorkspaces
 }
 export const GoogleOauth =  connect(mapStateToProps, mapDispatchToProps)(withRouter(_GoogleOauth))

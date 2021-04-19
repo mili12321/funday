@@ -218,7 +218,7 @@ class _Login extends Component {
       </form>
     )
 
-    const { loggedInUser,loadWorkspaces } = this.props
+    const { loggedInUser } = this.props
 
     if (this.state.isLoading) return <Loading txt='SIGNING IN.. PLEASE WAIT'/>
     return (
@@ -229,7 +229,7 @@ class _Login extends Component {
           <div className="inner">
               {!loggedInUser && this.state.section ? loginSection : signupSection}
               <div className="google-oauth">
-                <GoogleOauth className="google-oauth-btn" loadWorkspaces={loadWorkspaces} loggedInUser={loggedInUser}/>
+                <GoogleOauth className="google-oauth-btn"/>
               </div>
           </div>
           
