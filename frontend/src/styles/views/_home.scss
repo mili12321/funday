@@ -1,29 +1,18 @@
 .home-page{
   display: flex;
-  justify-content: space-between;
   position: absolute;
-  height: 100%;
   width: 100%;
 }
 .home-page-intro{
-  margin: auto;
   display: flex;
-  place-items: center;
-  height: 100%;
-  min-width: 50vw;
-  margin-left: 50px;
   color: #252525;
   flex-direction: column;
   justify-content: center;
   .title-wrapper{
     font-size:53px;
     font-weight: bold;
-    margin-bottom: 40px;
     text-align: start;
-    width: 500px;
     position: relative;
-    .title{
-    }
     .title-img{
       width: 133px;
       position: absolute;
@@ -34,16 +23,13 @@
   }
   .desc-wraper{
     line-height: 1.6;
-    font-size: 21px;
     font-family: 'Fascinate Inline', cursive;
-    width: 572px;
   }
   .btns-container{
     display: flex;
     flex-direction: column;
     width: fit-content;
     justify-content: center;
-    margin-top: 50px;
     >.login-btn{
       cursor: pointer;
       width: 203px;
@@ -81,46 +67,12 @@
 }
 
 
-//treat-button-style
+//-------------------------------treat-button-style----------------------------------------
 
 .treat-wrapper{
-  margin-bottom: 25px;
   width: fit-content;
   position: relative;
 }
-
-// .treat-button {
-//   width: 275px;
-//   font-family: 'Fascinate Inline', cursive;
-//   font-size:3vmin;
-//   appearance: none;
-//   background: linear-gradient(to bottom, #959595, #464545);
-//   border: none;
-//   color: #FFF;
-//   border-radius: 2em;
-//   padding: .6em 1.5em;
-//   overflow: hidden;
-//   user-select: none;
-//   cursor: pointer;
-//   z-index: 1;
-//   box-shadow: 0 0 1em rgba(white, .2);
-//   transition: transform .1s cubic-bezier(.5, 0, .5, 1),
-//   box-shadow .2s;
-//   &.colorful{
-//     background: linear-gradient(to bottom, #F46001, #E14802);
-//   }
-  
-//   &:hover {
-//     box-shadow: 0 0 2em rgba(white, .3);
-//   }
-
-//   outline: none;
-
-//   &:active {
-//     transform: scale(0.8) translateY(10%);
-//     transition-timing-function: cubic-bezier(.5, 0, .5, 1);
-//   }
-// }
 
 .treat {
   --scale-x: 0;
@@ -174,8 +126,73 @@
   }
 }
 
+@media only screen and (min-width:375px){
+  .home-page{
+    justify-content: space-between;
+    height: 100%;
+  }
+  .home-page-intro{
+    margin: auto;
+    place-items: center;
+    height: 100%;
+    min-width: 50vw;
+    margin-left: 50px;
+    .title-wrapper{
+      margin-bottom: 40px;
+      width: 500px;
+    }
+    .desc-wraper{
+      font-size: 21px;
+      width: 572px;
+    }
+    .btns-container{
+      margin-top: 50px;
+    }
+  }
+  .treat-wrapper{
+    margin-bottom: 25px;
+  }
+}
+@media only screen and (max-width:375px){
+  .home-page{
+    justify-content:center;
+    flex-direction: column;
+    place-items: center;
+    height:81vh;
+    overflow: hidden;
+    &.login-open{
+      height:100vh;
+    }
+  }
+  .home-page-intro{
+    height: 100vh;
+    width: 100%;
+    place-items: center;
+    .title-wrapper{
+      margin-bottom: 49px;
+      width: 220px;
+    }
+    .desc-wraper{
+      font-size: 17px;
+      width: 333px;
+      &.login-open{
+        visibility: hidden;
+      }
+    }
+    .btns-container{
+      margin-top: 47px;
+      &.login-open{
+        margin-top: 3px;
+      }
+    }
+  }
+  .treat-wrapper{
+    margin-bottom: 37px;
+  }
+}
 
-///////////////////////////////////////
+
+// ------------------------------------bootstrap style----------------------------------------
 
 .button {
   width: 275px;

@@ -2,7 +2,6 @@ body { padding:0; margin:0; }
 .container { 
     width:100%; 
     height:100vh;
-    // background-image:radial-gradient( rgb(6, 6, 51),rgb(4, 4, 44),rgb(2, 2, 22), rgb(1, 1, 8)); 
     background: #b7ddff;
     color: #252525;
     position:relative;  
@@ -17,10 +16,32 @@ body { padding:0; margin:0; }
 .stars-far { -webkit-animation: starFieldAnimation 600s linear infinite;    animation: starFieldAnimation 600s linear infinite; }
 .star {  fill: #4f5660 }
 
-.arwing-wrapper { height: 363px; left: 60%; overflow: visible; position: absolute; top: 20%; width: 40%; }
-.arwing { -webkit-animation: arwingAnim 7s ease-in-out infinite;    animation: arwingAnim 7s ease-in-out infinite;    width: 300px;   -webkit-transform: translateY(0);    transform: translateY(0); }
+.arwing-wrapper, .arwing-wrapper2, .arwing-wrapper3  { 
+    height: 363px; 
+    overflow: visible;
+    position: absolute; 
+}
 
-.wave { display:block; position:absolute; width:100%; bottom:0;  }
+.arwing { 
+    -webkit-animation: arwingAnim 7s ease-in-out infinite;    
+    animation: arwingAnim 7s ease-in-out infinite;    
+    -webkit-transform: translateY(0);    
+    transform: translateY(0); 
+}
+
+.wave { 
+    display:block; 
+    position:absolute; 
+    // width:100%; 
+    bottom:0;  
+    left: 0;
+    width: 200%;
+    height: 85%;
+    background-repeat: repeat no-repeat;
+    background-position: 0 bottom;
+    transform-origin: center bottom;
+}
+
 .wavePath { animation: waveDividerAnimation 20s linear infinite alternate; fill:rgba(255,255,255,0.3); }
 
 
@@ -101,49 +122,61 @@ body { padding:0; margin:0; }
 }
 
 
-.wave {
-    position: absolute;
-    left: 0;
-    width: 200%;
-    height: 85%;
-    background-repeat: repeat no-repeat;
-    background-position: 0 bottom;
-    transform-origin: center bottom;
+
+@media only screen and (min-width:375px){
+    .arwing-wrapper { 
+        width: 36%;
+        left: 69%;
+        top: 5%;
+        position: absolute;
+    }
+    .arwing {    
+        width: 257px;   
+    }
+    .arwing-wrapper2 {
+        left: 45%;
+        top: 51%;
+        width: 79%;
+    }
+    .arwing-wrapper3 {
+        left: 48%;
+        top: 43%;
+        width: 79%;
+    }
+    .arwing2 { 
+        -webkit-animation: arwingAnim 7s ease-in-out infinite;    
+        animation: arwingAnim 7s ease-in-out infinite;    
+        -webkit-transform: translateY(0);    
+        transform: translateY(0);
+        width: 560px;  
+    }
+
 }
-
-
-
-.arwing-wrapper {
-    height: 363px;
-    left: 62%;
-    overflow: visible;
-    position: absolute;
-    top: 9%;
-    width: 40%;
-}
-
-.arwing-wrapper2 {
-    height: 363px;
-    left: 45%;
-    overflow: visible;
-    position: absolute;
-    top: 51%;
-    width: 79%;
-}
-
-.arwing-wrapper3 {
-    height: 363px;
-    left: 48%;
-    overflow: visible;
-    position: absolute;
-    top: 43%;
-    width: 79%;
-}
+@media only screen and (max-width:375px){
+    .arwing-wrapper { 
+        width: 40%;
+        left: 70%;
+        top: 54%;
+        position: absolute;
+        z-index: 200;
+        height: 100px;
+    }
+    .arwing {    
+        width: 91px;   
+    }
+    .arwing-wrapper2 {
+        transform: translateX(-50%);
+        left: 50%;
+        top: 77%;
+        width: 90%;
+    }
+    .arwing-wrapper3 {
+        left: 12%;
+        top: 71%;
+        width: 90%;
+    }
+    .arwing2 { 
+        width: 300px
+    }
     
-.arwing2 { 
-    -webkit-animation: arwingAnim 7s ease-in-out infinite;    
-    animation: arwingAnim 7s ease-in-out infinite;    
-    width: 657px;   
-    -webkit-transform: translateY(0);    
-    transform: translateY(0);
 }

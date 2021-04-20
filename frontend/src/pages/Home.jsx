@@ -46,7 +46,7 @@ export class _Home extends Component {
         return (  
             <>
                 <HomeBackground showComponent={this.state.showComponent}/>
-            <div className="home-page">
+            <div className={`home-page ${this.state.showComponent?'login-open':''}`}>
                 <div className="home-page-intro">
 
                     <div className="title-wrapper" >
@@ -54,14 +54,14 @@ export class _Home extends Component {
                         <img class="title-img" src={process.env.PUBLIC_URL + "/assets/img/logo.png"} alt=''/>
                     </div>
 
-                    <div className="desc-wraper" >
+                    <div className={`desc-wraper ${this.state.showComponent?'login-open':''}`} >
                         The next step in multi-planning and productivity!
                         Funday will help you keep track of hundreds of tasks.
                         An efficient way to manage your co-workers / employees.
                         Half the hassle and twice the fun.
                     </div>
 
-                    <div className="btns-container">
+                    <div className={`btns-container ${this.state.showComponent?'login-open':''}`}>
                         
                         {!this.props.loggedInUser&&
                           <div class="treat-wrapper">
