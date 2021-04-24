@@ -10,15 +10,20 @@ export class TaskStatus extends Component {
         statusLabelList:[],
         newLabelColor:null,
         isUpdateLabelColor:false,
-        currLabel:{},
+        // currLabel:{},
         hideColorPicker:false,
         boardCopy:null
     }
+
+   statusModalWrapperEl = React.createRef();
 
     async componentDidMount(){
         const statusLabelList = [...this.props.board.statusLabelList]
         this.setState({statusLabelList})
         this.setState({boardCopy:this.props.board})
+       if( this.statusModalWrapperEl&& this.statusModalWrapperEl.current){
+        this.statusModalWrapperEl.current.focus();
+       }
     }
 
     updateTask=(table,task,statusLabel)=>{
@@ -86,10 +91,10 @@ export class TaskStatus extends Component {
             this.props.onEditBoard(newBoard,null)
         })
     }
-    onToggleUpdateLabelColor=(currLabel)=>{
-        this.setState({isUpdateLabelColor:!this.state.isUpdateLabelColor})
-        this.setState({currLabel})
-    }
+    // onToggleUpdateLabelColor=(currLabel)=>{
+    //     this.setState({isUpdateLabelColor:!this.state.isUpdateLabelColor})
+    //     this.setState({currLabel})
+    // }
     hideColorPicker=(toggleUpdateLabel)=>{
         if(toggleUpdateLabel){
             this.setState({hideColorPicker:true})
@@ -122,7 +127,7 @@ export class TaskStatus extends Component {
 
         if (!task) return <div>Loading....</div>
         return (
-            <div className="status-modal-wrapper">
+            <div className="status-modal-wrapper" ref={this.statusModalWrapperEl} tabindex="0" onBlur={()=>this.props.closeStatusModal}>
                 {
                     !isEditLabelsModalOpen&&
                     <>
@@ -151,7 +156,12 @@ export class TaskStatus extends Component {
                         <DragDropContext  onDragEnd={this.handleDragEnd} >
                             <Droppable droppableId='statusLabelList'>
                             {(provided) => (
-                                <div className={`status-label-list-container edit ${this.state.hideColorPicker?'updating-the-label':''}`} key='statusLabelList' {...provided.droppableProps} ref={provided.innerRef}>
+                                <div 
+                                    className={`status-label-list-container edit ${this.state.hideColorPicker?'updating-the-label':''}`} 
+                                    key='statusLabelList' 
+                                    {...provided.droppableProps} 
+                                    ref={provided.innerRef}
+                                    >
                                 {
                                     board.statusLabelList.map((statusLabel,index)=>
                                         <Draggable key={statusLabel._id} draggableId={statusLabel._id} index={index}>

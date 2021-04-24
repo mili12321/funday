@@ -20,8 +20,8 @@ export function ActivitiesModal() {
         {
             currBoard.activities.length>0?
             <table className="activities-list">
-            {currBoard.activities.map(activity=>
-                <tr className="activity-preview">
+            {currBoard.activities.map((activity,idx)=>
+                <tr className="activity-preview" key={idx}>
                     <td className="time">
                         <AiOutlineClockCircle/><span>{getTime(activity.createdAt)}</span>
                     </td>

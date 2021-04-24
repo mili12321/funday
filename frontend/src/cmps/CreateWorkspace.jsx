@@ -57,8 +57,10 @@ export function CreateWorkspace({setIsShown,addNewWorkspace}) {
                 </div>
                 <div className="small-font">Icon</div>
                 <div className="icon-picker">
-                    {iconsPicker.map(iconStr=>
-                        <div className="icon"
+                    {iconsPicker.map((iconStr,idx)=>
+                        <div 
+                        key={idx}
+                        className="icon"
                         style={{backgroundColor:`${newWorkspaceColor}`}}
                          onClick={()=>setNewWorkspaceIcon(iconStr)}
                          >

@@ -39,7 +39,8 @@ export function ToolbarMenuActionsBtn({
     }
     return (
         <>
-    <div className='actions-btn-wrapper' 
+    <div 
+    className='actions-btn-wrapper' 
     tabIndex='0'
      onBlur={()=>{setIsOpenModal(false)}}
      >

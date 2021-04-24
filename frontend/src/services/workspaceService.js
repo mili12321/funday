@@ -40,14 +40,12 @@ async function add(workspace) {
 //StatusLabelList
 async function getCurrBoard() {
     const workspaces = await query()
-    // console.log("workspaces from query:",workspaces)
     const currBoard = await workspaces.map(workspace=>workspace.boards.filter(board=>board.isLastSeen===true))[0]
     return currBoard
 }
 
 function getStatusLabelList() {
    const board = getCurrBoard()
-//    console.log("board.statusLabelList",board.statusLabelList)
    return board.statusLabelList
 }
 function addLabel(newLabel) {

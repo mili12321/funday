@@ -22,6 +22,7 @@ async function getWorkspace(req, res) {
 // UPDATE
 async function updateWorkspace(req, res) {
     console.log('req.body',req.body)
+    console.log('updateWorkspace from back',req.body)
     let updatedWorkspace
     try {
         console.log('req.body2',req.body)

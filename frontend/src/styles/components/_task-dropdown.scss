@@ -101,7 +101,9 @@
         opacity: 0.5;
         margin-top: 10px;
         font-size: 13px;
+        cursor: not-allowed;
         &.add{
+            cursor: pointer;
             opacity: 1;
             background-color: #1399ff;
             color: white;
@@ -114,10 +116,10 @@
         place-items: center;
         justify-content: center;
         height: 40px;
-        cursor: pointer;
         transition: 0.2s;
     }
     .edit-btn{
+        cursor: pointer;
         color: #1399ff;
         &:hover{
             background-color: #1399ff;

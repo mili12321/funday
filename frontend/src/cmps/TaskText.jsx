@@ -2,17 +2,26 @@ import React, { useEffect,useState,useRef } from 'react';
 import { stickers } from '../data/stickers'
 import { FaRegSmile } from 'react-icons/fa'
 
-export function TaskText({onEditTask,table,task,setUpdatingText}){
+export function TaskText({onEditTask,table,task,setUpdatingText,multipleColumnsLength,taskKey}){
+    // const [taskTextKeys, setTaskTextKeys] = useState([]);
     const [text, setText] = useState('');
     const [isUpdating, setUpdateText] = useState(false);
     const [isShowModal, setShowModal] = useState(false);
     const inputRef = useRef()
 
     useEffect(() => {
-        if(task.text){
-            setText(task.text)
+        if(task[taskKey]){
+            setText(task[taskKey])
         }
-    }, [task])
+    }, [task,taskKey])
+
+    // useEffect(() => {
+    //     for ( var key in task ) {
+    //         if(key.includes("text")){
+    //              setTaskTextKeys(oldArray => [...oldArray, key]);
+    //         }
+    //     }
+    // }, [task])
 
     const onUpdating=()=>{
         setUpdateText(true)
@@ -61,15 +70,16 @@ export function TaskText({onEditTask,table,task,setUpdatingText}){
                     value={text}
                     onBlur={()=>
                         {
-                            if(text===task.text){
+                            if(text===task[taskKey]){
                                 setUpdateText(false)
                                 setUpdatingText(false)
                                 return
                             }
-                            const updatedTask = {
+                            let updatedTask = {
                                 ...task,
-                                text: text
                             }
+                            updatedTask[taskKey] = text;
+                        
                             const desc = `changed task "${task.name}" text to "${text}"`
                             onEditTask(table,updatedTask,desc)
                             setUpdateText(false)
@@ -105,7 +115,7 @@ export function TaskText({onEditTask,table,task,setUpdatingText}){
                 </div>
                     :
                 <div className="text-content">
-                     <span className="dangerouslySetInnerHTML" dangerouslySetInnerHTML={{__html: replaceWithSticker(text),}}></span>
+                    <span className="dangerouslySetInnerHTML" dangerouslySetInnerHTML={{__html: replaceWithSticker(text),}}></span>
                 </div>
             }
         </div>

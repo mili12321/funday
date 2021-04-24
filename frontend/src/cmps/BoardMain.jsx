@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { Component, useState,useRef,useEffect }  from 'react'
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux'
 import { loadWorkspaces, updateWorkspace } from '../store/actions/workspaceActions'
@@ -12,7 +12,7 @@ import { MultipleActionsModal} from './MultipleActionsModal'
 
 import { socketService } from '../services/socketService'
 
-class _BoardMain extends Component {
+class _BoardMain extends Component  {
     state={
         board:null,
         isShrink:false,
@@ -22,7 +22,6 @@ class _BoardMain extends Component {
     onUnCheckTasks=()=>{
         this.setState({unCheckTasks:true})
     }
-
 
 
     onShrink=(value)=>{
@@ -37,11 +36,10 @@ class _BoardMain extends Component {
         })
     }
 
+
     onTest=()=>{
         socketService.emit('message', {txt:'123',user:'mili'})
     }
-
-
 
     componentDidUpdate(prevProps){
         if(prevProps.board !== this.props.board){
@@ -76,6 +74,7 @@ class _BoardMain extends Component {
         const desc = `changed groups order`
         this.props.onEditBoard(this.state.board,desc)
    }
+  
 
     render() {
         const { 
@@ -98,11 +97,12 @@ class _BoardMain extends Component {
         if (!board) return <div>Loading....</div>
         return (
             <>
-             {/* <button onClick={this.onTest}>test sockets</button> */}
         <DragDropContext  onDragEnd={this.handleDragEnd}>
             <Droppable droppableId={board._id} >
                 {(provided) => (
-                    <div className="board-main" key={board._id} {...provided.droppableProps} ref={provided.innerRef} >
+                    <div className="board-main" key={board._id} {...provided.droppableProps}
+                    ref={ provided.innerRef}
+                    >
                     {
                         board.tables.map((table,index)=>
                             <Draggable key={table._id} draggableId={table._id} index={index}>
@@ -147,6 +147,7 @@ class _BoardMain extends Component {
                 )}
             </Droppable>
         </DragDropContext>
+        <AlwaysScrollToBottom />
         </>
     );
 }}
@@ -164,3 +165,10 @@ const mapDispatchToProps = {
     updateCurrBoard,
 }
 export const BoardMain = connect(mapStateToProps, mapDispatchToProps)(withRouter(_BoardMain))
+
+
+const AlwaysScrollToBottom = () => {
+    const elementRef = useRef();
+    useEffect(() => elementRef.current.scrollIntoView());
+    return <div ref={elementRef} />;
+};

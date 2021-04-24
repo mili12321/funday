@@ -31,6 +31,9 @@
         .task-cell-status{
             opacity: 0.8 !important; 
         }
+        .task-cell:first-child {
+            background-color: #e8ecf1ba;
+        }
     }
     &.conversation-modal-open{
         background-color: #c5e7ff;
@@ -42,6 +45,13 @@
 .add-row{
     margin-top: 1px;
     box-shadow:  0 3px 1px -2px #e6e9ef, 0 -3px 1px -2px #e6e9ef;
+    display: flex;
+    justify-content: space-between;
+    >.add-cell{
+        &:first-child{
+           max-width: none;
+        }
+    }
 }
 .table-cell{
     width: 150px;
@@ -49,13 +59,23 @@
     border-left: 2px solid rgb(255, 255, 255);
     transition:background-color 0.2s;
     &:first-child{
-        min-width: 300px;
+        // min-width: 300px;
+        min-width: 25vw;
         flex-grow: 1;
+        max-width: 1000px;
+        // position: sticky; //!
+        // left: 0;
+        // z-index: 1;
+        background-color: #ffffffe6;
     }
     &:last-child{
         width: 40px;
     }
+    &:not(:last-child){
+        flex-grow: 1;
+    }
 }
+
 .title-cell{
     display: flex;
     place-items: center;
@@ -80,6 +100,8 @@
     &:first-child{
        font-size: 20px;
        opacity: 0.5;
+       z-index: 1;
+       background: white;               
        &:hover{
         background-color: rgba(230, 233, 239,1);
        }
@@ -162,6 +184,8 @@
 }
 .task-cell{
     &:first-child{
+        background-color: #edf0f6f7;
+        z-index: 1;
         .cell-content-wrapper{
             margin-left: 7px;
             width: 100%;

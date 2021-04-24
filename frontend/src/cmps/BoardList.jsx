@@ -23,6 +23,7 @@ export function BoardList({
       <>
        {boards.map((board,index)=>
               <BoardPreview
+              key={index}
               board={board}
               onGettingCurrentBoard={onGettingCurrentBoard}
               CgViewComfortable={CgViewComfortable}

@@ -61,9 +61,7 @@ export class _Workspace extends Component {
 
     async componentDidMount() {
         try {
-            if(!this.props.workspaces){
-                await this.props.loadWorkspaces();
-            }
+            await this.props.loadWorkspaces();
             this.editableName = React.createRef();
             if(this.props.workspaces){
                 await this.props.workspaces.map(workspace=>workspace.boards.map(board=>board.isLastSeen===true? this.setState({board},()=>{
@@ -77,21 +75,7 @@ export class _Workspace extends Component {
             console.log('Error', err)
         }
     }
-    // async componentDidMount() {
-    //     if(this.props.loggedInUser){
-    //         await this.props.loadWorkspaces()
-    //         this.editableName = React.createRef();
-    //         // const mainWorkspace = await this.props.workspaces.filter(workspace=>workspace.isMain===true)[0];
-    //         // this.setState({workspace:mainWorkspace})
-    
-    //         await this.props.workspaces.map(workspace=>workspace.boards.map(board=>board.isLastSeen===true? this.setState({board},()=>{
-    //             this.props.history.push(`/boards/${board._id}`)
-    //             this.props.updateCurrBoard(board)
-    //             this.setState({workspace})
-    //             this.props.updateCurrWorkspace(workspace)
-    //         }):null))[0];
-    //     }
-    // }
+
 
     focusText = () => {
         setTimeout(() => {

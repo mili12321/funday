@@ -1,6 +1,6 @@
 import httpService from './httpService'
 
-export default {
+export const userService = {
   login,
   logout,
   signup,

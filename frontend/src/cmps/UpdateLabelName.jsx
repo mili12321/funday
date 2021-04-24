@@ -44,7 +44,6 @@ export class UpdateLabelName extends Component {
                     onKeyDown={(ev) => {
                         if (ev.key === 'Enter') {
                             ev.target.blur()
-                            this.setState({isUpdateLabelName:false})
                         }
                     }}
                     />

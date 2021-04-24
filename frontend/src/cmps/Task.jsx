@@ -232,20 +232,20 @@ export function Task({
 
         const position = { top: ev.clientY, left: ev.clientX, transform: `translate(${translateX}, ${translateY})` };
         setModalPosition(position)
-        console.log('ModalPosition123:',position)
-        console.log('ev.clientY:',ev.clientY)
-        console.log('window.innerHeight:',window.innerHeight)
-        console.log('ev.clientX:',ev.clientX)
-        console.log('window.innerWidth:',window.innerWidth)
-        console.log('divSizes:',divSizes)
-        console.log('divOffsetS:',divOffsetS)
+        // console.log('ModalPosition123:',position)
+        // console.log('ev.clientY:',ev.clientY)
+        // console.log('window.innerHeight:',window.innerHeight)
+        // console.log('ev.clientX:',ev.clientX)
+        // console.log('window.innerWidth:',window.innerWidth)
+        // console.log('divSizes:',divSizes)
+        // console.log('divOffsetS:',divOffsetS)
     }
     
 
     const getTaskValue= (taskKey)=>{
         let content = [];
-        switch(taskKey) {
-            case 'name':
+        switch(true) {
+            case taskKey.includes('name'):
                 content.push(
                 <React.Fragment>
                     <div className="task-name-wrapper">
@@ -302,7 +302,7 @@ export function Task({
                 </React.Fragment>
                 );
                 break; 
-            case 'owner':
+            case taskKey.includes('owner'):
                 content.push(
                     <div className={`add-cell-content-btn-wrapper ${task[taskKey].length>0?'add-more':'add-first'}`}
                     >
@@ -347,7 +347,7 @@ export function Task({
                     )
                 }
                 break;
-            case 'createdAt':
+            case taskKey.includes('createdAt'):
                 if(!task[taskKey]){
                     content.push(
                         <TaskDate task={task} taskKey={taskKey} onEditTask={onEditTask} table={table}/>
@@ -360,22 +360,23 @@ export function Task({
                     );
                 }
                 break;
-            case 'text':
+            case taskKey.includes('text'):
+                const arrayOfTextTablecolumns = board.tableColumns.filter(column=>column.type==='Text')
                 content.push(
-                    <TaskText onEditTask={onEditTask} task={task} table={table} setUpdatingText={setUpdatingText}/>
+                    <TaskText multipleColumnsLength={arrayOfTextTablecolumns.length} taskKey={taskKey} onEditTask={onEditTask} task={task} table={table} setUpdatingText={setUpdatingText}/>
                 ) 
                 break; 
-            case 'numbers':
+            case taskKey.includes('numbers'):
                 content.push(
                     <TaskNumbersColumn onEditTask={onEditTask} task={task} table={table} setUpdatingNumbers={setUpdatingNumbers}/>
                 ) 
                 break;
-            case 'checkBox':
+            case taskKey.includes('checkBox'):
                 content.push(
                     <TaskCheckBox onEditTask={onEditTask} task={task} table={table} />
                 ) 
                 break;
-            case 'lastUpdated':
+            case taskKey.includes('lastUpdated'):
                 if(task[taskKey]&&task[taskKey].date){
                     content.push(
                         <div className="last-updated-task-container">
@@ -391,12 +392,12 @@ export function Task({
                     ) 
                 }
                 break;
-            case 'timeline':
+            case taskKey.includes('timeline'):
                     content.push(
                         <TaskTimeline task={task} taskKey={taskKey} onEditTask={onEditTask} table={table}/>
                     ) 
                 break;
-            case 'dropdown':
+            case taskKey.includes('dropdown'):
                     content.push(
                         <div className={`add-cell-content-btn-wrapper dropdown add-first`}
                         >
@@ -512,21 +513,23 @@ export function Task({
     }
 
     const getColumnStyle=(val)=>{
-        switch (val) {
-            case 'text':
-                return 'text-style'
-            case 'numbers':
-                return 'numbers-style'
-            case 'checkBox':
-                return 'checkBox-style'
-            case 'lastUpdated':
-                return 'lastUpdated-style'
-            case 'dropdown':
-                return `dropdown-style ${task.dropdown.length>0?'not-empty':''}`
-            case 'timeline':
-                return `timeline-style ${task.timeline.from?'not-empty':''}`
-            default:
-                return ''
+        if(val.includes('text')){
+            return 'text-style'
+        }else{
+            switch (val) {
+                case 'numbers':
+                    return 'numbers-style'
+                case 'checkBox':
+                    return 'checkBox-style'
+                case 'lastUpdated':
+                    return 'lastUpdated-style'
+                case 'dropdown':
+                    return `dropdown-style ${task.dropdown.length>0?'not-empty':''}`
+                case 'timeline':
+                    return `timeline-style ${task.timeline.from?'not-empty':''}`
+                default:
+                    return ''
+            }
         }
     }
 
@@ -572,7 +575,7 @@ export function Task({
                  onBlur={()=>setIsShowOptionsModal(false)
                 }
                 >
-                    <div className="TiArrowSortedDown-wrapper   TiArrowSortedDown-task-wrapper">
+                    <div className="TiArrowSortedDown-wrapper TiArrowSortedDown-task-wrapper">
                         <TiArrowSortedDown/>
                     </div>
                     { 
@@ -596,25 +599,24 @@ export function Task({
                 </div>
             </div>
             <div className={`table-row task-row ${isOpenConversationModal&&task._id===conversationLocation.taskId?'conversation-modal-open':''}`} >
-                {taskKeys.map((taskKey)=>
+                {taskKeys.map((taskKey,idx)=>
                     taskKey==="status"?
                     <div 
                     className='table-cell task-cell'
                     tabIndex="0" 
                     onBlur={closeStatusModal}
-                    // ref = {cellEl}
-                    // onClick={(e)=>
-                    //     onOpenModal(taskKey,e)
-                    // }
                     >
-                        <div className='task-cell-status' style={{backgroundColor:`${task.status.color}`}} onClick={toggleStatusModal}>
+                        <div className='task-cell-status' style={{backgroundColor:`${task.status.color}`}}
+                         onClick={toggleStatusModal}
+                         >
                             <div className="cell-content-wrapper">
                             {task[taskKey].name}
                             </div>
                         </div>
 
                         <div className="status-container">
-                        {isStatusModalOpen&&<TaskStatus 
+                        {isStatusModalOpen&&
+                        <TaskStatus 
                         taskKey={taskKey} 
                         task={task} 
                         table={table} 
@@ -627,7 +629,9 @@ export function Task({
                         openEditLabelsModal={openEditLabelsModal}
                         closeEditLabelsModal={closeEditLabelsModal}
                         setIsStatusModalOpen={setIsStatusModalOpen}
-                        />}
+                        closeStatusModal={closeStatusModal}
+                        />
+                        }
                         </div>
                     </div>
 
@@ -637,7 +641,6 @@ export function Task({
                     ref = {cellEl}
                     onClick={(e)=>
                         {if(taskKey==='owner'||taskKey==='dropdown'){
-                            console.log('open-owner-modal');
                             onOpenModal(taskKey,e)
                         }
                         }}

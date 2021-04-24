@@ -49,6 +49,8 @@ export function TablePreview({
     const users = useSelector(state => state.user.users);
     const loggedInUser = useSelector(state => state.user.loggedInUser);
     const board = useSelector(state => state.workspace.currBoard);
+    // const isEditableGroupNameFocus = useSelector(state => state.workspace.isEditableGroupNameFocus);
+    const [isEditableGroupNameFocus, setToggleGroupNameFocus] = useState('');
     const [newTaskName, setNewTaskName] = useState('');
     const [isInputBtnVisable, setIsInputBtnVisable] = useState(false);
     const [isShowTableOptionsModal, setIsShowTableOptionsModal] = useState(false);
@@ -267,11 +269,32 @@ export function TablePreview({
                 EditBoard(newColumn,desc)
                 break;
             case 'Text':
-                newColumn = {
-                    _id:Date.now(),
-                    title:'Text',
-                    type:'Text',
-                    taskKey:'text'
+                const arrayOfTextTablecolumns = board.tableColumns.filter(column=>column.type==='Text')
+                if(arrayOfTextTablecolumns.length>0){
+                    if(arrayOfTextTablecolumns.length===1){
+                        newColumn = {
+                            _id:Date.now(),
+                            title:'Text',
+                            type:'Text',
+                            taskKey:`text1`
+                        }
+                    }else{
+                        const lastItemNum = parseInt(  arrayOfTextTablecolumns[arrayOfTextTablecolumns.length-1].taskKey.substring(4) ) + 1
+                        
+                        newColumn = {
+                            _id:Date.now(),
+                            title:'Text',
+                            type:'Text',
+                            taskKey:`text${lastItemNum}`
+                        }
+                    }
+                }else{
+                    newColumn = {
+                        _id:Date.now(),
+                        title:'Text',
+                        type:'Text',
+                        taskKey:'text'
+                    }
                 }
                 desc = `added new text column`
                 EditBoard(newColumn,desc)
@@ -435,7 +458,7 @@ export function TablePreview({
             }}
         )
         const uniq = [ ...new Set(columnsInUse) ];
-        if(uniq.includes(btnName)){
+        if(uniq.includes(btnName)&btnName!=='Text'){
             return 'column-in-use'
         }
             
@@ -456,6 +479,12 @@ export function TablePreview({
         return content
     }
 
+    const onToggleRenameGroup=()=>{
+        setToggleGroupNameFocus(p=>!p)
+        setTimeout(() => {
+            setToggleGroupNameFocus(p=>!p)
+        }, 0);
+    }
 
     if (!table||!board) return <div>Loading....</div>
     return (
@@ -481,9 +510,10 @@ export function TablePreview({
                                 <div className="options-modal title-options-modal">
         
                                     <div  className='modal-btn item-actions-btn'
+                                    onClick={onToggleRenameGroup}
                                     >
                                         <FaPencilAlt className="icon"/>
-                                        <span>Rename Group-erorr</span>
+                                        <span>Rename Group</span>
                                     </div>
         
                                     <div  className='modal-btn item-actions-btn'
@@ -534,13 +564,14 @@ export function TablePreview({
                                         isExpand={isExpand}
                                         dragHandle={dragHandle}
                                         onEditTask={onEditTask} 
+                                        isEditableGroupNameFocus={isEditableGroupNameFocus}
                                     />
                                 ) 
                             }
                                     <div className="table-cell title-cell"
                                      tabIndex="0"
                                      onBlur={()=>{
-                                         setToggleAddColumnModal(false)
+                                        setToggleAddColumnModal(false)
                                      }}
                                     >
                                         <HiPlusCircle 
@@ -649,7 +680,7 @@ export function TablePreview({
                 </div>:
                 <div className={`table ${!isExpand?'shrink':''}`} key={table._id}>
                     <div className="title-row-wrapper" >
-                        <div className="table-cell title-cell" style={{color:`${table.color}` }} >
+                        <div className="table-cell title-cell" style={{color:`${table.color}` }}>
                         <div 
                     className={`${isOpenTableColorModal?'':'table-name-wrapper'}`}
                     tabIndex='0' 

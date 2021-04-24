@@ -4,7 +4,7 @@ const BASE_URL =
   process.env.NODE_ENV === 'production' ? '/api/' : '//localhost:3030/api/'
 
 var axios = Axios.create({
-  withCredentials: true,
+  withCredentials : true,
 })
 
 export default {
@@ -27,7 +27,7 @@ async function ajax(endpoint, method = 'get', data = null) {
     const res = await axios({
       url: `${BASE_URL}${endpoint}`,
       method,
-      data,
+      data
     })
     return res.data
   } catch (err) {
@@ -36,7 +36,7 @@ async function ajax(endpoint, method = 'get', data = null) {
     )
     console.dir(err)
     if (err.response && err.response.status === 401) {
-      // window.location.assign('/')
+      window.location.assign('/')
       // window.location.assign('/#/login')
     }
     throw err

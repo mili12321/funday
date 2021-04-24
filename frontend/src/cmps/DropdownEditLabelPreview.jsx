@@ -1,5 +1,5 @@
 import React, { useEffect,useState,useRef } from 'react';
-import userService from '../services/userService';
+import {userService} from '../services/userService';
 import { RiCloseCircleFill } from 'react-icons/ri'
 
 export function DropdownEditLabelPreview({label,onEditBoardLabel,onRemoveLabelFromBoard}) {

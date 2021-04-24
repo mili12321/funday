@@ -35,6 +35,11 @@ class _TableColumnPreview extends Component {
             });
             this.setState({currTableColumn:this.props.tableColumn})
         }
+        if (prevProps.isEditableGroupNameFocus !== this.props.isEditableGroupNameFocus) {
+            if( this.props.isEditableGroupNameFocus ){
+                this.focusEditableGroupName()
+            }
+        }
     }
 
     focusText = () => {
@@ -79,7 +84,7 @@ class _TableColumnPreview extends Component {
                         <div className="table-actions">
                             {!this.props.isExpand?<CgExpand className="expand-btn" onClick={()=>this.props.toggleExpandeTable(true)}/>:
                             <AiOutlineShrink className="shrink-btn" onClick={()=>this.props.toggleExpandeTable(false)}/> }
-                            <div  className="drag-btn"  {...dragHandle.dragHandleProps}>
+                            <div className="drag-btn" {...dragHandle.dragHandleProps}>
                             <BiGridVertical/>
                             </div>
                         </div>
@@ -162,6 +167,14 @@ class _TableColumnPreview extends Component {
         this.setState({isShownTitleOptionsModal:false})
     }
 
+
+    focusEditableGroupName=()=>{
+        if(this.editableGroupName&&this.editableGroupName.current){
+            this.editableGroupName.current.focus()
+        }
+        //change to false
+    }
+
     render() {
         const { board, tableColumn, table, IoMdNotifications } = this.props
         if (!tableColumn) return <div>Loading....</div>
@@ -205,8 +218,9 @@ class _TableColumnPreview extends Component {
 }
 const mapStateToProps = state => {
     return {
-        loggedInUser: state.user.loggedInUser
+        loggedInUser: state.user.loggedInUser,
     }
 }
+
 
 export const TableColumnPreview = connect(mapStateToProps)(_TableColumnPreview)

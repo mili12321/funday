@@ -47,6 +47,11 @@ function addBoard(currWorkspace, boardName) {
         dropdownLabels:[],
         statusLabelList: [
                 {
+                    _id :uniqId(),
+                    color : "rgb(180, 182, 188)",
+                    name : ""
+                }, 
+                {
                     _id : uniqId(),
                     color:"#ffbe0c",
                     name:"Working on it"

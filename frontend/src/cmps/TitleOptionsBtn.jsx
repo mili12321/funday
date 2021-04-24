@@ -50,8 +50,17 @@ export function TitleOptionsBtn({toggleTitleOptionsModal,isShownTitleOptionsModa
         board.tables.forEach(table => {
             const newTable = {
                 ...table,
-                tasks:table.tasks.flatMap((task)=>
-                    [{...task,[`${tableColumn.taskKey}`]:getDefaultValue(tableColumn.taskKey)}]
+                tasks:table.tasks.map(task=>
+                    tableColumn.taskKey.includes('text')?
+                    Object.keys(task).filter(key =>
+                        key !== `${tableColumn.taskKey}`).reduce((obj, key) =>
+                        {
+                            obj[key] = task[key];
+                            return obj;
+                        }, {}
+                    )
+                    :
+                    {...task,[`${tableColumn.taskKey}`]:getDefaultValue(tableColumn.taskKey)}
                 )
             }
             newTablesArray.push(newTable)
@@ -109,9 +118,9 @@ export function TitleOptionsBtn({toggleTitleOptionsModal,isShownTitleOptionsModa
                     closeTitleOptionsModal()
                 }}
                 >
-                    <div className="delete-btn modal-btn" onClick={hideColumn}>
+                    {!tableColumn.taskKey.includes("text")&&<div className="delete-btn modal-btn" onClick={hideColumn}>
                         <BiHide className='icon'/><span>Hide column</span>
-                    </div>
+                    </div>}
                     <div className="delete-btn modal-btn" onClick={deleteColumn}>
                         <VscTrash className='icon'/><span>Delete column</span>
                     </div>

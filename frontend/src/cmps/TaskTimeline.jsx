@@ -12,6 +12,8 @@ export function TaskTimeline({task,taskKey,onEditTask,table}) {
     const [diffDays, setDiffDays] = useState('');
     const [isMouseEnter, setIsmouseEnter] = useState('');
 
+    const datePickerWrapperEl = useRef()
+
     const onChange = dates => {
         const [start, end] = dates;
         setStartDate(start);
@@ -119,6 +121,11 @@ export function TaskTimeline({task,taskKey,onEditTask,table}) {
         onEditTask(table,updatedTask,desc)
     }
 
+    useEffect(() => {
+       if(isShown&&datePickerWrapperEl&&datePickerWrapperEl.current){
+        datePickerWrapperEl.current.focus()
+       }
+    }, [isShown])
 
     return (
         <>
@@ -140,7 +147,7 @@ export function TaskTimeline({task,taskKey,onEditTask,table}) {
         </div>
 
         {isShown&&
-            <div className='datePicker-wrapper'>
+            <div className='datePicker-wrapper' ref={datePickerWrapperEl} tabIndex="0" onBlur={()=>setIsShown(false)}>
                 <DatePicker
                 closeOnScroll={true}
                 selected={startDate}

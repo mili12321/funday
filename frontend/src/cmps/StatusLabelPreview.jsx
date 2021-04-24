@@ -38,8 +38,13 @@ export class StatusLabelPreview extends Component {
         const { BsDroplet,statusLabel,colorsPicker,idx,updateLabel ,provided } = this.props
         return (
             <>
-            <div className={`stat-label-edit-wrapper ${idx>5?'sec-column':''}`} ref={provided.innerRef} {...provided.draggableProps}>
-            <div className="status-label-dots-btn"  {...provided.dragHandleProps}>
+            <div 
+            className={`stat-label-edit-wrapper ${idx>5?'sec-column':''}`} 
+            ref={provided.innerRef} {...provided.draggableProps}
+            >
+            <div className="status-label-dots-btn"  
+            {...provided.dragHandleProps}
+            >
                ::
             </div>
             <div 
